@@ -6,11 +6,10 @@ An online E-store system built in Java 8=>11 and Spring Tools 4.16
 ## Team
 
 - Christin
-- Sohan Saimbhi
 - Hritish Mahajan
 - 
 -
-
+- 
 
 ## Prerequisites
 
