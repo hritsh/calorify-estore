@@ -46,4 +46,5 @@ public class InventoryController {
     public InventoryController(InventoryDAO inventoryDao) {
         this.inventoryDao = inventoryDao;
     }
+    
 }
