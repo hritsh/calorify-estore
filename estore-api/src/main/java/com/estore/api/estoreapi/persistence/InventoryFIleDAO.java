@@ -81,12 +81,12 @@ public class InventoryFileDAO implements InventoryDAO {
      * 
      * @return The array of {@link Product products}, may be empty
      */
-    private Product[] getProductsArray(String containsText) { // if containsText == null, no filter
+    private Product[] getProductsArray(String containsText, Integer containsPrice) { // if containsText == null, no filter
         ArrayList<Product> productArrayList = new ArrayList<>();
 
         for (Product product : products.values()) {
-            if (containsText == null || product.getName().contains(containsText)) {
-                productArrayList.add(product);
+            if (containsText == null || product.getName().contains(containsText) || (containsPrice != null && product.getPrice() <= containsPrice)) {
+                    productArrayList.add(product);
             }
         }
 
@@ -140,6 +140,16 @@ public class InventoryFileDAO implements InventoryDAO {
         // Make the next id one greater than the maximum from the file
         ++nextId;
         return true;
+    }
+    @Override
+    /**
+     ** {@inheritDoc}
+     ** called searchProduct on Trello card
+     */
+    public Product[] searchProduct(String containsText, Integer containsPrice) throws IOException {
+        synchronized(products) {
+            return getProductsArray(containsText, containsPrice);
+        }
     }
 
 }

@@ -13,5 +13,5 @@ public interface InventoryDAO {
      * 
      * @throws IOException if an issue with underlying storage
      */
-    Product[] searchProduct(String containsText) throws IOException;
+    Product[] searchProduct(String containsText, Integer containsPrice ) throws IOException;
 }
