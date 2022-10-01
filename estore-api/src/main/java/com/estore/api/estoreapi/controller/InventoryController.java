@@ -19,6 +19,31 @@ import java.util.logging.Logger;
 import com.estore.api.estoreapi.persistence.InventoryDAO;
 import com.estore.api.estoreapi.model.Product;
 
-public class InventoryController {
+/**
+ * Handles the REST API requests for the Product resource
+ * <p>
+ * {@literal @}RestController Spring annotation identifies this class as a REST
+ * API
+ * method handler to the Spring framework
+ * 
+ * @author Team-E
+ */
 
+@RestController
+@RequestMapping("products")
+public class InventoryController {
+    private static final Logger LOG = Logger.getLogger(InventoryController.class.getName());
+    private InventoryDAO inventoryDao;
+
+    /**
+     * Creates a REST API controller to reponds to requests
+     * 
+     * @param inventoryDao The {@link InventoryDAO Inventory Data Access Object} to
+     *                     perform CRUD operations
+     *                     <br>
+     *                     This dependency is injected by the Spring Framework
+     */
+    public InventoryController(InventoryDAO inventoryDao) {
+        this.inventoryDao = inventoryDao;
+    }
 }
