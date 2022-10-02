@@ -47,6 +47,32 @@ public class InventoryController {
         this.inventoryDao = inventoryDao;
     }
      /**
+     * Responds to the GET request for a {@linkplain Product product} for the given
+     * id
+     * 
+     * @param id The id used to locate the {@link Product product}
+     * 
+     * @return ResponseEntity with {@link Product product} object and HTTP status of
+     *         OK if found<br>
+     *         ResponseEntity with HTTP status of NOT_FOUND if not found<br>
+     *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     */
+    @GetMapping("/{id}")
+    public ResponseEntity<Product> getProduct(@PathVariable int id) {
+        LOG.info("GET /products/" + id);
+        try {
+            Product product = inventoryDao.getProduct(id);
+            if (product != null)
+                return new ResponseEntity<Product>(product, HttpStatus.OK);
+            else
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (IOException e) {
+            LOG.log(Level.SEVERE, e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+     /**
      * Deletes a {@linkplain Product product} with the given id
      * 
      * @param id The id of the {@link Product product} to deleted
