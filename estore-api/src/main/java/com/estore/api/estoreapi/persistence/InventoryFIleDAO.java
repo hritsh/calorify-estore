@@ -141,5 +141,14 @@ public class InventoryFileDAO implements InventoryDAO {
         ++nextId;
         return true;
     }
+    /**
+    ** {@inheritDoc}
+     */
+    @Override
+    public Product[] getProducts() {
+        synchronized(products) {
+            return getProductsArray();
+        }
+    }
 
 }
