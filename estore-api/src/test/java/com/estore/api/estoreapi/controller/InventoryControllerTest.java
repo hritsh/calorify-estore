@@ -23,7 +23,7 @@ import org.springframework.http.ResponseEntity;
  * @author Team-E
  */
 
-@Tag("Controller-tier")
+@Tag("Controller-tier") 
 public class InventoryControllerTest {
     private InventoryController inventoryController;
     private InventoryDAO  mockInventoryDAO;
