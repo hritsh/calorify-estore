@@ -11,5 +11,5 @@ public interface InventoryDAO {
      * 
      * @throws IOException if an issue with underlying storage
      */
-  Hero[] getHeroes() throws IOException;
+  Hero[] getProducts() throws IOException;
 }
