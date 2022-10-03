@@ -31,6 +31,7 @@ public class Product {
      * 
      * @param id       The id of the product
      * @param name     The name of the product
+     * @param image    The image url of the product
      * @param calories The calories of the product
      * @param price    The price of the product
      * 
