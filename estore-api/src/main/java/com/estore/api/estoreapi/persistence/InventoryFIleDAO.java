@@ -146,6 +146,16 @@ public class InventoryFileDAO implements InventoryDAO {
      ** {@inheritDoc}
      */
     @Override
+    public Product[] getProducts() {
+        synchronized (products) {
+            return getProductsArray();
+        }
+    }
+
+    /**
+     ** {@inheritDoc}
+     */
+    @Override
     public Product createProduct(Product product) throws IOException {
         synchronized (products) {
             // We create a new product object because the id field is immutable

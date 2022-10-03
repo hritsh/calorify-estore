@@ -10,6 +10,15 @@ import com.estore.api.estoreapi.model.Product;
  */
 public interface InventoryDAO {
     /**
+     * Retrieves all {@linkplain Product products}
+     * 
+     * @return An array of {@link Product product} objects, may be empty
+     * 
+     * @throws IOException if an issue with underlying storage
+     */
+    Product[] getProducts() throws IOException;
+
+    /**
      * Creates and saves a {@linkplain Product product}
      * 
      * @param product {@linkplain Product product} object to be created and saved
