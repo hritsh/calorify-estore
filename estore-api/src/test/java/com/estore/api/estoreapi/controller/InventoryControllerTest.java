@@ -46,7 +46,7 @@ public class InventoryControllerTest {
         when(mockInventoryDAO.searchProduct(searchString, null)).thenReturn(products);
 
         // Invoke
-        ResponseEntity<Product[]> response = inventoryController.searchHeroes(searchString, null);
+        ResponseEntity<Product[]> response = inventoryController.searchProducts(searchString, null);
 
         // Analyze
         assertEquals(HttpStatus.OK,response.getStatusCode());
@@ -66,7 +66,7 @@ public class InventoryControllerTest {
         when(mockInventoryDAO.searchProduct(null, searchPrice)).thenReturn(splitArrayResult);
 
         // Invoke
-        ResponseEntity<Product[]> response = inventoryController.searchHeroes(null, searchPrice);
+        ResponseEntity<Product[]> response = inventoryController.searchProducts(null, searchPrice);
        
         // Analyze
         assertEquals(HttpStatus.OK,response.getStatusCode());
@@ -89,21 +89,21 @@ public class InventoryControllerTest {
         when(mockInventoryDAO.searchProduct(searchString, searchPrice)).thenReturn(splitArrayResult);
 
         // Invoke
-        ResponseEntity<Product[]> response = inventoryController.searchHeroes(searchString, searchPrice);
+        ResponseEntity<Product[]> response = inventoryController.searchProducts(searchString, searchPrice);
        
         // Analyze
         assertEquals(HttpStatus.OK,response.getStatusCode());
         assertEquals(splitArrayResult,response.getBody()); 
     }
     @Test
-    public void testSearchHeroesHandleException() throws IOException { // searchProduct may throw IOException
+    public void testSearchProductsHandleException() throws IOException { // searchProduct may throw IOException
         // Setup
         String searchString = "an";
         // When searchProduct is called on the Mock Inventory DAO, throw an IOException
         doThrow(new IOException()).when(mockInventoryDAO).searchProduct(searchString, null);
 
         // Invoke
-        ResponseEntity<Product[]> response = inventoryController.searchHeroes(searchString, null);
+        ResponseEntity<Product[]> response = inventoryController.searchProducts(searchString, null);
 
         // Analyze
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());

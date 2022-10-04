@@ -66,21 +66,21 @@ public class InventoryController {
      * GET http://localhost:8080/products/?price=1
      */
     @GetMapping("/")
-    public ResponseEntity<Product[]> searchHeroes(@RequestParam(required = false) String name, @RequestParam(required = false) Integer price) {
+    public ResponseEntity<Product[]> searchProducts(@RequestParam(required = false) String name, @RequestParam(required = false) Integer price) {
         try {
             if(name != null && price != null) {
-                LOG.info("GET /heroes/?name="+name+"&price="+price);
+                LOG.info("GET /products/?name="+name+"&price="+price);
                 Product[] products = inventoryDao.searchProduct(name, price);
                 if(products.length != 0)
                     return new ResponseEntity<Product[]>(products, HttpStatus.OK);
             }
             else if(name != null) {
-                LOG.info("GET /heroes/?name="+name);
+                LOG.info("GET /products/?name="+name);
                 Product[] products = inventoryDao.searchProduct(name, null);
                 if(products.length != 0)
                     return new ResponseEntity<Product[]>(products, HttpStatus.OK);
             } else if(price != null) {
-                LOG.info("GET /heroes/?price="+price);
+                LOG.info("GET /products/?price="+price);
                 Product[] products = inventoryDao.searchProduct(null, price);
                 if(products.length != 0)
                     return new ResponseEntity<Product[]>(products, HttpStatus.OK);
