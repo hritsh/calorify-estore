@@ -81,9 +81,14 @@ public class InventoryController {
      *         ResponseEntity with HTTP status of NOT_FOUND if not found<br>
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
+<<<<<<< Updated upstream
     @DeleteMapping("/{id}")
     public ResponseEntity<Product> deleteProduct(@PathVariable int id) {
         LOG.info("DELETE /products/" + id);
+=======
+    @GetMapping("/")
+    public ResponseEntity<Product[]> searchProduct(@RequestParam(required = false) String name, @RequestParam(required = false) Integer price) {
+>>>>>>> Stashed changes
         try {
             boolean product = inventoryDao.deleteProduct(id);
             if (product != false)
