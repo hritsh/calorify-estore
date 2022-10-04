@@ -141,5 +141,4 @@ public class InventoryFileDAO implements InventoryDAO {
         ++nextId;
         return true;
     }
-
 }
