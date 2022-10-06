@@ -65,7 +65,7 @@ public class InventoryFileDAOTest {
         Product product = inventoryFileDAO.getProduct(2);
 
         // Analzye
-        assertEquals(product, testInventory[1]);
+        assertEquals(product, testProducts[1]);
     }
 
     @Test
