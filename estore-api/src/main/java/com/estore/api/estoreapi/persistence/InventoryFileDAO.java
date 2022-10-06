@@ -67,7 +67,7 @@ public class InventoryFileDAO implements InventoryDAO {
      * @return The array of {@link Product products}, may be empty
      */
     private Product[] getProductsArray() {
-        return getProductsArray(null);
+        return getProductsArray(null, null);
     }
 
     /**
@@ -81,12 +81,23 @@ public class InventoryFileDAO implements InventoryDAO {
      * 
      * @return The array of {@link Product products}, may be empty
      */
-    private Product[] getProductsArray(String containsText) { // if containsText == null, no filter
+    private Product[] getProductsArray(String containsText, Integer containsPrice) {
         ArrayList<Product> productArrayList = new ArrayList<>();
-
+        // if containsText == null, no filter, (excluding because controller accounts
+        // for no query parameter)
         for (Product product : products.values()) {
-            if (containsText == null || product.getName().contains(containsText)) {
-                productArrayList.add(product);
+            if (containsPrice == null) {
+                // matches has been used instead of containsText to make search case insensitive
+                // ?i switches to case insensitive mode, .* means any sequence of characters is
+                // accepted
+                if (product.getName().matches("(?i).*" + containsText + ".*"))
+                    productArrayList.add(product);
+            } else if (containsText == null) {
+                if (product.getPrice() <= containsPrice)
+                    productArrayList.add(product);
+            } else {
+                if (product.getName().matches("(?i).*" + containsText + ".*") && product.getPrice() <= containsPrice)
+                    productArrayList.add(product);
             }
         }
 
@@ -142,16 +153,82 @@ public class InventoryFileDAO implements InventoryDAO {
         return true;
     }
 
+    /**
+     ** {@inheritDoc}
+     */
     @Override
+    public Product[] getProducts() {
+        synchronized (products) {
+            return getProductsArray();
+        }
+    }
+
+    /**
+     ** {@inheritDoc}
+     */
+    @Override
+    public Product getProduct(int id) {
+        synchronized (products) {
+            if (products.containsKey(id))
+                return products.get(id);
+            else
+                return null;
+        }
+    }
+
+    /**
+     ** {@inheritDoc}
+     */
+    @Override
+    public Product createProduct(Product product) throws IOException {
+        synchronized (products) {
+            // We create a new product object because the id field is immutable
+            // and we need to assign the next unique id
+            Product newProduct = new Product(nextId(), product.getName(), product.getImage(), product.getCalories(),
+                    product.getPrice());
+            products.put(newProduct.getId(), newProduct);
+            save(); // may throw an IOException
+            return newProduct;
+        }
+    }
+
+    @Override
+    /**
+     ** {@inheritDoc}
+     ** called searchProduct on Trello card
+     */
+    public Product[] searchProduct(String containsText, Integer containsPrice) throws IOException {
+        synchronized (products) {
+            return getProductsArray(containsText, containsPrice);
+        }
+    }
+
+    @Override
+    /**
+     ** {@inheritDoc}
+     */
     public Product updateProduct(Product product) throws IOException {
         synchronized(products) {
             if (products.containsKey(product.getId()) == false)
                 return null;  // hero does not exist
-
+ 
             products.put(product.getId(),product);
-            save(); // may throw an IOException
+            save(); // may throw an IOExc eption
             return product;
         }
     }
 
+    @Override
+    /**
+     ** {@inheritDoc}
+     */
+    public boolean deleteProduct(int id) throws IOException {
+        synchronized (products) {
+            if (products.containsKey(id)) {
+                products.remove(id);
+                return save();
+            } else
+                return false;
+        }
+    }
 }
