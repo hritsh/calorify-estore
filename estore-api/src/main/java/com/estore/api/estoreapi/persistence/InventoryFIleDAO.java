@@ -142,4 +142,16 @@ public class InventoryFileDAO implements InventoryDAO {
         return true;
     }
 
+    @Override
+    public Product updateProduct(Product product) throws IOException {
+        synchronized(products) {
+            if (products.containsKey(product.getId()) == false)
+                return null;  // hero does not exist
+
+            products.put(product.getId(),product);
+            save(); // may throw an IOException
+            return product;
+        }
+    }
+
 }

@@ -4,5 +4,5 @@ import java.io.IOException;
 import com.estore.api.estoreapi.model.Product;
 
 public interface InventoryDAO {
-
+    Product updateProduct(Product product) throws IOException;
 }
