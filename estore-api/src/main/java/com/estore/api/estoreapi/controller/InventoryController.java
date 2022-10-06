@@ -71,33 +71,4 @@ public class InventoryController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
-     /**
-     * Deletes a {@linkplain Product product} with the given id
-     * 
-     * @param id The id of the {@link Product product} to deleted
-     * 
-     * @return ResponseEntity HTTP status of OK if deleted<br>
-     *         ResponseEntity with HTTP status of NOT_FOUND if not found<br>
-     *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
-     */
-<<<<<<< Updated upstream
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Product> deleteProduct(@PathVariable int id) {
-        LOG.info("DELETE /products/" + id);
-=======
-    @GetMapping("/")
-    public ResponseEntity<Product[]> searchProduct(@RequestParam(required = false) String name, @RequestParam(required = false) Integer price) {
->>>>>>> Stashed changes
-        try {
-            boolean product = inventoryDao.deleteProduct(id);
-            if (product != false)
-                return new ResponseEntity<>(HttpStatus.OK);
-            else
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (IOException e) {
-            LOG.log(Level.SEVERE, e.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
 }
