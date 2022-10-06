@@ -81,13 +81,15 @@ public class InventoryFileDAO implements InventoryDAO {
      * 
      * @return The array of {@link Product products}, may be empty
      */
-    private Product[] getProductsArray(String containsText, Integer containsPrice) { 
+    private Product[] getProductsArray(String containsText, Integer containsPrice) {
         ArrayList<Product> productArrayList = new ArrayList<>();
-        // if containsText == null, no filter, (excluding because controller accounts for no query parameter)
+        // if containsText == null, no filter, (excluding because controller accounts
+        // for no query parameter)
         for (Product product : products.values()) {
-            if(containsPrice == null) {
-                //matches has been used instead of containsText to make search case insensitive
-                //?i switches to case insensitive mode, .* means any sequence of characters is accepted
+            if (containsPrice == null) {
+                // matches has been used instead of containsText to make search case insensitive
+                // ?i switches to case insensitive mode, .* means any sequence of characters is
+                // accepted
                 if (product.getName().matches("(?i).*" + containsText + ".*"))
                     productArrayList.add(product);
             } else if (containsText == null) {
@@ -150,7 +152,7 @@ public class InventoryFileDAO implements InventoryDAO {
         ++nextId;
         return true;
     }
-	
+
     /**
      ** {@inheritDoc}
      */
@@ -196,22 +198,21 @@ public class InventoryFileDAO implements InventoryDAO {
      ** called searchProduct on Trello card
      */
     public Product[] searchProduct(String containsText, Integer containsPrice) throws IOException {
-        synchronized(products) {
+        synchronized (products) {
             return getProductsArray(containsText, containsPrice);
         }
     }
-    
+
     @Override
     /**
-    ** {@inheritDoc}
-    */
+     ** {@inheritDoc}
+     */
     public boolean deleteProduct(int id) throws IOException {
-        synchronized(products) {
+        synchronized (products) {
             if (products.containsKey(id)) {
                 products.remove(id);
                 return save();
-            }
-            else
+            } else
                 return false;
         }
     }

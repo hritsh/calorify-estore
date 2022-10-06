@@ -60,6 +60,24 @@ public class InventoryFileDAOTest {
     }
 
     @Test
+    public void testGetProduct() throws IOException {
+        // Invoke
+        Product product = inventoryFileDAO.getProduct(2);
+
+        // Analzye
+        assertEquals(product, testInventory[1]);
+    }
+
+    @Test
+    public void testGetProductNotFound() throws IOException {
+        // Invoke
+        Product product = inventoryFileDAO.getProduct(98);
+
+        // Analyze
+        assertEquals(product, null);
+    }
+
+    @Test
     public void testCreateProduct() {
         // Setup
         Product product = new Product(4, "Banana",

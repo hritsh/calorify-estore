@@ -24,7 +24,7 @@ import org.springframework.http.ResponseEntity;
  * @author Team-E
  */
 
-@Tag("Controller-tier") 
+@Tag("Controller-tier")
 public class InventoryControllerTest {
     private InventoryController inventoryController;
     private InventoryDAO mockInventoryDAO;
@@ -40,42 +40,92 @@ public class InventoryControllerTest {
     }
 
     @Test
+    public void testGetProduct() throws IOException { // getProduct may throw IOException
+        // Setup
+        Product product = new Product(2, "Galactic Potato", "", 200, 10);
+        // When the same id is passed in, our mock product DAO will return the product
+        // object
+        when(mockInventoryDAO.getProduct(product.getId())).thenReturn(product);
+
+        // Invoke
+        ResponseEntity<Product> response = inventoryController.getProduct(product.getId());
+
+        // Analyze
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(product, response.getBody());
+    }
+
+    @Test
+    public void testGetProductNotFound() throws Exception { // getProduct may throw IOException
+        // Setup
+        int productId = 10;
+        // When the same id is passed in, our mock Product DAO will return null,
+        // simulating
+        // no Product found
+        when(mockInventoryDAO.getProduct(productId)).thenReturn(null);
+
+        // Invoke
+        ResponseEntity<Product> response = inventoryController.getProduct(productId);
+
+        // Analyze
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
+    @Test
+    public void testGetProductHandleException() throws Exception { // createProduct may throw IOException
+        // Setup
+        int userId = 99;
+        // When getProduct is called on the Mock Product DAO, throw an IOException
+        doThrow(new IOException()).when(mockInventoryDAO).getProduct(userId);
+
+        // Invoke
+        ResponseEntity<Product> response = inventoryController.getProduct(userId);
+
+        // Analyze
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
+    }
+
+    @Test
     public void testSearchProductByName() throws IOException { // searchProduct may throw IOException
         // Setup
         String searchString = "to";
         Product[] products = new Product[2];
-        products[0] = new Product(1,"Galactic Potato","", 200, 10);
-        products[1] = new Product(2,"Bombasto Pepper","",300,20);
-        // When searchProduct is called with the search string, return the two product above
+        products[0] = new Product(1, "Galactic Potato", "", 200, 10);
+        products[1] = new Product(2, "Bombasto Pepper", "", 300, 20);
+        // When searchProduct is called with the search string, return the two product
+        // above
         when(mockInventoryDAO.searchProduct(searchString, null)).thenReturn(products);
 
         // Invoke
         ResponseEntity<Product[]> response = inventoryController.searchProducts(searchString, null);
 
         // Analyze
-        assertEquals(HttpStatus.OK,response.getStatusCode());
-        assertEquals(products,response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(products, response.getBody());
     }
+
     @Test
     public void testSearchProductsByPrice() throws IOException {
         Integer searchPrice = 10;
         Product[] products = new Product[3];
         products[0] = new Product(1, "Apple", "", 100, 5);
-        products[1] = new Product(2,"Galactic Potato","", 200, 10);
-        products[2] = new Product(3,"Bombasto Pepper","",300,20);
+        products[1] = new Product(2, "Galactic Potato", "", 200, 10);
+        products[2] = new Product(3, "Bombasto Pepper", "", 300, 20);
 
         Product[] splitArrayResult = Arrays.copyOfRange(products, 0, 2);
 
-        // When searchProduct is called with the search price, return the two product that have price less than or equal to 10
+        // When searchProduct is called with the search price, return the two product
+        // that have price less than or equal to 10
         when(mockInventoryDAO.searchProduct(null, searchPrice)).thenReturn(splitArrayResult);
 
         // Invoke
         ResponseEntity<Product[]> response = inventoryController.searchProducts(null, searchPrice);
-       
+
         // Analyze
-        assertEquals(HttpStatus.OK,response.getStatusCode());
-        assertEquals(splitArrayResult,response.getBody()); 
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(splitArrayResult, response.getBody());
     }
+
     @Test
     public void testSearchProductsByNameAndPrice() throws IOException {
         Integer searchPrice = 10;
@@ -83,22 +133,25 @@ public class InventoryControllerTest {
 
         Product[] products = new Product[4];
         products[0] = new Product(1, "Apple", "", 100, 5);
-        products[1] = new Product(2,"Pomogrenate", "", 50, 8);
-        products[2] = new Product(3,"Galactic Potato","", 200, 10);
-        products[3] = new Product(4,"Bombasto Pepper","",300,20);
+        products[1] = new Product(2, "Pomogrenate", "", 50, 8);
+        products[2] = new Product(3, "Galactic Potato", "", 200, 10);
+        products[3] = new Product(4, "Bombasto Pepper", "", 300, 20);
 
         Product[] splitArrayResult = Arrays.copyOfRange(products, 1, 3);
 
-        // When searchProduct is called with the search price, return the two product that have price less than or equal to 10 and contain the specified search string
+        // When searchProduct is called with the search price, return the two product
+        // that have price less than or equal to 10 and contain the specified search
+        // string
         when(mockInventoryDAO.searchProduct(searchString, searchPrice)).thenReturn(splitArrayResult);
 
         // Invoke
         ResponseEntity<Product[]> response = inventoryController.searchProducts(searchString, searchPrice);
-       
+
         // Analyze
-        assertEquals(HttpStatus.OK,response.getStatusCode());
-        assertEquals(splitArrayResult,response.getBody()); 
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(splitArrayResult, response.getBody());
     }
+
     @Test
     public void testSearchProductsHandleException() throws IOException { // searchProduct may throw IOException
         // Setup
@@ -112,7 +165,6 @@ public class InventoryControllerTest {
         // Analyze
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
     }
-
 
     /*****************************************************************
      * The following tests will fail until all InventoryController methods
@@ -180,7 +232,7 @@ public class InventoryControllerTest {
         ResponseEntity<Product> response = inventoryController.deleteProduct(productId);
 
         // Analyze
-        assertEquals(HttpStatus.OK,response.getStatusCode());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
@@ -192,9 +244,9 @@ public class InventoryControllerTest {
         // Invoke
         ResponseEntity<Product> response = inventoryController.deleteProduct(productId);
         // Analyze
-        assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
-    
+
     @Test
     public void testDeleteProductHandleException() throws IOException { // deleteProduct may throw IOException
         // Setup
