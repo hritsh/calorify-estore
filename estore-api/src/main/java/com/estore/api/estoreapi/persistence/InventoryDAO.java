@@ -9,7 +9,6 @@ import com.estore.api.estoreapi.model.Product;
  * @author SWEN Faculty
  */
 public interface InventoryDAO {
-    /**
      * Retrieves a {@linkplain Product product} with the given id
      * 
      * @param id The id of the {@link Product product} to get
@@ -44,4 +43,15 @@ public interface InventoryDAO {
      * @throws IOException if an issue with underlying storage
      */
     Product createProduct(Product product) throws IOException;
+
+    /**
+     * Finds all {@linkplain Product products} whose name contains the given text
+     * 
+     * @param containsText The text to match against
+     * 
+     * @return An array of {@link Product product} whose names contains the given text, may be empty
+     * 
+     * @throws IOException if an issue with underlying storage
+     */
+    Product[] searchProduct(String containsText, Integer containsPrice ) throws IOException;
 }

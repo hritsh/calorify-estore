@@ -76,11 +76,22 @@ public class InventoryFileDAOTest {
                 assertEquals(actual.getName(), product.getName());
         }
 
-    @Test
-    public void testSaveException() throws IOException{
-        doThrow(new IOException())
-            .when(mockObjectMapper)
-                .writeValue(any(File.class),any(Product[].class));
+        @Test
+        public void testSearchProduct() throws IOException{
+            // Invoke
+            Product[] products = inventoryFileDAO.searchProduct("po", null);
+
+            // Analyze
+            assertEquals(products.length,2);
+            assertEquals(products[0],testProducts[1]);
+            assertEquals(products[1],testProducts[2]);
+        }
+
+        @Test
+        public void testSaveException() throws IOException{
+            doThrow(new IOException())
+                .when(mockObjectMapper)
+                    .writeValue(any(File.class),any(Product[].class));
 
         Product product = new Product(2, "Potato",
         "https://clipart.world/wp-content/uploads/2021/09/Potato-clipart-images.png",
@@ -88,6 +99,27 @@ public class InventoryFileDAOTest {
 
         assertThrows(IOException.class,
                         () -> inventoryFileDAO.createProduct(product),
+                        "IOException not thrown");
+    }
+    */
+
+    @Test
+    public void testConstructorException() throws IOException {
+        // Setup
+        ObjectMapper mockObjectMapper = mock(ObjectMapper.class);
+        // We want to simulate with a Mock Object Mapper that an
+        // exception was raised during JSON object deseerialization
+        // into Java objects
+        // When the Mock Object Mapper readValue method is called
+        // from the inventoryFileDAO load method, an IOException is
+        // raised
+        doThrow(new IOException())
+            .when(mockObjectMapper)
+                .readValue(new File("doesnt_matter.txt"),Product[].class);
+
+        // Invoke & Analyze
+        assertThrows(IOException.class,
+                        () -> new InventoryFileDAO("doesnt_matter.txt",mockObjectMapper),
                         "IOException not thrown");
     }
 }
