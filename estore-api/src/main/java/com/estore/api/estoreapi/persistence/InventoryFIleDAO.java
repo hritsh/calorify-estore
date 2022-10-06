@@ -150,6 +150,46 @@ public class InventoryFileDAO implements InventoryDAO {
         ++nextId;
         return true;
     }
+	
+    /**
+     ** {@inheritDoc}
+     */
+    @Override
+    public Product[] getProducts() {
+        synchronized (products) {
+            return getProductsArray();
+        }
+    }
+
+    /**
+     ** {@inheritDoc}
+     */
+    @Override
+    public Product getProduct(int id) {
+        synchronized (products) {
+            if (products.containsKey(id))
+                return products.get(id);
+            else
+                return null;
+        }
+    }
+
+    /**
+     ** {@inheritDoc}
+     */
+    @Override
+    public Product createProduct(Product product) throws IOException {
+        synchronized (products) {
+            // We create a new product object because the id field is immutable
+            // and we need to assign the next unique id
+            Product newProduct = new Product(nextId(), product.getName(), product.getImage(), product.getCalories(),
+                    product.getPrice());
+            products.put(newProduct.getId(), newProduct);
+            save(); // may throw an IOException
+            return newProduct;
+        }
+    }
+
     @Override
     /**
      ** {@inheritDoc}
@@ -160,5 +200,4 @@ public class InventoryFileDAO implements InventoryDAO {
             return getProductsArray(containsText, containsPrice);
         }
     }
-
 }

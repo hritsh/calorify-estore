@@ -46,6 +46,7 @@ public class InventoryController {
     public InventoryController(InventoryDAO inventoryDao) {
         this.inventoryDao = inventoryDao;
     }
+    
     /**
      * Responds to the GET request for all {@linkplain Product products} whose name contains
      * the text in name
@@ -92,5 +93,39 @@ public class InventoryController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return null;
+
+    /**
+     * Creates a {@linkplain Product product} with the provided product object
+     * 
+     * @param product - The {@link Product product} to create
+     * 
+     * @return ResponseEntity with created {@link Product product} object and HTTP
+     *         status
+     *         of CREATED<br>
+     *         ResponseEntity with HTTP status of CONFLICT if {@link Product
+     *         product}
+     *         object already exists<br>
+     *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     */
+    @PostMapping("")
+    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
+        LOG.info("POST /products " + product);
+
+        // Replace below with your implementation
+        try {
+            Product[] products = inventoryDao.getProducts();
+            // check if product already exists and return CONFLICT if it does
+            for (Product p : products) {
+                if (p.getName().equals(product.getName()))
+                    return new ResponseEntity<>(HttpStatus.CONFLICT);
+            }
+            // else, create product and return CREATED
+            Product newProduct = inventoryDao.createProduct(product);
+            return new ResponseEntity<Product>(newProduct, HttpStatus.CREATED);
+
+        } catch (IOException e) {
+            LOG.log(Level.SEVERE, e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
