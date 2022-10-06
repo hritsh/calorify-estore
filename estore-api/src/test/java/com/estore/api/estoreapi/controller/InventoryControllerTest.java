@@ -5,6 +5,7 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.util.Arrays;
 import java.io.IOException;
 import java.util.*;
 
@@ -26,7 +27,7 @@ import org.springframework.http.ResponseEntity;
 @Tag("Controller-tier") 
 public class InventoryControllerTest {
     private InventoryController inventoryController;
-    private InventoryDAO  mockInventoryDAO;
+    private InventoryDAO mockInventoryDAO;
 
     /**
      * Before each test, create a new InventoryController object and inject
@@ -36,9 +37,138 @@ public class InventoryControllerTest {
     public void setupInventoryController() {
         mockInventoryDAO = mock(InventoryDAO.class);
         inventoryController = new InventoryController(mockInventoryDAO);
-    
-
     }
+
+    @Test
+    public void testSearchProductByName() throws IOException { // searchProduct may throw IOException
+        // Setup
+        String searchString = "to";
+        Product[] products = new Product[2];
+        products[0] = new Product(1,"Galactic Potato","", 200, 10);
+        products[1] = new Product(2,"Bombasto Pepper","",300,20);
+        // When searchProduct is called with the search string, return the two product above
+        when(mockInventoryDAO.searchProduct(searchString, null)).thenReturn(products);
+
+        // Invoke
+        ResponseEntity<Product[]> response = inventoryController.searchProducts(searchString, null);
+
+        // Analyze
+        assertEquals(HttpStatus.OK,response.getStatusCode());
+        assertEquals(products,response.getBody());
+    }
+    @Test
+    public void testSearchProductsByPrice() throws IOException {
+        Integer searchPrice = 10;
+        Product[] products = new Product[3];
+        products[0] = new Product(1, "Apple", "", 100, 5);
+        products[1] = new Product(2,"Galactic Potato","", 200, 10);
+        products[2] = new Product(3,"Bombasto Pepper","",300,20);
+
+        Product[] splitArrayResult = Arrays.copyOfRange(products, 0, 2);
+
+        // When searchProduct is called with the search price, return the two product that have price less than or equal to 10
+        when(mockInventoryDAO.searchProduct(null, searchPrice)).thenReturn(splitArrayResult);
+
+        // Invoke
+        ResponseEntity<Product[]> response = inventoryController.searchProducts(null, searchPrice);
+       
+        // Analyze
+        assertEquals(HttpStatus.OK,response.getStatusCode());
+        assertEquals(splitArrayResult,response.getBody()); 
+    }
+    @Test
+    public void testSearchProductsByNameAndPrice() throws IOException {
+        Integer searchPrice = 10;
+        String searchString = "po";
+
+        Product[] products = new Product[4];
+        products[0] = new Product(1, "Apple", "", 100, 5);
+        products[1] = new Product(2,"Pomogrenate", "", 50, 8);
+        products[2] = new Product(3,"Galactic Potato","", 200, 10);
+        products[3] = new Product(4,"Bombasto Pepper","",300,20);
+
+        Product[] splitArrayResult = Arrays.copyOfRange(products, 1, 3);
+
+        // When searchProduct is called with the search price, return the two product that have price less than or equal to 10 and contain the specified search string
+        when(mockInventoryDAO.searchProduct(searchString, searchPrice)).thenReturn(splitArrayResult);
+
+        // Invoke
+        ResponseEntity<Product[]> response = inventoryController.searchProducts(searchString, searchPrice);
+       
+        // Analyze
+        assertEquals(HttpStatus.OK,response.getStatusCode());
+        assertEquals(splitArrayResult,response.getBody()); 
+    }
+    @Test
+    public void testSearchProductsHandleException() throws IOException { // searchProduct may throw IOException
+        // Setup
+        String searchString = "an";
+        // When searchProduct is called on the Mock Inventory DAO, throw an IOException
+        doThrow(new IOException()).when(mockInventoryDAO).searchProduct(searchString, null);
+
+        // Invoke
+        ResponseEntity<Product[]> response = inventoryController.searchProducts(searchString, null);
+
+        // Analyze
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
+    }
+
+
+    /*****************************************************************
+     * The following tests will fail until all InventoryController methods
+     * are implemented.
+     ****************************************************************/
+
+    @Test
+    public void testCreateProduct() throws IOException { // createProduct may throw IOException
+        // Setup
+        Product product = new Product(1, "Apple",
+                "https://clipart.world/wp-content/uploads/2020/06/red-apple-vector-1028143.jpg", 200, 5);
+        // when createProduct is called, return true simulating successful
+        // creation and save
+        when(mockInventoryDAO.createProduct(product)).thenReturn(product);
+
+        // Invoke
+        ResponseEntity<Product> response = inventoryController.createProduct(product);
+
+        // Analyze
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertEquals(product, response.getBody());
+    }
+
+    @Test
+    public void testCreateProductFailed() throws IOException { // createProduct may throw IOException
+        // Setup
+        Product product = new Product(1, "Apple",
+                "https://clipart.world/wp-content/uploads/2020/06/red-apple-vector-1028143.jpg", 200, 5);
+        // when createProduct is called, return false simulating failed
+        // creation and save
+        when(mockInventoryDAO.createProduct(product)).thenReturn(null);
+
+        // Invoke
+        ResponseEntity<Product> response = inventoryController.createProduct(product);
+
+        // Analyze
+        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+    }
+
+    @Test
+    public void testCreateProductHandleException() throws IOException { // createHProduct may throw IOException
+        // Setup
+        Product product = new Product(1, "Apple",
+                "https://clipart.world/wp-content/uploads/2020/06/red-apple-vector-1028143.jpg",
+                200, 5);
+
+        // When createProduct is called on the Mock Inventory DAO, throw an IOException
+        doThrow(new IOException()).when(mockInventoryDAO).createProduct(product);
+
+        // Invoke
+        ResponseEntity<Product> response = inventoryController.createProduct(product);
+
+        // Analyze
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+    }
+
     @Test
     public void testDeleteProduct() throws IOException { // deleteProduct may throw IOException
         // Setup
@@ -52,6 +182,7 @@ public class InventoryControllerTest {
         // Analyze
         assertEquals(HttpStatus.OK,response.getStatusCode());
     }
+
     @Test
     public void testDeleteProductNotFound() throws IOException { // deleteProduct may throw IOException
         // Setup
@@ -63,7 +194,8 @@ public class InventoryControllerTest {
         // Analyze
         assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
     }
- @Test
+    
+    @Test
     public void testDeleteProductHandleException() throws IOException { // deleteProduct may throw IOException
         // Setup
         int productId = 10;
@@ -72,8 +204,5 @@ public class InventoryControllerTest {
 
         // Invoke
         ResponseEntity<Product> response = inventoryController.deleteProduct(productId);
-        // Analyze
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
     }
-
 }
