@@ -6,7 +6,7 @@ import com.estore.api.estoreapi.model.Product;
 /**
  * Defines the interface for Product object persistence
  * 
- * @author SWEN Faculty
+ * @author Team-E
  */
 public interface InventoryDAO {
      * Retrieves a {@linkplain Product product} with the given id
@@ -54,4 +54,17 @@ public interface InventoryDAO {
      * @throws IOException if an issue with underlying storage
      */
     Product[] searchProduct(String containsText, Integer containsPrice ) throws IOException;
+
+    /**
+     * Deletes a {@linkplain Product product} with the given id of a particular product.
+     * 
+     * @param id The id of the {@link Product product}
+     * 
+     * @return true if the {@link Product product} was deleted
+     * 
+     * false if product with the given id does not exist
+     * 
+     * @throws IOException if underlying storage cannot be accessed
+     */
+    boolean deleteProduct(int id) throws IOException;
 }

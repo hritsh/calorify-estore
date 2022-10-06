@@ -122,4 +122,31 @@ public class InventoryFileDAOTest {
                         () -> new InventoryFileDAO("doesnt_matter.txt",mockObjectMapper),
                         "IOException not thrown");
     }
+
+    @Test
+    public void testDeleteProductNotFound() {
+        // Invoke
+        boolean result = assertDoesNotThrow(() -> inventoryFileDAO.deleteProduct(99),
+                            "Unexpected exception thrown");
+
+        // Analzye
+        assertEquals(result,false);
+        // We check the internal tree map size against the length
+        assertEquals(inventoryFileDAO.products.size(),testProducts.length);
+    }
+
+    @Test
+    public void testDeleteProduct() {
+        // Invoke
+        boolean result = assertDoesNotThrow(() -> inventoryFileDAO.deleteProduct(2),
+                            "Unexpected exception thrown");
+
+        // Analzye
+        assertEquals(result,true);
+        // We check the internal tree map size against the length
+        // of the test heroes array - 1 (because of the delete)
+        // Because heroes attribute of HeroFileDAO is package private
+        // we can access it directly
+        assertEquals(inventoryFileDAO.products.size(),testProducts.length-1);
+    }
 }
