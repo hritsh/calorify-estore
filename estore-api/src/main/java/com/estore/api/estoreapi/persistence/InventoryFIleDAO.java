@@ -141,7 +141,7 @@ public class InventoryFileDAO implements InventoryDAO {
         ++nextId;
         return true;
     }
-
+	
     /**
      ** {@inheritDoc}
      */
@@ -180,5 +180,4 @@ public class InventoryFileDAO implements InventoryDAO {
             return newProduct;
         }
     }
-
 }

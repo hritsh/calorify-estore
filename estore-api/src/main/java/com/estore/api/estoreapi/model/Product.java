@@ -15,11 +15,13 @@ public class Product {
     // Package private for tests
     static final String STRING_FORMAT = "Product [id=%d, name=%s, image=%s, calories=%d, price=%f]";
 
+// We intend to keep 30 products in the inventory.
+
     @JsonProperty("id")
     private int id;
     @JsonProperty("name")
     private String name;
-    @JsonProperty("image")
+    @JsonProperty("image") 
     private String image;
     @JsonProperty("calories")
     private int calories;
