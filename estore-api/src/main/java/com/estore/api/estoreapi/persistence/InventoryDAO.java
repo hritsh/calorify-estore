@@ -70,4 +70,16 @@ public interface InventoryDAO {
      * @throws IOException if underlying storage cannot be accessed
      */
     boolean deleteProduct(int id) throws IOException;
+
+    /**
+     * Updates and saves a {@linkplain Product product}
+     * 
+     * @param {@link Product product} object to be updated and saved
+     * 
+     * @return updated {@link Product product} if successful, null if
+     *         {@link Product product} could not be found
+     * 
+     * @throws IOException if underlying storage cannot be accessed
+     */
+    Product updateProduct(Product hero) throws IOException;
 }

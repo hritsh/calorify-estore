@@ -207,6 +207,21 @@ public class InventoryFileDAO implements InventoryDAO {
     /**
      ** {@inheritDoc}
      */
+    public Product updateProduct(Product product) throws IOException {
+        synchronized(products) {
+            if (products.containsKey(product.getId()) == false)
+                return null;  // hero does not exist
+ 
+            products.put(product.getId(),product);
+            save(); // may throw an IOExc eption
+            return product;
+        }
+    }
+
+    @Override
+    /**
+     ** {@inheritDoc}
+     */
     public boolean deleteProduct(int id) throws IOException {
         synchronized (products) {
             if (products.containsKey(id)) {
