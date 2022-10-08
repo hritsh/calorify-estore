@@ -47,10 +47,11 @@ public class InventoryController {
         this.inventoryDao = inventoryDao;
     }
 
-/**
+    /**
      * Responds to the GET request for all {@linkplain Product products}
      * 
-     * @return ResponseEntity with array of {@link Product product} objects (may be empty)
+     * @return ResponseEntity with array of {@link Product product} objects (may be
+     *         empty)
      *         and
      *         HTTP status of OK<br>
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
@@ -61,12 +62,12 @@ public class InventoryController {
         try {
             Product[] products = inventoryDao.getProducts();
             return new ResponseEntity<Product[]>(products, HttpStatus.OK);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     /**
      * Responds to the GET request for a {@linkplain Product product} for the given
      * id
@@ -182,7 +183,7 @@ public class InventoryController {
 
     @PutMapping("")
     public ResponseEntity<Product> updateProduct(@RequestBody Product product) {
-        LOG.info("PUT /heroes " + product);
+        LOG.info("PUT /products " + product);
 
         try {
             Product updateProduct = inventoryDao.updateProduct(product);

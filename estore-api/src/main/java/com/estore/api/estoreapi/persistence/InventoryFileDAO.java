@@ -86,10 +86,9 @@ public class InventoryFileDAO implements InventoryDAO {
         // if containsText == null, no filter, (excluding because controller accounts
         // for no query parameter)
         for (Product product : products.values()) {
-            if(getAll == true) {
+            if (getAll == true) {
                 productArrayList.add(product);
-            }
-            else if (containsPrice == null) {
+            } else if (containsPrice == null) {
                 // matches has been used instead of containsText to make search case insensitive
                 // ?i switches to case insensitive mode, .* means any sequence of characters is
                 // accepted
@@ -98,7 +97,7 @@ public class InventoryFileDAO implements InventoryDAO {
             } else if (containsText == null) {
                 if (product.getPrice() <= containsPrice)
                     productArrayList.add(product);
-            } else if(containsPrice != null && containsText != null){
+            } else if (containsPrice != null && containsText != null) {
                 if (product.getName().matches("(?i).*" + containsText + ".*") && product.getPrice() <= containsPrice)
                     productArrayList.add(product);
             }
@@ -155,12 +154,13 @@ public class InventoryFileDAO implements InventoryDAO {
         ++nextId;
         return true;
     }
+
     /**
-    ** {@inheritDoc}
+     ** {@inheritDoc}
      */
     @Override
     public Product[] getProducts() {
-        synchronized(products) {
+        synchronized (products) {
             return getProductsArray();
         }
     }
@@ -210,11 +210,11 @@ public class InventoryFileDAO implements InventoryDAO {
      ** {@inheritDoc}
      */
     public Product updateProduct(Product product) throws IOException {
-        synchronized(products) {
+        synchronized (products) {
             if (products.containsKey(product.getId()) == false)
-                return null;  // hero does not exist
- 
-            products.put(product.getId(),product);
+                return null; // product does not exist
+
+            products.put(product.getId(), product);
             save(); // may throw an IOExc eption
             return product;
         }

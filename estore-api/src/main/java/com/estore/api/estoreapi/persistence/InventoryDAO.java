@@ -81,5 +81,5 @@ public interface InventoryDAO {
      * 
      * @throws IOException if underlying storage cannot be accessed
      */
-    Product updateProduct(Product hero) throws IOException;
+    Product updateProduct(Product product) throws IOException;
 }
