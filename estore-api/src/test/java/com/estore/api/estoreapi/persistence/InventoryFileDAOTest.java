@@ -161,8 +161,8 @@ public class InventoryFileDAOTest {
         // Analzye
         assertEquals(result, true);
         // We check the internal tree map size against the length
-        // of the test heroes array - 1 (because of the delete)
-        // Because heroes attribute of HeroFileDAO is package private
+        // of the test products array - 1 (because of the delete)
+        // Because products attribute of InventoryFileDAO is package private
         // we can access it directly
         assertEquals(inventoryFileDAO.products.size(), testProducts.length - 1);
     }
