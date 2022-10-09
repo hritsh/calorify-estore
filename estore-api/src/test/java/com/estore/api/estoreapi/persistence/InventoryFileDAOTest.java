@@ -166,4 +166,14 @@ public class InventoryFileDAOTest {
         // we can access it directly
         assertEquals(inventoryFileDAO.products.size(), testProducts.length - 1);
     }
+    @Test
+    public void testGetProducts() {
+        // Invoke
+        Product[] products = inventoryFileDAO.getProducts();
+
+        // Analyze
+        assertEquals(products.length,testProducts.length);
+        for (int i = 0; i < testProducts.length;++i)
+            assertEquals(products[i],testProducts[i]);
+    }
 }

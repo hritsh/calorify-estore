@@ -257,4 +257,36 @@ public class InventoryControllerTest {
         // Invoke
         ResponseEntity<Product> response = inventoryController.deleteProduct(productId);
     }
+
+
+    @Test
+    public void testGetAllProducts() throws IOException { // get all products may throw IOException
+        
+        Product[] products = new Product[3];
+        products[0] = new Product(1, "Try1", "", 99, 5);
+        products[1] = new Product(2, "Try2", "", 35, 8);
+        products[2] = new Product(3, "Try3", "", 169, 10);
+        // When get all products is called return the products created above
+        when(mockInventoryDAO.getProducts()).thenReturn(products);
+
+        // Invoking
+        ResponseEntity<Product[]> response = inventoryController.getProducts();
+
+        // Analyzing
+        assertEquals(HttpStatus.OK,response.getStatusCode());
+        assertEquals(products,response.getBody());
+    }
+
+    @Test
+    public void testGetAllProductsHandleException() throws IOException { // getProducts may throw IOException
+        // When getProducts is called on the Mock Product DAO, throw an IOException
+        doThrow(new IOException()).when(mockInventoryDAO).getProducts();
+
+        // Invoke
+        ResponseEntity<Product[]> response = inventoryController.getProducts();
+
+        // Analyze
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
+    }
+
 }
