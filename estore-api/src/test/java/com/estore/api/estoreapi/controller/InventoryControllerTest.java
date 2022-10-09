@@ -222,6 +222,59 @@ public class InventoryControllerTest {
     }
 
     @Test
+    public void testUpdateProduct() throws IOException { // updateProduct may throw IOException
+        // Setup
+        Product product = new Product(1, "Apple",
+                "https://clipart.world/wp-content/uploads/2020/06/red-apple-vector-1028143.jpg",
+                200, 5);
+        // when updateProduct is called, return true simulating successful
+        // update and save
+        when(mockInventoryDAO.updateProduct(product)).thenReturn(product);
+        ResponseEntity<Product> response = inventoryController.updateProduct(product);
+        product.setName("Orange");
+
+        // Invoke
+        response = inventoryController.updateProduct(product);
+
+        // Analyze
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(product, response.getBody());
+    }
+
+    @Test
+    public void testUpdateProductFailed() throws IOException { // updateProduct may throw IOException
+        // Setup
+        Product product = new Product(1, "Apple",
+                "https://clipart.world/wp-content/uploads/2020/06/red-apple-vector-1028143.jpg",
+                200, 5);
+        // when updateProduct is called, return true simulating successful
+        // update and save
+        when(mockInventoryDAO.updateProduct(product)).thenReturn(null);
+
+        // Invoke
+        ResponseEntity<Product> response = inventoryController.updateProduct(product);
+
+        // Analyze
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
+    @Test
+    public void testUpdateProductHandleException() throws IOException { // updateProduct may throw IOException
+        // Setup
+        Product product = new Product(1, "Apple",
+        "https://clipart.world/wp-content/uploads/2020/06/red-apple-vector-1028143.jpg",
+        200, 5);
+        // When updateProduct is called on the Mock Inventory DAO, throw an IOException
+        doThrow(new IOException()).when(mockInventoryDAO).updateProduct(product);
+
+        // Invoke
+        ResponseEntity<Product> response = inventoryController.updateProduct(product);
+
+        // Analyze
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
+    }
+
+    @Test
     public void testDeleteProduct() throws IOException { // deleteProduct may throw IOException
         // Setup
         int productId = 10;
