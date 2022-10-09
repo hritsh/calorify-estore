@@ -200,9 +200,9 @@ public class InventoryFileDAO implements InventoryDAO {
      ** {@inheritDoc}
      ** called searchProduct on Trello card
      */
-    public Product[] searchProduct(String containsText, Integer containsPrice) throws IOException {
+    public Product[] searchProduct(String containsText, Integer containsCalories) throws IOException {
         synchronized (products) {
-            return getProductsArray(containsText, containsPrice, false);
+            return getProductsArray(containsText, containsCalories, false);
         }
     }
 

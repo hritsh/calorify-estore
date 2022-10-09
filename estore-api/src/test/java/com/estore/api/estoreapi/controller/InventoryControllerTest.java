@@ -42,7 +42,7 @@ public class InventoryControllerTest {
     @Test
     public void testGetProduct() throws IOException { // getProduct may throw IOException
         // Setup
-        Product product = new Product(2, "Galactic Potato", "", 200, 10);
+        Product product = new Product(2, "Guacamole", "", 100, 10);
         // When the same id is passed in, our mock product DAO will return the product
         // object
         when(mockInventoryDAO.getProduct(product.getId())).thenReturn(product);
@@ -90,8 +90,8 @@ public class InventoryControllerTest {
         // Setup
         String searchString = "to";
         Product[] products = new Product[2];
-        products[0] = new Product(1, "Galactic Potato", "", 200, 10);
-        products[1] = new Product(2, "Bombasto Pepper", "", 300, 20);
+        products[0] = new Product(1,"Miso Pumpkin Salad","",200,5);
+        products[1] = new Product(2, "Guacamole", "", 100, 10);
         // When searchProduct is called with the search string, return the two product
         // above
         when(mockInventoryDAO.searchProduct(searchString, null)).thenReturn(products);
@@ -105,21 +105,21 @@ public class InventoryControllerTest {
     }
 
     @Test
-    public void testSearchProductsByPrice() throws IOException {
-        Integer searchPrice = 10;
+    public void testSearchProductsByCalories() throws IOException {
+        Integer searchCalories = 10;
         Product[] products = new Product[3];
-        products[0] = new Product(1, "Apple", "", 100, 5);
-        products[1] = new Product(2, "Galactic Potato", "", 200, 10);
-        products[2] = new Product(3, "Bombasto Pepper", "", 300, 20);
+        products[0] = new Product(1, "Miso Pumpkin Salad", "", 200, 5);
+        products[1] = new Product(2, "Guacamole", "", 100, 10);
+        products[2] = new Product(3, "Spinach Carbonara", "", 300, 20);
 
         Product[] splitArrayResult = Arrays.copyOfRange(products, 0, 2);
 
-        // When searchProduct is called with the search price, return the two product
-        // that have price less than or equal to 10
-        when(mockInventoryDAO.searchProduct(null, searchPrice)).thenReturn(splitArrayResult);
+        // When searchProduct is called with the search calories, return the two product
+        // that have calories less than or equal to 10
+        when(mockInventoryDAO.searchProduct(null, searchCalories)).thenReturn(splitArrayResult);
 
         // Invoke
-        ResponseEntity<Product[]> response = inventoryController.searchProducts(null, searchPrice);
+        ResponseEntity<Product[]> response = inventoryController.searchProducts(null, searchCalories);
 
         // Analyze
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -127,25 +127,24 @@ public class InventoryControllerTest {
     }
 
     @Test
-    public void testSearchProductsByNameAndPrice() throws IOException {
-        Integer searchPrice = 10;
+    public void testSearchProductsByNameAndCalories() throws IOException {
+        Integer searchCalories = 10;
         String searchString = "po";
-
         Product[] products = new Product[4];
-        products[0] = new Product(1, "Apple", "", 100, 5);
-        products[1] = new Product(2, "Pomogrenate", "", 50, 8);
-        products[2] = new Product(3, "Galactic Potato", "", 200, 10);
-        products[3] = new Product(4, "Bombasto Pepper", "", 300, 20);
+        products[0] = new Product(1, "Miso Pumpkin Salad", "", 200, 5);
+        products[1] = new Product(2, "Guacamole", "", 100, 10);
+        products[2] = new Product(3, "Spinach Carbonara", "", 300, 20);
+        products[3] = new Product(4, "Fattoush Salad", "", 300, 20);
 
         Product[] splitArrayResult = Arrays.copyOfRange(products, 1, 3);
 
-        // When searchProduct is called with the search price, return the two product
-        // that have price less than or equal to 10 and contain the specified search
+        // When searchProduct is called with the search calories, return the two product
+        // that have calories less than or equal to 10 and contain the specified search
         // string
-        when(mockInventoryDAO.searchProduct(searchString, searchPrice)).thenReturn(splitArrayResult);
+        when(mockInventoryDAO.searchProduct(searchString, searchCalories)).thenReturn(splitArrayResult);
 
         // Invoke
-        ResponseEntity<Product[]> response = inventoryController.searchProducts(searchString, searchPrice);
+        ResponseEntity<Product[]> response = inventoryController.searchProducts(searchString, searchCalories);
 
         // Analyze
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -174,8 +173,8 @@ public class InventoryControllerTest {
     @Test
     public void testCreateProduct() throws IOException { // createProduct may throw IOException
         // Setup
-        Product product = new Product(1, "Apple",
-                "https://clipart.world/wp-content/uploads/2020/06/red-apple-vector-1028143.jpg", 200, 5);
+        Product product = new Product(1, "Miso Pumpkin Salad",
+                "", 200, 5);
         // when createProduct is called, return true simulating successful
         // creation and save
         when(mockInventoryDAO.createProduct(product)).thenReturn(product);
@@ -191,8 +190,8 @@ public class InventoryControllerTest {
     @Test
     public void testCreateProductFailed() throws IOException { // createProduct may throw IOException
         // Setup
-        Product product = new Product(1, "Apple",
-                "https://clipart.world/wp-content/uploads/2020/06/red-apple-vector-1028143.jpg", 200, 5);
+        Product product = new Product(1, "Miso Pumpkin Salad",
+                "", 200, 5);
         // when createProduct is called, return false simulating failed
         // creation and save
         when(mockInventoryDAO.createProduct(product)).thenReturn(null);
@@ -207,8 +206,8 @@ public class InventoryControllerTest {
     @Test
     public void testCreateProductHandleException() throws IOException { // createHProduct may throw IOException
         // Setup
-        Product product = new Product(1, "Apple",
-                "https://clipart.world/wp-content/uploads/2020/06/red-apple-vector-1028143.jpg",
+        Product product = new Product(1, "Miso Pumpkin Salad",
+                "",
                 200, 5);
 
         // When createProduct is called on the Mock Inventory DAO, throw an IOException

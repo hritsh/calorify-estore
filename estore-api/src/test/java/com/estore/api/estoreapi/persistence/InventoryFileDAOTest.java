@@ -41,14 +41,14 @@ public class InventoryFileDAOTest {
     public void setupInventoryFileDAO() throws IOException {
         mockObjectMapper = mock(ObjectMapper.class);
         testProducts = new Product[3];
-        testProducts[0] = new Product(1, "Apple",
-                "https://clipart.world/wp-content/uploads/2020/06/red-apple-vector-1028143.jpg", 200,
+        testProducts[0] = new Product(1, "Miso Pumpkin Salad",
+                "", 200,
                 5);
-        testProducts[1] = new Product(2, "Potato",
-                "https://clipart.world/wp-content/uploads/2021/09/Potato-clipart-images.png",
+        testProducts[1] = new Product(2, "Guacamole",
+                "",
                 100, 10);
-        testProducts[2] = new Product(3, "Bombasto Pepper",
-                "https://clipart.world/wp-content/uploads/2022/08/Chili-Pepper-Clipart-Png.png", 300,
+        testProducts[2] = new Product(3, "Spinach Carbonara",
+                "", 300,
                 20);
 
         // When the object mapper is supposed to read from the file
@@ -80,8 +80,8 @@ public class InventoryFileDAOTest {
     @Test
     public void testCreateProduct() {
         // Setup
-        Product product = new Product(4, "Banana",
-                "https://clipart.world/wp-content/uploads/2020/07/three-bananas-2.jpg", 100, 10);
+        Product product = new Product(4, "Fattoush Salad",
+                "", 100, 10);
 
         // Invoke
         Product result = assertDoesNotThrow(() -> inventoryFileDAO.createProduct(product),
@@ -97,7 +97,7 @@ public class InventoryFileDAOTest {
     @Test
     public void testSearchProduct() throws IOException {
         // Invoke
-        Product[] products = inventoryFileDAO.searchProduct("po", null);
+        Product[] products = inventoryFileDAO.searchProduct("salad", null);
 
         // Analyze
         assertEquals(products.length, 2);
@@ -111,8 +111,8 @@ public class InventoryFileDAOTest {
                 .when(mockObjectMapper)
                     .writeValue(any(File.class),any(Product[].class));
 
-        Product product = new Product(2, "Potato",
-        "https://clipart.world/wp-content/uploads/2021/09/Potato-clipart-images.png",
+        Product product = new Product(2, "Guacamole",
+        "",
         100, 10);
 
         assertThrows(IOException.class,
