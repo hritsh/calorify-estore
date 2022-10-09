@@ -81,7 +81,7 @@ public class InventoryFileDAO implements InventoryDAO {
      * 
      * @return The array of {@link Product products}, may be empty
      */
-    private Product[] getProductsArray(String containsText, Integer containsPrice, boolean getAll) {
+    private Product[] getProductsArray(String containsText, Integer containsCalories, boolean getAll) {
         ArrayList<Product> productArrayList = new ArrayList<>();
         // if containsText == null, no filter, (excluding because controller accounts
         // for no query parameter)
@@ -89,17 +89,17 @@ public class InventoryFileDAO implements InventoryDAO {
             if(getAll == true) {
                 productArrayList.add(product);
             }
-            else if (containsPrice == null) {
+            else if (containsCalories == null) {
                 // matches has been used instead of containsText to make search case insensitive
                 // ?i switches to case insensitive mode, .* means any sequence of characters is
                 // accepted
                 if (product.getName().matches("(?i).*" + containsText + ".*"))
                     productArrayList.add(product);
             } else if (containsText == null) {
-                if (product.getPrice() <= containsPrice)
+                if (product.getCalories() <= containsCalories)
                     productArrayList.add(product);
-            } else if(containsPrice != null && containsText != null){
-                if (product.getName().matches("(?i).*" + containsText + ".*") && product.getPrice() <= containsPrice)
+            } else if(containsCalories != null && containsText != null){
+                if (product.getName().matches("(?i).*" + containsText + ".*") && product.getCalories() <= containsCalories)
                     productArrayList.add(product);
             }
         }

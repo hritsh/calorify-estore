@@ -98,13 +98,13 @@ public class InventoryController {
      * contains
      * the text in name
      * 
-     * Responds to the GET request for all {@linkplain Product products} whose price
+     * Responds to the GET request for all {@linkplain Product products} whose calories
      * is
-     * less than or equal to query price
+     * less than or equal to query calories
      * 
      * @param name  The name parameter which contains the text used to find the
      *              {@link Product products}
-     * @param price The price parameter which contains the price used to find the
+     * @param calories The calories parameter which contains the calories used to find the
      *              {@link Product products}
      * 
      * @return ResponseEntity with array of {@link Product product} objects (may be
@@ -114,16 +114,16 @@ public class InventoryController {
      *         <p>
      *         Example: Find all products that contain the text "ma"
      *         GET http://localhost:8080/products/?name=ma
-     *         Example: Find all products whose price is less than or equal to 1
-     *         GET http://localhost:8080/products/?price=1
+     *         Example: Find all products whose calories is less than or equal to 1
+     *         GET http://localhost:8080/products/?calories=1
      */
     @GetMapping("/")
     public ResponseEntity<Product[]> searchProducts(@RequestParam(required = false) String name,
-            @RequestParam(required = false) Integer price) {
+            @RequestParam(required = false) Integer calories) {
         try {
-            if (name != null && price != null) {
-                LOG.info("GET /products/?name=" + name + "&price=" + price);
-                Product[] products = inventoryDao.searchProduct(name, price);
+            if (name != null && calories != null) {
+                LOG.info("GET /products/?name=" + name + "&calories=" + calories);
+                Product[] products = inventoryDao.searchProduct(name, calories);
                 if (products.length != 0)
                     return new ResponseEntity<Product[]>(products, HttpStatus.OK);
             } else if (name != null) {
@@ -131,9 +131,9 @@ public class InventoryController {
                 Product[] products = inventoryDao.searchProduct(name, null);
                 if (products.length != 0)
                     return new ResponseEntity<Product[]>(products, HttpStatus.OK);
-            } else if (price != null) {
-                LOG.info("GET /products/?price=" + price);
-                Product[] products = inventoryDao.searchProduct(null, price);
+            } else if (calories != null) {
+                LOG.info("GET /products/?calories=" + calories);
+                Product[] products = inventoryDao.searchProduct(null, calories);
                 if (products.length != 0)
                     return new ResponseEntity<Product[]>(products, HttpStatus.OK);
             } else {
