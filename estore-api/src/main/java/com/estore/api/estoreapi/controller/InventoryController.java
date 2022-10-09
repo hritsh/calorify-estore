@@ -99,14 +99,16 @@ public class InventoryController {
      * contains
      * the text in name
      * 
-     * Responds to the GET request for all {@linkplain Product products} whose calories
+     * Responds to the GET request for all {@linkplain Product products} whose
+     * calories
      * is
      * less than or equal to query calories
      * 
-     * @param name  The name parameter which contains the text used to find the
-     *              {@link Product products}
-     * @param calories The calories parameter which contains the calories used to find the
-     *              {@link Product products}
+     * @param name     The name parameter which contains the text used to find the
+     *                 {@link Product products}
+     * @param calories The calories parameter which contains the calories used to
+     *                 find the
+     *                 {@link Product products}
      * 
      * @return ResponseEntity with array of {@link Product product} objects (may be
      *         empty) and
@@ -166,15 +168,11 @@ public class InventoryController {
 
         // Replace below with your implementation
         try {
-            Product[] products = inventoryDao.getProducts();
-            // check if product already exists and return CONFLICT if it does
-            for (Product p : products) {
-                if (p.getName().equals(product.getName()))
-                    return new ResponseEntity<>(HttpStatus.CONFLICT);
-            }
-            // else, create product and return CREATED
             Product newProduct = inventoryDao.createProduct(product);
-            return new ResponseEntity<Product>(newProduct, HttpStatus.CREATED);
+            if (newProduct != null)
+                return new ResponseEntity<Product>(newProduct, HttpStatus.CREATED);
+            else
+                return new ResponseEntity<>(HttpStatus.CONFLICT);
         } catch (IOException e) {
             LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
