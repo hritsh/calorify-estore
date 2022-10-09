@@ -88,8 +88,7 @@ public class InventoryFileDAO implements InventoryDAO {
         for (Product product : products.values()) {
             if (getAll == true) {
                 productArrayList.add(product);
-            }
-            else if (containsCalories == null) {
+            } else if (containsCalories == null) {
                 // matches has been used instead of containsText to make search case insensitive
                 // ?i switches to case insensitive mode, .* means any sequence of characters is
                 // accepted
@@ -98,8 +97,9 @@ public class InventoryFileDAO implements InventoryDAO {
             } else if (containsText == null) {
                 if (product.getCalories() <= containsCalories)
                     productArrayList.add(product);
-            } else if(containsCalories != null && containsText != null){
-                if (product.getName().matches("(?i).*" + containsText + ".*") && product.getCalories() <= containsCalories)
+            } else if (containsCalories != null && containsText != null) {
+                if (product.getName().matches("(?i).*" + containsText + ".*")
+                        && product.getCalories() <= containsCalories)
                     productArrayList.add(product);
             }
         }
@@ -187,6 +187,15 @@ public class InventoryFileDAO implements InventoryDAO {
         synchronized (products) {
             // We create a new product object because the id field is immutable
             // and we need to assign the next unique id
+            // check if a product name already exists in products
+            // if it does, return null
+            for (Product p : products.values()) {
+                if (p.getName().equals(product.getName())) {
+                    save();
+                    return null;
+                }
+            }
+            // else, create a new product and add it to products
             Product newProduct = new Product(nextId(), product.getName(), product.getImage(), product.getCalories(),
                     product.getPrice());
             products.put(newProduct.getId(), newProduct);

@@ -141,6 +141,36 @@ public class InventoryFileDAOTest {
     }
 
     @Test
+    public void testUpdateProduct() {
+        // Setup
+        Product product = new Product(1, "Apple",
+                "https://clipart.world/wp-content/uploads/2020/06/red-apple-vector-1028143.jpg", 200, 5);
+
+        // Invoke
+        Product result = assertDoesNotThrow(() -> inventoryFileDAO.updateProduct(product),
+                "Unexpected exception thrown");
+
+        // Analyze
+        assertNotNull(result);
+        Product actual = inventoryFileDAO.getProduct(product.getId());
+        assertEquals(actual, product);
+    }
+
+    @Test
+    public void testUpdateProductNotFound() {
+        // Setup
+        Product product = new Product(99, "Orange",
+                "https://clipart.world/wp-content/uploads/2020/06/red-apple-vector-1028143.jpg", 200, 5);
+
+        // Invoke
+        Product result = assertDoesNotThrow(() -> inventoryFileDAO.updateProduct(product),
+                "Unexpected exception thrown");
+
+        // Analyze
+        assertNull(result);
+    }
+
+    @Test
     public void testDeleteProductNotFound() {
         // Invoke
         boolean result = assertDoesNotThrow(() -> inventoryFileDAO.deleteProduct(99),
