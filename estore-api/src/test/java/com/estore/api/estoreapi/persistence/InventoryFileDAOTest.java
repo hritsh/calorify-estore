@@ -100,9 +100,8 @@ public class InventoryFileDAOTest {
         Product[] products = inventoryFileDAO.searchProduct("salad", null);
 
         // Analyze
-        assertEquals(products.length, 2);
-        assertEquals(products[0], testProducts[1]);
-        assertEquals(products[1], testProducts[2]);
+        assertEquals(products.length, 1);
+        assertEquals(products[0], testProducts[0]);
     }
 
     @Test

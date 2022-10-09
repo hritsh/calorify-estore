@@ -15,8 +15,8 @@ public class ProductTest {
     public void testCtor() {
         // Setup
         int expected_id = 1;
-        String expected_name = "Apple";
-        String expected_image = "https://clipart.world/wp-content/uploads/2020/06/red-apple-vector-1028143.jpg";
+        String expected_name = "Miso Pumpkin Salad";
+        String expected_image = "";
         int expected_calories = 200;
         float expected_price = 5;
 
@@ -35,13 +35,13 @@ public class ProductTest {
     public void testName() {
         // Setup
         int id = 1;
-        String name = "Apple";
-        String image = "https://clipart.world/wp-content/uploads/2020/06/red-apple-vector-1028143.jpg";
+        String name = "Miso Pumpkin Salad";
+        String image = "";
         int calories = 200;
         float price = 5;
         Product product = new Product(id, name, image, calories, price);
 
-        String expected_name = "Red Apple";
+        String expected_name = "Salad";
 
         // Invoke
         product.setName(expected_name);
@@ -54,8 +54,8 @@ public class ProductTest {
     public void testToString() {
         // Setup
         int id = 1;
-        String name = "Apple";
-        String image = "https://clipart.world/wp-content/uploads/2020/06/red-apple-vector-1028143.jpg";
+        String name = "Miso Pumpkin Salad";
+        String image = "";
         int calories = 200;
         float price = 5;
         String expected_string = String.format(Product.STRING_FORMAT, id, name, image, calories, price);
