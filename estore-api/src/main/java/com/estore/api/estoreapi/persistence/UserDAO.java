@@ -3,7 +3,7 @@ package com.estore.api.estoreapi.persistence;
 import java.io.IOException;
 import com.estore.api.estoreapi.model.User;
 
-public interface userDAO {
+public interface UserDAO {
     /**
      * Retrieves a {@linkplain User user} with the given id
      * 
@@ -16,6 +16,7 @@ public interface userDAO {
      * @throws IOException if an issue with underlying storage
      */
     User getUser(int id) throws IOException;
+
     /**
      * Retrieves all {@linkplain User users}
      * 

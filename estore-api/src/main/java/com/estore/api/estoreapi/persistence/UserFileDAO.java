@@ -14,8 +14,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import com.estore.api.estoreapi.model.User;
 
-public class userFileDAO implements userDAO{
-    private static final Logger LOG = Logger.getLogger(userFileDAO.class.getName());
+public class UserFileDAO implements UserDAO {
+    private static final Logger LOG = Logger.getLogger(UserFileDAO.class.getName());
     Map<Integer, User> users;
     private ObjectMapper objectMapper;
 
@@ -31,11 +31,12 @@ public class userFileDAO implements userDAO{
      * 
      * @throws IOException when file cannot be accessed or read from
      */
-    public userFileDAO(@Value("${user.file}") String filename, ObjectMapper objectMapper) throws IOException {
+    public UserFileDAO(@Value("${user.file}") String filename, ObjectMapper objectMapper) throws IOException {
         this.filename = filename;
         this.objectMapper = objectMapper;
         load(); // load the inventory from the file
     }
+
     /**
      * Generates the next id for a new {@linkplain User user}
      * 
@@ -46,6 +47,7 @@ public class userFileDAO implements userDAO{
         ++nextId;
         return id;
     }
+
     /**
      * Saves the {@linkplain User users} from the map into the file as an
      * array of JSON objects
@@ -63,6 +65,7 @@ public class userFileDAO implements userDAO{
         objectMapper.writeValue(new File(filename), userArray);
         return true;
     }
+
     /**
      * Loads {@linkplain User users} from the JSON file into the map
      * <br>
@@ -91,7 +94,8 @@ public class userFileDAO implements userDAO{
         ++nextId;
         return true;
     }
-     /**
+
+    /**
      * Generates an array of {@linkplain User users} from the tree map
      * 
      * @return The array of {@link User users}, may be empty
@@ -99,6 +103,7 @@ public class userFileDAO implements userDAO{
     private User[] getUsersArray() {
         return getUsersArray(null);
     }
+
     /**
      * Generates an array of {@linkplain User users} from the tree map for any
      * {@linkplain User users} that contains the text specified by
@@ -123,6 +128,7 @@ public class userFileDAO implements userDAO{
         userArrayList.toArray(userArray);
         return userArray;
     }
+
     /**
      ** {@inheritDoc}
      */
@@ -132,6 +138,7 @@ public class userFileDAO implements userDAO{
             return getUsersArray();
         }
     }
+
     /**
      ** {@inheritDoc}
      */
@@ -144,5 +151,5 @@ public class userFileDAO implements userDAO{
                 return null;
         }
     }
-    
+
 }

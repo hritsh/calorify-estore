@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.estore.api.estoreapi.persistence.userDAO;
+import com.estore.api.estoreapi.persistence.UserDAO;
 import com.estore.api.estoreapi.model.User;
 
 /**
@@ -31,18 +31,19 @@ import com.estore.api.estoreapi.model.User;
 
 @RestController
 @RequestMapping("users")
-public class userController {
-    private userDAO userDao;
-    private static final Logger LOG = Logger.getLogger(userController.class.getName());
+public class UserController {
+    private UserDAO userDao;
+    private static final Logger LOG = Logger.getLogger(UserController.class.getName());
+
     /**
      * Creates a REST API controller to reponds to requests
      * 
      * @param userDao The {@link userDAO Inventory Data Access Object} to
-     *                     perform CRUD operations
-     *                     <br>
-     *                     This dependency is injected by the Spring Framework
+     *                perform CRUD operations
+     *                <br>
+     *                This dependency is injected by the Spring Framework
      */
-    public userController(userDAO userDao) {
+    public UserController(UserDAO userDao) {
         this.userDao = userDao;
     }
 
@@ -51,9 +52,10 @@ public class userController {
      * 
      * @param id The id used to locate the {@link User user}
      * 
-     * @return ResponseEntity with {@link User user} object and HTTP status of OK if found<br>
-     * ResponseEntity with HTTP status of NOT_FOUND if not found<br>
-     * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     * @return ResponseEntity with {@link User user} object and HTTP status of OK if
+     *         found<br>
+     *         ResponseEntity with HTTP status of NOT_FOUND if not found<br>
+     *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
     @GetMapping("/{id}")
     public ResponseEntity<User> getUser(@PathVariable int id) {
@@ -61,12 +63,11 @@ public class userController {
         try {
             User user = userDao.getUser(id);
             if (user != null)
-                return new ResponseEntity<User>(user,HttpStatus.OK);
+                return new ResponseEntity<User>(user, HttpStatus.OK);
             else
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        catch(IOException e) {
-            LOG.log(Level.SEVERE,e.getLocalizedMessage());
+        } catch (IOException e) {
+            LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -74,9 +75,10 @@ public class userController {
     /**
      * Responds to the GET request for all {@linkplain User users}
      * 
-     * @return ResponseEntity with array of {@link User user} objects (may be empty) and
-     * HTTP status of OK<br>
-     * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     * @return ResponseEntity with array of {@link User user} objects (may be empty)
+     *         and
+     *         HTTP status of OK<br>
+     *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
     @GetMapping("")
     public ResponseEntity<User[]> getUsers() {
@@ -85,10 +87,9 @@ public class userController {
         // Replace below with your implementation
         try {
             User[] users = userDao.getUsers();
-            if(users.length != 0)
-                return new ResponseEntity<User[]>(users,HttpStatus.OK);
-        }
-        catch(IOException e) {
+            if (users.length != 0)
+                return new ResponseEntity<User[]>(users, HttpStatus.OK);
+        } catch (IOException e) {
             LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -96,31 +97,34 @@ public class userController {
     }
 
     /**
-     * Responds to the GET request for all {@linkplain User users} whose name contains
+     * Responds to the GET request for all {@linkplain User users} whose name
+     * contains
      * the text in name
      * 
-     * @param name The name parameter which contains the text used to find the {@link User users}
+     * @param name The name parameter which contains the text used to find the
+     *             {@link User users}
      * 
-     * @return ResponseEntity with array of {@link User user} objects (may be empty) and
-     * HTTP status of OK<br>
-     * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
-     * <p>
-     * Example: Find all users that contain the text "ma"
-     * GET http://localhost:8080/users/?name=ma
+     * @return ResponseEntity with array of {@link User user} objects (may be empty)
+     *         and
+     *         HTTP status of OK<br>
+     *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     *         <p>
+     *         Example: Find all users that contain the text "ma"
+     *         GET http://localhost:8080/users/?name=ma
      */
     @GetMapping("/")
     public ResponseEntity<User[]> searchUsers(@RequestParam String name) {
-        LOG.info("GET /users/?name="+name);
+        LOG.info("GET /users/?name=" + name);
 
         // // Stub implementation
         // try {
-        //     // User[] users = []; //userDao.findUsers(name);
-        //     // if(users.length != 0)
-        //     //     return new ResponseEntity<User[]>(users,HttpStatus.OK);
+        // // User[] users = []; //userDao.findUsers(name);
+        // // if(users.length != 0)
+        // // return new ResponseEntity<User[]>(users,HttpStatus.OK);
         // }
         // catch(IOException e) {
-        //     LOG.log(Level.SEVERE, e.getLocalizedMessage());
-        //     return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        // LOG.log(Level.SEVERE, e.getLocalizedMessage());
+        // return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         // }
         return null;
     }
@@ -130,9 +134,11 @@ public class userController {
      * 
      * @param user - The {@link User user} to create
      * 
-     * @return ResponseEntity with created {@link User user} object and HTTP status of CREATED<br>
-     * ResponseEntity with HTTP status of CONFLICT if {@link User user} object already exists<br>
-     * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     * @return ResponseEntity with created {@link User user} object and HTTP status
+     *         of CREATED<br>
+     *         ResponseEntity with HTTP status of CONFLICT if {@link User user}
+     *         object already exists<br>
+     *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
     @PostMapping("")
     public ResponseEntity<User> createUser(@RequestBody User user) {
@@ -143,13 +149,15 @@ public class userController {
     }
 
     /**
-     * Updates the {@linkplain User user} with the provided {@linkplain User user} object, if it exists
+     * Updates the {@linkplain User user} with the provided {@linkplain User user}
+     * object, if it exists
      * 
      * @param user The {@link User user} to update
      * 
-     * @return ResponseEntity with updated {@link User user} object and HTTP status of OK if updated<br>
-     * ResponseEntity with HTTP status of NOT_FOUND if not found<br>
-     * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     * @return ResponseEntity with updated {@link User user} object and HTTP status
+     *         of OK if updated<br>
+     *         ResponseEntity with HTTP status of NOT_FOUND if not found<br>
+     *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
     @PutMapping("")
     public ResponseEntity<User> updateHero(@RequestBody User user) {
@@ -165,8 +173,8 @@ public class userController {
      * @param id The id of the {@link User user} to deleted
      * 
      * @return ResponseEntity HTTP status of OK if deleted<br>
-     * ResponseEntity with HTTP status of NOT_FOUND if not found<br>
-     * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     *         ResponseEntity with HTTP status of NOT_FOUND if not found<br>
+     *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<User> deleteHero(@PathVariable int id) {
