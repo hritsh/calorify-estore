@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import com.estore.api.estoreapi.model.User;
 
-public class UserFileDAO implements UserDAO{
+public class UserFileDAO implements UserDAO {
     private static final Logger LOG = Logger.getLogger(UserFileDAO.class.getName());
     Map<Integer, User> users;
     private ObjectMapper objectMapper;
@@ -39,6 +39,7 @@ public class UserFileDAO implements UserDAO{
         this.objectMapper = objectMapper;
         load(); // load the inventory from the file
     }
+
     /**
      * Generates the next id for a new {@linkplain User user}
      * 
@@ -49,6 +50,7 @@ public class UserFileDAO implements UserDAO{
         ++nextId;
         return id;
     }
+
     /**
      * Saves the {@linkplain User users} from the map into the file as an
      * array of JSON objects
@@ -66,6 +68,7 @@ public class UserFileDAO implements UserDAO{
         objectMapper.writeValue(new File(filename), userArray);
         return true;
     }
+
     /**
      * Loads {@linkplain User users} from the JSON file into the map
      * <br>
@@ -94,7 +97,8 @@ public class UserFileDAO implements UserDAO{
         ++nextId;
         return true;
     }
-     /**
+
+    /**
      * Generates an array of {@linkplain User users} from the tree map
      * 
      * @return The array of {@link User users}, may be empty
@@ -187,6 +191,7 @@ public class UserFileDAO implements UserDAO{
         userArrayList.toArray(userArray);
         return userArray;
     }
+
     /**
      ** {@inheritDoc}
      */
@@ -196,6 +201,7 @@ public class UserFileDAO implements UserDAO{
             return getUsersArray();
         }
     }
+
     /**
      ** {@inheritDoc}
      */
