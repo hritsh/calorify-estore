@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.estore.api.estoreapi.persistence.userDAO;
+import com.estore.api.estoreapi.persistence.UserDAO;
 import com.estore.api.estoreapi.model.User;
 
 /**
@@ -31,9 +31,9 @@ import com.estore.api.estoreapi.model.User;
 
 @RestController
 @RequestMapping("users")
-public class userController {
-    private userDAO userDao;
-    private static final Logger LOG = Logger.getLogger(userController.class.getName());
+public class UserController {
+    private UserDAO userDao;
+    private static final Logger LOG = Logger.getLogger(UserController.class.getName());
     /**
      * Creates a REST API controller to reponds to requests
      * 
@@ -42,7 +42,7 @@ public class userController {
      *                     <br>
      *                     This dependency is injected by the Spring Framework
      */
-    public userController(userDAO userDao) {
+    public UserController(UserDAO userDao) {
         this.userDao = userDao;
     }
 

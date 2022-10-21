@@ -35,6 +35,8 @@ public class User {
     private int weight;
     @JsonProperty("age")
     private int age;
+    @JsonProperty("loggedIn")
+    private boolean loggedIn;
 
     /**
      * Create a product with the given id and name
@@ -50,21 +52,26 @@ public class User {
      *                 the default Java
      *                 value, i.e. 0 for int
      */
-    public User(
-            @JsonProperty("id") int id, @JsonProperty("password") String password,
-            @JsonProperty("username") String username, @JsonProperty("firstName") String firstName,
-            @JsonProperty("lastName") String lastName, @JsonProperty("height") Integer height, 
-            @JsonProperty("weight") Integer weight, @JsonProperty("age") Integer age,
-            @JsonProperty("gender") String gender) {
+    public User(@JsonProperty("id") int id, @JsonProperty("username") String username, @JsonProperty("password") String password) {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.height = height;
-        this.weight = weight;
-        this.age = age;
-        this.gender = gender;
+    }
+    /**
+     * Retrieves the id of the product
+     * 
+     * @return The id of the product
+     */
+    public boolean getloggedIn() {
+        return loggedIn;
+    }
+    /**
+     * Sets the log in status of the User
+     * 
+     * @param loggedIn The log in status of the User
+     */
+    public void setLoggedIn(boolean loggedIn) {
+        this.loggedIn = loggedIn;
     }
     /**
      * Retrieves the id of the product
@@ -121,6 +128,14 @@ public class User {
      */
     public void setWeight(Integer weight) {
         this.weight = weight;
+    }
+    /**
+     * Gets the password of the User
+     * 
+     * @return The password of the User
+     */
+    public String getPassword() {
+        return password;
     }
     /**
      * Sets the password of the User

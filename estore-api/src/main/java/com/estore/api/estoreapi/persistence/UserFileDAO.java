@@ -4,6 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
@@ -14,8 +17,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import com.estore.api.estoreapi.model.User;
 
-public class userFileDAO implements userDAO{
-    private static final Logger LOG = Logger.getLogger(userFileDAO.class.getName());
+public class UserFileDAO implements UserDAO{
+    private static final Logger LOG = Logger.getLogger(UserFileDAO.class.getName());
     Map<Integer, User> users;
     private ObjectMapper objectMapper;
 
@@ -31,7 +34,7 @@ public class userFileDAO implements userDAO{
      * 
      * @throws IOException when file cannot be accessed or read from
      */
-    public userFileDAO(@Value("${user.file}") String filename, ObjectMapper objectMapper) throws IOException {
+    public UserFileDAO(@Value("${user.file}") String filename, ObjectMapper objectMapper) throws IOException {
         this.filename = filename;
         this.objectMapper = objectMapper;
         load(); // load the inventory from the file
@@ -99,6 +102,67 @@ public class userFileDAO implements userDAO{
     private User[] getUsersArray() {
         return getUsersArray(null);
     }
+    private static String getSalt() {
+        byte [] salt = new byte[16];
+        try {
+            SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
+            sr.nextBytes(salt);
+        } catch(NoSuchAlgorithmException e) {
+            e.printStackTrace();         
+        }
+        
+        return salt.toString();
+    }
+    private static String convertToSHA256(String password, String salt) {
+        String generatedPassword = null;
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            md.update(salt.getBytes());
+            byte[] bytes = md.digest(password.getBytes());
+            StringBuilder sb = new StringBuilder();
+            for(int i=0; i<bytes.length; i++) {
+                sb.append(Integer.toString((bytes[i] &0xff) + 0x100, 16).substring(1));
+            }
+            generatedPassword = sb.toString();
+        } catch(NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return generatedPassword;
+    }
+    /**
+    ** {@inheritDoc}
+     */
+    @Override
+    public User createUser(String username, String password) throws IOException {
+        String salt = getSalt();
+        String passwordHash = convertToSHA256(password, salt);
+        synchronized(users) {
+            // We create a new user object because the id field is immutable
+            // and we need to assign the next unique id
+            User newUser = new User(nextId(), username, passwordHash);
+            users.put(newUser.getId(), newUser);
+            save(); // may throw an IOException
+            return newUser;
+        }
+    }
+    /**
+    ** {@inheritDoc}
+     */
+    @Override
+    public User createProfile(User user) throws IOException {
+        synchronized(users) {
+            if(users.containsKey(user.getId()) == false)
+                return null;
+            
+            user.setfirstName(user.getfirstName());
+            user.setlastName(user.getlastName());
+            user.setHeight(user.getHeight());
+            user.setWeight(user.getWeight());
+            user.setAge(user.getAge());
+            user.setGender(user.getGender());
+        }
+        return null;
+    }
     /**
      * Generates an array of {@linkplain User users} from the tree map for any
      * {@linkplain User users} that contains the text specified by
@@ -144,5 +208,19 @@ public class userFileDAO implements userDAO{
                 return null;
         }
     }
-    
+    @Override
+    /**
+     ** {@inheritDoc}
+     */
+    public boolean deleteUser(int userId, String password) throws IOException {
+        String salt = getSalt();
+        String passwordHash = convertToSHA256(password, salt);
+        synchronized (users) {
+            if (users.containsKey(userId)) {
+                users.remove(userId);
+                return save();
+            } else
+                return false;
+        }
+    }
 }
