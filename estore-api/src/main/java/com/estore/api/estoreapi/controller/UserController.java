@@ -143,14 +143,26 @@ public class UserController {
     public ResponseEntity<User> createUser(@RequestBody User user) {
         LOG.info("POST /users");
         try{
-            //User[] users = userDao.getUsers();
-            User userRep = userDao.createUser(user);
-            return new ResponseEntity<User>(userRep, HttpStatus.CREATED);
+            User[] users = userDao.getUsers();
+            int duplicate = 0;
+            //Added functionality to check if user sends duplicate name and give status of CONFLICT if name already exists as per above documentation
+            for(int i=0; i< users.length; i++) {
+                User userListItem = users[i];
+                if((user.getUsername().contains(userListItem.getUsername())) == true) 
+                    duplicate = 1;
+            }
+            if(duplicate == 0) {
+                User userRep = userDao.createUser(user);
+                if(userRep != null)
+                    return new ResponseEntity<User>(userRep, HttpStatus.CREATED);
+            } else 
+                return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
         catch(IOException e) {
             LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+        return null;
     }
 
     /**
