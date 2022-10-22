@@ -244,11 +244,9 @@ public class UserFileDAO implements UserDAO {
     /**
      ** {@inheritDoc}
      */
-    public boolean deleteUser(int userId, String username, String password) throws IOException {
-        String salt = getSalt();
-        String passwordHash = convertToSHA256(password, salt);
+    public boolean deleteUser(int userId) throws IOException {
         synchronized (users) {
-            if (users.containsKey(userId) == true && users.get(userId).getUsername().equals(username) == true && users.get(userId).getPassword().equals(passwordHash) == true) {
+            if (users.containsKey(userId) == true) {
                 users.remove(userId);
                 return save();
             }

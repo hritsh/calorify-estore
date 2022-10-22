@@ -71,5 +71,5 @@ public interface UserDAO {
      * 
      * @throws IOException if underlying storage cannot be accessed
      */
-    boolean deleteUser(int userId, String username, String password) throws IOException;
+    boolean deleteUser(int userId) throws IOException;
 }
