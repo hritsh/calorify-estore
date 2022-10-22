@@ -137,13 +137,13 @@ public class UserFileDAO implements UserDAO {
     ** {@inheritDoc}
      */
     @Override
-    public User createUser(String username, String password) throws IOException {
+    public User createUser(User user) throws IOException {
         String salt = getSalt();
-        String passwordHash = convertToSHA256(password, salt);
+        String passwordHash = convertToSHA256(user.getPassword(), salt);
         synchronized(users) {
             // We create a new user object because the id field is immutable
             // and we need to assign the next unique id
-            User newUser = new User(nextId(), username, passwordHash);
+            User newUser = new User(nextId(), user.getUsername(), passwordHash);
             users.put(newUser.getId(), newUser);
             save(); // may throw an IOException
             return newUser;

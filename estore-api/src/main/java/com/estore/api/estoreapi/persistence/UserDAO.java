@@ -35,7 +35,7 @@ public interface UserDAO {
      * 
      * @throws IOException if an issue with underlying storage
      */
-    User createUser(String username, String password) throws IOException;
+    User createUser(User user) throws IOException;
     /**
      * Updates and saves a {@linkplain User user} with selected details provided by user after authenticating
      * 

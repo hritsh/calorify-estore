@@ -56,11 +56,11 @@ public class UserController {
      *         ResponseEntity with HTTP status of NOT_FOUND if not found<br>
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
-    @GetMapping("/{id}")
-    public ResponseEntity<User> getUser(@PathVariable int id) {
-        LOG.info("GET /users/" + id);
+    @PostMapping("/{id}")
+    public ResponseEntity<User> getUser(@PathVariable int id, @RequestParam(required = true) String username, @RequestParam(required = true) String password) {
+        LOG.info("POST /users/" + id + "?username="+username + "&password="+password);
         try {
-            User user = userDao.getUser(id);
+            User user = userDao.getUser(id, username, password);
             if (user != null)
                 return new ResponseEntity<User>(user, HttpStatus.OK);
             else
@@ -141,10 +141,16 @@ public class UserController {
      */
     @PostMapping("")
     public ResponseEntity<User> createUser(@RequestBody User user) {
-        LOG.info("POST /users " + user);
-
-        // // Stub implementation
-        return null;
+        LOG.info("POST /users");
+        try{
+            //User[] users = userDao.getUsers();
+            User userRep = userDao.createUser(user);
+            return new ResponseEntity<User>(userRep, HttpStatus.CREATED);
+        }
+        catch(IOException e) {
+            LOG.log(Level.SEVERE, e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     /**
