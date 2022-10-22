@@ -143,7 +143,7 @@ public class UserFileDAO implements UserDAO {
         synchronized(users) {
             // We create a new user object because the id field is immutable
             // and we need to assign the next unique id
-            User newUser = new User(nextId(), user.getUsername(), passwordHash);
+            User newUser = new User(nextId(), user.getUsername(), passwordHash, salt);
             users.put(newUser.getId(), newUser);
             save(); // may throw an IOException
             return newUser;
@@ -181,7 +181,11 @@ public class UserFileDAO implements UserDAO {
                 return null;
             else {
                 User foundUser = users.get(user.getId());
-                if(foundUser.getUsername().equals(user.getUsername()) && foundUser.getPassword().equals(user.getPassword())) {
+                String commonSalt = foundUser.getSaltString();
+                user.setSaltString(commonSalt);
+                String SHAPass = convertToSHA256(user.getPassword(), user.getSaltString());
+                user.setPassword(SHAPass);
+                if(foundUser.getPassword().equals(SHAPass)) {
                     users.put(user.getId(), user);
                     save();
                 }
@@ -228,16 +232,13 @@ public class UserFileDAO implements UserDAO {
      ** {@inheritDoc}
      */
     @Override
-    public User getUser(int id, String username, String password) {
+    public User getUser(int id) {
         synchronized (users) {
-            User currentUser = users.get(id);
-            if (users.containsKey(id)) {
-                if(currentUser.getUsername().equals(username) && currentUser.getPassword().equals(password)) {
-                    return users.get(id);
-                }
-            }
+            if (users.containsKey(id))
+                return users.get(id);
+            else
+                return null;
         }
-        return null;
     }
     @Override
     /**

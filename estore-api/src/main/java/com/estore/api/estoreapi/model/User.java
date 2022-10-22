@@ -2,6 +2,7 @@ package com.estore.api.estoreapi.model;
 
 import java.util.logging.Logger;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -37,7 +38,8 @@ public class User {
     private int age;
     @JsonProperty("loggedIn")
     private boolean loggedIn;
-
+    @JsonProperty("saltString")
+    private String saltString;
     /**
      * Create a product with the given id and name
      * 
@@ -52,10 +54,17 @@ public class User {
      *                 the default Java
      *                 value, i.e. 0 for int
      */
-    public User(@JsonProperty("id") int id, @JsonProperty("username") String username, @JsonProperty("password") String password) {
+    public User(@JsonProperty("id") int id, @JsonProperty("username") String username, @JsonProperty("password") String password, @JsonProperty("saltString") String saltString) {
         this.id = id;
         this.username = username;
         this.password = password;
+        this.saltString = saltString;
+    }
+    public String getSaltString() {
+        return saltString;
+    }
+    public void setSaltString(String saltString) {
+        this.saltString = saltString;
     }
     /**
      * Retrieves the id of the product

@@ -15,7 +15,7 @@ public interface UserDAO {
      * 
      * @throws IOException if an issue with underlying storage
      */
-    User getUser(int id, String username, String password) throws IOException;
+    User getUser(int id) throws IOException;
     /**
      * Retrieves all {@linkplain User users}
      * 

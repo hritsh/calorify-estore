@@ -56,11 +56,11 @@ public class UserController {
      *         ResponseEntity with HTTP status of NOT_FOUND if not found<br>
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
-    @PostMapping("/{id}")
-    public ResponseEntity<User> getUser(@PathVariable int id, @RequestParam(required = true) String username, @RequestParam(required = true) String password) {
-        LOG.info("POST /users/" + id + "?username="+username + "&password="+password);
+    @GetMapping("/{id}")
+    public ResponseEntity<User> getUser(@PathVariable int id) {
+        LOG.info("POST /users/" + id);
         try {
-            User user = userDao.getUser(id, username, password);
+            User user = userDao.getUser(id);
             if (user != null)
                 return new ResponseEntity<User>(user, HttpStatus.OK);
             else
@@ -177,11 +177,20 @@ public class UserController {
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
     @PutMapping("")
-    public ResponseEntity<User> updateHero(@RequestBody User user) {
-        LOG.info("PUT /users " + user);
+    public ResponseEntity<User> updateUser(@RequestBody User user) {
+        LOG.info("PUT /users");
 
-        // // Stub implementation
-        return null;
+        try {
+            User updatedUser = userDao.updateUserDetails(user);
+            if(updatedUser != null)
+                return new ResponseEntity<User>(user, HttpStatus.OK);    
+            else
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            
+        } catch(IOException e) {
+            LOG.log(Level.SEVERE, e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     /**
