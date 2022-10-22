@@ -15,8 +15,8 @@ import java.util.logging.Logger;
 import com.estore.api.estoreapi.model.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import com.estore.api.estoreapi.model.User;
 
+@Component
 public class UserFileDAO implements UserDAO {
     private static final Logger LOG = Logger.getLogger(UserFileDAO.class.getName());
     Map<Integer, User> users;
@@ -149,23 +149,45 @@ public class UserFileDAO implements UserDAO {
             return newUser;
         }
     }
+    private User searchFromUsername(String username, String password) {
+        User foundUser = null;
+        for (User user : users.values()) {
+            if(user.getUsername().equals(username) == true && user.getPassword().equals(password) == true) {
+                foundUser = user;
+            }
+        }
+        return foundUser;
+    }
     /**
     ** {@inheritDoc}
      */
     @Override
-    public User createProfile(User user) throws IOException {
+    public User logoutUser(String username, String password, boolean loggedInStatus) throws IOException {
+        synchronized(users) {
+            User foundUser = searchFromUsername(username, password);
+            foundUser.setLoggedIn(loggedInStatus);
+            users.put(foundUser.getId(), foundUser);
+            save();
+            return foundUser;
+        }
+    }
+    /**
+    ** {@inheritDoc}
+     */
+    @Override
+    public User updateUserDetails(User user) throws IOException {
         synchronized(users) {
             if(users.containsKey(user.getId()) == false)
                 return null;
-            
-            user.setfirstName(user.getfirstName());
-            user.setlastName(user.getlastName());
-            user.setHeight(user.getHeight());
-            user.setWeight(user.getWeight());
-            user.setAge(user.getAge());
-            user.setGender(user.getGender());
+            else {
+                User foundUser = users.get(user.getId());
+                if(foundUser.getUsername().equals(user.getUsername()) && foundUser.getPassword().equals(user.getPassword())) {
+                    users.put(user.getId(), user);
+                    save();
+                }
+                return user;
+            }
         }
-        return null;
     }
     /**
      * Generates an array of {@linkplain User users} from the tree map for any
@@ -206,26 +228,30 @@ public class UserFileDAO implements UserDAO {
      ** {@inheritDoc}
      */
     @Override
-    public User getUser(int id) {
+    public User getUser(int id, String username, String password) {
         synchronized (users) {
-            if (users.containsKey(id))
-                return users.get(id);
-            else
-                return null;
+            User currentUser = users.get(id);
+            if (users.containsKey(id)) {
+                if(currentUser.getUsername().equals(username) && currentUser.getPassword().equals(password)) {
+                    return users.get(id);
+                }
+            }
         }
+        return null;
     }
     @Override
     /**
      ** {@inheritDoc}
      */
-    public boolean deleteUser(int userId, String password) throws IOException {
+    public boolean deleteUser(int userId, String username, String password) throws IOException {
         String salt = getSalt();
         String passwordHash = convertToSHA256(password, salt);
         synchronized (users) {
-            if (users.containsKey(userId)) {
+            if (users.containsKey(userId) == true && users.get(userId).getUsername().equals(username) == true && users.get(userId).getPassword().equals(passwordHash) == true) {
                 users.remove(userId);
                 return save();
-            } else
+            }
+            else
                 return false;
         }
     }
