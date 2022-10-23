@@ -37,8 +37,7 @@ public class User {
     private int age;
     @JsonProperty("loggedIn")
     private boolean loggedIn;
-    @JsonProperty("saltString")
-    private String saltString;
+
     /**
      * Create a product with the given id and name
      * 
@@ -53,17 +52,10 @@ public class User {
      *                 the default Java
      *                 value, i.e. 0 for int
      */
-    public User(@JsonProperty("id") int id, @JsonProperty("username") String username, @JsonProperty("password") String password, @JsonProperty("saltString") String saltString) {
+    public User(@JsonProperty("id") int id, @JsonProperty("username") String username, @JsonProperty("password") String password) {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.saltString = saltString;
-    }
-    public String getSaltString() {
-        return saltString;
-    }
-    public void setSaltString(String saltString) {
-        this.saltString = saltString;
     }
     /**
      * Retrieves the id of the product
