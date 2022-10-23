@@ -15,8 +15,8 @@ import java.util.logging.Logger;
 import com.estore.api.estoreapi.model.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import com.estore.api.estoreapi.model.User;
 
+@Component
 public class UserFileDAO implements UserDAO {
     private static final Logger LOG = Logger.getLogger(UserFileDAO.class.getName());
     Map<Integer, User> users;
@@ -140,16 +140,40 @@ public class UserFileDAO implements UserDAO {
      ** {@inheritDoc}
      */
     @Override
-    public User createUser(String username, String password) throws IOException {
+    public User createUser(User user) throws IOException {
         String salt = getSalt();
-        String passwordHash = convertToSHA256(password, salt);
+        String passwordHash = convertToSHA256(user.getPassword(), salt);
         synchronized (users) {
             // We create a new user object because the id field is immutable
             // and we need to assign the next unique id
-            User newUser = new User(nextId(), username, passwordHash);
+            User newUser = new User(nextId(), user.getUsername(), passwordHash, salt);
             users.put(newUser.getId(), newUser);
             save(); // may throw an IOException
             return newUser;
+        }
+    }
+
+    private User searchFromUsername(String username, String password) {
+        User foundUser = null;
+        for (User user : users.values()) {
+            if (user.getUsername().equals(username) == true && user.getPassword().equals(password) == true) {
+                foundUser = user;
+            }
+        }
+        return foundUser;
+    }
+
+    /**
+     ** {@inheritDoc}
+     */
+    @Override
+    public User logoutUser(String username, String password, boolean loggedInStatus) throws IOException {
+        synchronized (users) {
+            User foundUser = searchFromUsername(username, password);
+            foundUser.setLoggedIn(loggedInStatus);
+            users.put(foundUser.getId(), foundUser);
+            save();
+            return foundUser;
         }
     }
 
@@ -157,19 +181,23 @@ public class UserFileDAO implements UserDAO {
      ** {@inheritDoc}
      */
     @Override
-    public User createProfile(User user) throws IOException {
+    public User updateUserDetails(User user) throws IOException {
         synchronized (users) {
             if (users.containsKey(user.getId()) == false)
                 return null;
-
-            user.setfirstName(user.getfirstName());
-            user.setlastName(user.getlastName());
-            user.setHeight(user.getHeight());
-            user.setWeight(user.getWeight());
-            user.setAge(user.getAge());
-            user.setGender(user.getGender());
+            else {
+                User foundUser = users.get(user.getId());
+                String commonSalt = foundUser.getSaltString();
+                user.setSaltString(commonSalt);
+                String SHAPass = convertToSHA256(user.getPassword(), user.getSaltString());
+                user.setPassword(SHAPass);
+                if (foundUser.getPassword().equals(SHAPass)) {
+                    users.put(user.getId(), user);
+                    save();
+                }
+                return user;
+            }
         }
-        return null;
     }
 
     /**
@@ -224,11 +252,9 @@ public class UserFileDAO implements UserDAO {
     /**
      ** {@inheritDoc}
      */
-    public boolean deleteUser(int userId, String password) throws IOException {
-        String salt = getSalt();
-        String passwordHash = convertToSHA256(password, salt);
+    public boolean deleteUser(int userId) throws IOException {
         synchronized (users) {
-            if (users.containsKey(userId)) {
+            if (users.containsKey(userId) == true) {
                 users.remove(userId);
                 return save();
             } else
@@ -236,22 +262,24 @@ public class UserFileDAO implements UserDAO {
         }
     }
 
-    @Override
-    public User updateUser(User user) throws IOException {
-        // TODO Auto-generated method stub
-        return null;
-    }
+    // @Override
+    // public User updateUser(User user) throws IOException {
+    // // TODO Auto-generated method stub
+    // return null;
+    // }
 
-    @Override
-    public User updateUserDetails(int userId, String passwordHash, String firstName, String lastName, int height,
-            int weight, int age, String gender) throws IOException {
-        // TODO Auto-generated method stub
-        return null;
-    }
+    // @Override
+    // public User updateUserDetails(int userId, String passwordHash, String
+    // firstName, String lastName, int height,
+    // int weight, int age, String gender) throws IOException {
+    // // TODO Auto-generated method stub
+    // return null;
+    // }
 
-    @Override
-    public User logoutUser(int userId, boolean loggedInStatus) throws IOException {
-        // TODO Auto-generated method stub
-        return null;
-    }
+    // @Override
+    // public User logoutUser(int userId, boolean loggedInStatus) throws IOException
+    // {
+    // // TODO Auto-generated method stub
+    // return null;
+    // }
 }

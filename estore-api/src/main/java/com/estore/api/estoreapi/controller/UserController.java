@@ -58,7 +58,7 @@ public class UserController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<User> getUser(@PathVariable int id) {
-        LOG.info("GET /users/" + id);
+        LOG.info("POST /users/" + id);
         try {
             User user = userDao.getUser(id);
             if (user != null)
@@ -96,39 +96,6 @@ public class UserController {
     }
 
     /**
-     * Responds to the GET request for all {@linkplain User users} whose name
-     * contains
-     * the text in name
-     * 
-     * @param name The name parameter which contains the text used to find the
-     *             {@link User users}
-     * 
-     * @return ResponseEntity with array of {@link User user} objects (may be empty)
-     *         and
-     *         HTTP status of OK<br>
-     *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
-     *         <p>
-     *         Example: Find all users that contain the text "ma"
-     *         GET http://localhost:8080/users/?name=ma
-     */
-    @GetMapping("/")
-    public ResponseEntity<User[]> searchUsers(@RequestParam String name) {
-        LOG.info("GET /users/?name=" + name);
-
-        // // Stub implementation
-        // try {
-        // // User[] users = []; //userDao.findUsers(name);
-        // // if(users.length != 0)
-        // // return new ResponseEntity<User[]>(users,HttpStatus.OK);
-        // }
-        // catch(IOException e) {
-        // LOG.log(Level.SEVERE, e.getLocalizedMessage());
-        // return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        // }
-        return null;
-    }
-
-    /**
      * Creates a {@linkplain User user} with the provided user object
      * 
      * @param user - The {@link User user} to create
@@ -141,9 +108,27 @@ public class UserController {
      */
     @PostMapping("")
     public ResponseEntity<User> createUser(@RequestBody User user) {
-        LOG.info("POST /users " + user);
-
-        // // Stub implementation
+        LOG.info("POST /users");
+        try{
+            User[] users = userDao.getUsers();
+            int duplicate = 0;
+            //Added functionality to check if user sends duplicate name and give status of CONFLICT if name already exists as per above documentation
+            for(int i=0; i< users.length; i++) {
+                User userListItem = users[i];
+                if((user.getUsername().contains(userListItem.getUsername())) == true) 
+                    duplicate = 1;
+            }
+            if(duplicate == 0) {
+                User userRep = userDao.createUser(user);
+                if(userRep != null)
+                    return new ResponseEntity<User>(userRep, HttpStatus.CREATED);
+            } else 
+                return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        catch(IOException e) {
+            LOG.log(Level.SEVERE, e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
         return null;
     }
 
@@ -159,11 +144,20 @@ public class UserController {
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
     @PutMapping("")
-    public ResponseEntity<User> updateHero(@RequestBody User user) {
-        LOG.info("PUT /users " + user);
+    public ResponseEntity<User> updateUser(@RequestBody User user) {
+        LOG.info("PUT /users");
 
-        // // Stub implementation
-        return null;
+        try {
+            User updatedUser = userDao.updateUserDetails(user);
+            if(updatedUser != null)
+                return new ResponseEntity<User>(user, HttpStatus.OK);    
+            else
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            
+        } catch(IOException e) {
+            LOG.log(Level.SEVERE, e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     /**
@@ -176,10 +170,18 @@ public class UserController {
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<User> deleteHero(@PathVariable int id) {
+    //should delete user require inputting username and password? maybe another api method which verifies password which deleteUser depends on for response
+    public ResponseEntity<User> deleteUser(@PathVariable int id) {
         LOG.info("DELETE /users/" + id);
-
-        // Stub implementation
-        return null;
+        try {
+            boolean userDeleteStatus = userDao.deleteUser(id);
+            if(userDeleteStatus == true)
+                return new ResponseEntity<>(HttpStatus.OK);
+            else
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (IOException e) {
+            LOG.log(Level.SEVERE, e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
