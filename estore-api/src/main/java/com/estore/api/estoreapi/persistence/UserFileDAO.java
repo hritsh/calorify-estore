@@ -106,17 +106,19 @@ public class UserFileDAO implements UserDAO {
     private User[] getUsersArray() {
         return getUsersArray(null);
     }
+
     private static String getSalt() {
-        byte [] salt = new byte[16];
+        byte[] salt = new byte[16];
         try {
             SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
             sr.nextBytes(salt);
-        } catch(NoSuchAlgorithmException e) {
-            e.printStackTrace();         
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
         }
-        
+
         return salt.toString();
     }
+
     private static String convertToSHA256(String password, String salt) {
         String generatedPassword = null;
         try {
@@ -124,23 +126,24 @@ public class UserFileDAO implements UserDAO {
             md.update(salt.getBytes());
             byte[] bytes = md.digest(password.getBytes());
             StringBuilder sb = new StringBuilder();
-            for(int i=0; i<bytes.length; i++) {
-                sb.append(Integer.toString((bytes[i] &0xff) + 0x100, 16).substring(1));
+            for (int i = 0; i < bytes.length; i++) {
+                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
             }
             generatedPassword = sb.toString();
-        } catch(NoSuchAlgorithmException e) {
+        } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
         return generatedPassword;
     }
+
     /**
-    ** {@inheritDoc}
+     ** {@inheritDoc}
      */
     @Override
     public User createUser(String username, String password) throws IOException {
         String salt = getSalt();
         String passwordHash = convertToSHA256(password, salt);
-        synchronized(users) {
+        synchronized (users) {
             // We create a new user object because the id field is immutable
             // and we need to assign the next unique id
             User newUser = new User(nextId(), username, passwordHash);
@@ -149,15 +152,16 @@ public class UserFileDAO implements UserDAO {
             return newUser;
         }
     }
+
     /**
-    ** {@inheritDoc}
+     ** {@inheritDoc}
      */
     @Override
     public User createProfile(User user) throws IOException {
-        synchronized(users) {
-            if(users.containsKey(user.getId()) == false)
+        synchronized (users) {
+            if (users.containsKey(user.getId()) == false)
                 return null;
-            
+
             user.setfirstName(user.getfirstName());
             user.setlastName(user.getlastName());
             user.setHeight(user.getHeight());
@@ -167,6 +171,7 @@ public class UserFileDAO implements UserDAO {
         }
         return null;
     }
+
     /**
      * Generates an array of {@linkplain User users} from the tree map for any
      * {@linkplain User users} that contains the text specified by
@@ -214,6 +219,7 @@ public class UserFileDAO implements UserDAO {
                 return null;
         }
     }
+
     @Override
     /**
      ** {@inheritDoc}
@@ -228,5 +234,24 @@ public class UserFileDAO implements UserDAO {
             } else
                 return false;
         }
+    }
+
+    @Override
+    public User updateUser(User user) throws IOException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public User updateUserDetails(int userId, String passwordHash, String firstName, String lastName, int height,
+            int weight, int age, String gender) throws IOException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public User logoutUser(int userId, boolean loggedInStatus) throws IOException {
+        // TODO Auto-generated method stub
+        return null;
     }
 }
