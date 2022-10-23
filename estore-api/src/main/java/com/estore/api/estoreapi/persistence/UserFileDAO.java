@@ -15,8 +15,8 @@ import java.util.logging.Logger;
 import com.estore.api.estoreapi.model.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import com.estore.api.estoreapi.model.User;
 
+@Component
 public class UserFileDAO implements UserDAO {
     private static final Logger LOG = Logger.getLogger(UserFileDAO.class.getName());
     Map<Integer, User> users;
@@ -106,17 +106,19 @@ public class UserFileDAO implements UserDAO {
     private User[] getUsersArray() {
         return getUsersArray(null);
     }
+
     private static String getSalt() {
-        byte [] salt = new byte[16];
+        byte[] salt = new byte[16];
         try {
             SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
             sr.nextBytes(salt);
-        } catch(NoSuchAlgorithmException e) {
-            e.printStackTrace();         
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
         }
-        
+
         return salt.toString();
     }
+
     private static String convertToSHA256(String password, String salt) {
         String generatedPassword = null;
         try {
@@ -124,49 +126,80 @@ public class UserFileDAO implements UserDAO {
             md.update(salt.getBytes());
             byte[] bytes = md.digest(password.getBytes());
             StringBuilder sb = new StringBuilder();
-            for(int i=0; i<bytes.length; i++) {
-                sb.append(Integer.toString((bytes[i] &0xff) + 0x100, 16).substring(1));
+            for (int i = 0; i < bytes.length; i++) {
+                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
             }
             generatedPassword = sb.toString();
-        } catch(NoSuchAlgorithmException e) {
+        } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
         return generatedPassword;
     }
+
     /**
-    ** {@inheritDoc}
+     ** {@inheritDoc}
      */
     @Override
-    public User createUser(String username, String password) throws IOException {
+    public User createUser(User user) throws IOException {
         String salt = getSalt();
-        String passwordHash = convertToSHA256(password, salt);
-        synchronized(users) {
+        String passwordHash = convertToSHA256(user.getPassword(), salt);
+        synchronized (users) {
             // We create a new user object because the id field is immutable
             // and we need to assign the next unique id
-            User newUser = new User(nextId(), username, passwordHash);
+            User newUser = new User(nextId(), user.getUsername(), passwordHash, salt);
             users.put(newUser.getId(), newUser);
             save(); // may throw an IOException
             return newUser;
         }
     }
+
+    private User searchFromUsername(String username, String password) {
+        User foundUser = null;
+        for (User user : users.values()) {
+            if (user.getUsername().equals(username) == true && user.getPassword().equals(password) == true) {
+                foundUser = user;
+            }
+        }
+        return foundUser;
+    }
+
     /**
-    ** {@inheritDoc}
+     ** {@inheritDoc}
      */
     @Override
-    public User createProfile(User user) throws IOException {
-        synchronized(users) {
-            if(users.containsKey(user.getId()) == false)
-                return null;
-            
-            user.setfirstName(user.getfirstName());
-            user.setlastName(user.getlastName());
-            user.setHeight(user.getHeight());
-            user.setWeight(user.getWeight());
-            user.setAge(user.getAge());
-            user.setGender(user.getGender());
+    public User logoutUser(String username, String password, boolean loggedInStatus) throws IOException {
+        synchronized (users) {
+            User foundUser = searchFromUsername(username, password);
+            foundUser.setLoggedIn(loggedInStatus);
+            users.put(foundUser.getId(), foundUser);
+            save();
+            return foundUser;
         }
-        return null;
     }
+
+    /**
+     ** {@inheritDoc}
+     */
+    @Override
+    public User updateUserDetails(User user) throws IOException {
+        synchronized (users) {
+            if (users.containsKey(user.getId()) == false)
+                return null;
+            else {
+                User foundUser = users.get(user.getId());
+                String commonSalt = foundUser.getSaltString();
+                user.setSaltString(commonSalt);
+                String SHAPass = convertToSHA256(user.getPassword(), user.getSaltString());
+                user.setPassword(SHAPass);
+                if (foundUser.getPassword().equals(SHAPass)) {
+                    users.put(user.getId(), user);
+                    save();
+                }
+                return user;
+            }
+        }
+    }
+
     /**
      * Generates an array of {@linkplain User users} from the tree map for any
      * {@linkplain User users} that contains the text specified by
@@ -214,15 +247,14 @@ public class UserFileDAO implements UserDAO {
                 return null;
         }
     }
+
     @Override
     /**
      ** {@inheritDoc}
      */
-    public boolean deleteUser(int userId, String password) throws IOException {
-        String salt = getSalt();
-        String passwordHash = convertToSHA256(password, salt);
+    public boolean deleteUser(int userId) throws IOException {
         synchronized (users) {
-            if (users.containsKey(userId)) {
+            if (users.containsKey(userId) == true) {
                 users.remove(userId);
                 return save();
             } else
