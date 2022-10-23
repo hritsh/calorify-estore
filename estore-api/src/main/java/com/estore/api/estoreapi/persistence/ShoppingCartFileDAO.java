@@ -3,7 +3,6 @@ package com.estore.api.estoreapi.persistence;
 import java.io.IOException;
 import java.util.HashMap;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Logger;
@@ -55,7 +54,11 @@ public class ShoppingCartFileDAO implements ShoppingCartDAO {
         // Serializes the Java Objects to JSON objects into the file
         // writeValue will thrown an IOException if there is an issue
         // with the file or reading from the file
-        objectMapper.writeValue(new File(filename), carts.values().toArray(new ShoppingCart[0]));
+        // ShoppingCart[] shoppingCarts = getShoppingCartsArray();
+
+        // inside each ShoppingCart object, convert Product objects to arrays
+
+        // objectMapper.writeValue(new File(filename), shoppingCarts);
         return true;
     }
 
@@ -74,14 +77,26 @@ public class ShoppingCartFileDAO implements ShoppingCartDAO {
         // Deserializes the JSON objects from the file into an array of products
         // readValue will throw an IOException if there's an issue with the file
         // or reading from the file
-        ShoppingCart[] cartsArray = objectMapper.readValue(new File(filename), ShoppingCart[].class);
+        // ShoppingCart[] cartsArray = objectMapper.readValue(new File(filename),
+        // ShoppingCart[].class);
 
         // Add each cart to the tree map
-        for (ShoppingCart cart : cartsArray) {
-            carts.put(cart.getUserId(), cart);
-        }
+        // for (ShoppingCart cart : cartsArray) {
+        // carts.put(cart.getUserId(), cart);
+        // }
 
         return true;
+    }
+
+    /**
+     * Gets the {@linkplain Product products} as an array
+     * 
+     * @return The {@linkplain Product products} as an array
+     */
+    private ShoppingCart[] getShoppingCartsArray() {
+        ShoppingCart[] cartsArray = new ShoppingCart[carts.size()];
+        cartsArray = carts.values().toArray(cartsArray);
+        return cartsArray;
     }
 
     @Override

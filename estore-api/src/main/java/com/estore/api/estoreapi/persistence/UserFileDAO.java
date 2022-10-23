@@ -261,25 +261,4 @@ public class UserFileDAO implements UserDAO {
                 return false;
         }
     }
-
-    // @Override
-    // public User updateUser(User user) throws IOException {
-    // // TODO Auto-generated method stub
-    // return null;
-    // }
-
-    // @Override
-    // public User updateUserDetails(int userId, String passwordHash, String
-    // firstName, String lastName, int height,
-    // int weight, int age, String gender) throws IOException {
-    // // TODO Auto-generated method stub
-    // return null;
-    // }
-
-    // @Override
-    // public User logoutUser(int userId, boolean loggedInStatus) throws IOException
-    // {
-    // // TODO Auto-generated method stub
-    // return null;
-    // }
 }
