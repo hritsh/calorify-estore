@@ -15,18 +15,20 @@ public class Product {
     // Package private for tests
     static final String STRING_FORMAT = "Product [id=%d, name=%s, image=%s, calories=%d, price=%f]";
 
-// We intend to keep 30 products in the inventory.
+    // We intend to keep 30 products in the inventory.
 
     @JsonProperty("id")
     private int id;
     @JsonProperty("name")
     private String name;
-    @JsonProperty("image") 
+    @JsonProperty("image")
     private String image;
     @JsonProperty("calories")
     private int calories;
     @JsonProperty("price")
     private float price;
+    @JsonProperty("quantity")
+    private int quantity;
 
     /**
      * Create a product with the given id and name
@@ -138,6 +140,25 @@ public class Product {
      */
     public float getPrice() {
         return price;
+    }
+
+    /**
+     * Sets the quantity of the product - necessary for JSON object to Java object
+     * deserialization
+     * 
+     * @param quantity The quantity of the product
+     */
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    /**
+     * Retrieves the quantity of the product
+     * 
+     * @return The quantity of the product
+     */
+    public int getQuantity() {
+        return quantity;
     }
 
     /**

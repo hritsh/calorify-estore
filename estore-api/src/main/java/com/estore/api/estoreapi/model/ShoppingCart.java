@@ -1,160 +1,91 @@
 package com.estore.api.estoreapi.model;
 
-import java.util.HashMap;
-import java.util.logging.Logger;
+import java.util.ArrayList;
+import java.util.TreeMap;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Represents a Shopping Cart entity
+ * The class that holds the manipulation of the customer's shopping cart
  * 
  * @author Team-E
  */
 public class ShoppingCart {
-    private static final Logger LOG = Logger.getLogger(ShoppingCart.class.getName());
 
-    // Package private for tests
-    static final String STRING_FORMAT = "ShoppingCart [userId=%s, items=%s, totalCalories=%d, totalPrice=%f, isOrderComplete=%b]";
-
-    @JsonProperty("userId")
-    private int userId;
-    @JsonProperty("shoppingCart")
-    private HashMap<Product, Integer> shoppingCart;
-    @JsonProperty("totalCalories")
-    private int totalCalories;
-    @JsonProperty("totalPrice")
-    private float totalPrice;
-    @JsonProperty("isOrderComplete")
-    private boolean isOrderComplete;
+    @JsonProperty("items")
+    private TreeMap<Integer, Product> items;
 
     /**
-     * Create a product with the given id and name
+     * The json constructor that creates a shopping cart instance
+     * This constructor is used whenever a deserialization takes place
      * 
-     * @param userId          The userId of the product
-     * @param shoppingCart    The map of products in the cart along with their
-     *                        quantity
-     * @param totalCalories   The total calories of the cart
-     * @param totalPrice      The total price of the cart
-     * @param isOrderComplete A flag indicating if the order is complete
-     * 
-     *                        {@literal @}JsonProperty is used in serialization and
-     *                        deserialization
-     *                        of the JSON object to the Java object in mapping the
-     *                        fields. If a field
-     *                        is not provided in the JSON object, the Java field
-     *                        gets
-     *                        the default Java
-     *                        value, i.e. 0 for int
+     * @param items a map of {@linkplain Product products}
      */
-    public ShoppingCart(
-            @JsonProperty("userId") int userId, @JsonProperty("shoppingCart") HashMap<Product, Integer> shoppingCart,
-            @JsonProperty("totalCalories") int totalCalories, @JsonProperty("totalPrice") float totalPrice) {
-        this.userId = userId;
-        this.shoppingCart = new HashMap<Product, Integer>();
-        this.totalCalories = totalCalories;
-        this.totalPrice = totalPrice;
+    public ShoppingCart(@JsonProperty("items") TreeMap<Integer, Product> items) {
+        // items can be null indicating this should be a new empty cart
+        if (items != null) {
+            this.items = items;
+        } else {
+            this.items = new TreeMap<>();
+        }
     }
 
     /**
-     * Retrieves the id of the product
+     * Adds a {@linkplain Product product} to the shopping cart
      * 
-     * @return The id of the product
+     * @param product the {@link Product product} to add
+     * @return the {@link Product product} that was added
      */
-    public int getUserId() {
-        return userId;
+    public Product addProduct(Product product) {
+        if (items.containsKey(product.getId())) {
+            items.get(product.getId()).setQuantity(product.getQuantity());
+        } else {
+            items.put(product.getId(), product);
+        }
+        return product;
     }
 
     /**
-     * Retrieves the user id of the shopping cart
+     * Removes a {@linkplain Product product} from the shopping cart
      * 
-     * @param userId
+     * @param id the id of the {@link Product product} to remove
+     * @return the {@link Product product} that was removed, null if no product was
+     *         removed
      */
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public Product removeProduct(int id) {
+        return items.remove(id);
     }
 
     /**
-     * Retrieves the map of products in the shopping cart with their associated
-     * quantities
+     * clears the shopping cart
      * 
-     * @return
+     * @return true indicating that the cart was cleared
      */
-    public HashMap<Product, Integer> getShoppingCart() {
-        return shoppingCart;
+    public boolean clearCart() {
+        this.items.clear();
+        return true;
     }
 
     /**
-     * Sets the shopping cart map
+     * transforms the map of {@linkplain Product products} into an array of
+     * {@link Product products} and returns it
      * 
-     * @param shoppingCart
+     * @return an array of products that represents the items that are in the cart
      */
-    public void setShoppingCart(HashMap<Product, Integer> shoppingCart) {
-        this.shoppingCart = shoppingCart;
+    @JsonIgnore
+    public Product[] getItems() {
+        ArrayList<Product> products = new ArrayList<>();
+
+        for (Product i : items.values()) {
+            products.add(i);
+        }
+
+        Product[] results = new Product[products.size()];
+        products.toArray(results);
+
+        return results;
+
     }
 
-    /**
-     * Sets the calories of the shopping cart - necessary for JSON object to Java
-     * object
-     * deserialization
-     * 
-     * @param totalCalories The calories of the product
-     */
-    public void setTotalCalories(int totalCalories) {
-        this.totalCalories = totalCalories;
-    }
-
-    /**
-     * Retrieves the total calories of the product
-     * 
-     * @return The total calories of the product
-     */
-    public int getTotalCalories() {
-        return totalCalories;
-    }
-
-    /**
-     * Sets the price of the product - necessary for JSON object to Java object
-     * deserialization
-     * 
-     * @param price The price of the product
-     */
-    public void setTotalPrice(float totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
-    /**
-     * Retrieves the price of the product
-     * 
-     * @return The price of the product
-     */
-    public float getTotalPrice() {
-        return totalPrice;
-    }
-
-    /**
-     * Retrieves the flag indicating if the order is complete
-     * 
-     * @return The flag indicating if the order is complete
-     */
-    public boolean isOrderComplete() {
-        return isOrderComplete;
-    }
-
-    /**
-     * Sets the flag indicating if the order is complete
-     * 
-     * @param isOrderComplete The flag indicating if the order is complete
-     */
-    public void setOrderComplete(boolean isOrderComplete) {
-        this.isOrderComplete = isOrderComplete;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return String.format(STRING_FORMAT, userId, shoppingCart.toString(), totalCalories, totalPrice,
-                isOrderComplete);
-    }
 }
