@@ -58,6 +58,21 @@ public class Product {
     }
 
     /**
+     * secondary constructor for the product class
+     * this constructor specifically creates a clone of an already existing product
+     * and save a new amount to the new product
+     * 
+     * @param original The original product to clone
+     * @param quantity The new int to set the amount to
+     */
+    public Product(Product original, int quantity) {
+        this.name = original.name;
+        this.quantity = quantity;
+        this.price = original.price;
+        this.id = original.id;
+    }
+
+    /**
      * Retrieves the id of the product
      * 
      * @return The id of the product
