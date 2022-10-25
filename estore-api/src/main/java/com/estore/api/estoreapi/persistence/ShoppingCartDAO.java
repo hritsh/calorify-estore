@@ -31,7 +31,7 @@ public interface ShoppingCartDAO {
      * 
      * @throws IOException If an issue occured whilst accessing the json files
      */
-    Product addProduct(String username, int id, int amount) throws IOException;
+    Product addProduct(String username, int id, int quantity) throws IOException;
 
     /**
      * Deletes a {@linkplain Product product} within the specified {@link Customer

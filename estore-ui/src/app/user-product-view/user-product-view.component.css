@@ -1,3 +1,12 @@
+label {
+  display: block;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  color: #ff0000;
+}
+
 h1 {
   display: block;
   font-weight: bold;

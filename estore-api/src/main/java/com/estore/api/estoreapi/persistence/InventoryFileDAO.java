@@ -261,8 +261,8 @@ public class InventoryFileDAO implements InventoryDAO {
      * Changes the ammount of the inventory has in stock
      * 
      * @return false:
-     *         if the amount of the {@linkplain Product product} that is being
-     *         checkedout is larger than the amount the inventory has in stock
+     *         if the quantity of the {@linkplain Product product} that is being
+     *         checkedout is larger than the quantity the inventory has in stock
      *         if a {@link Product product} that is being checked out no longer is
      *         available in the inventory
      *         true otherwise indicating a sucessful action

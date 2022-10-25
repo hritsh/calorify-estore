@@ -1,0 +1,32 @@
+<body>
+  <div>
+    <label for="new-product">Product name: </label>
+    <input id="new-product" #productName />
+
+    <button
+      type="button"
+      class="add-button"
+      (click)="addProduct(productName.value); productName.value = ''"
+    >
+      Add product
+    </button>
+  </div>
+
+  <ul class="wrapper">
+    <div *ngFor="let product of inventory">
+      <button class="btn-group" routerLink="/product-details/{{ product.id }}">
+        {{ product.name }}
+        <label class="quantity">Stock: {{ product.quantity }}</label>
+        <label class="price">Price: ${{ product.price }}</label>
+      </button>
+      <button
+        type="button"
+        class="delete"
+        title="Delete Product"
+        (click)="deleteProduct(product)"
+      >
+        x
+      </button>
+    </div>
+  </ul>
+</body>

@@ -60,10 +60,10 @@ public class Product {
     /**
      * secondary constructor for the product class
      * this constructor specifically creates a clone of an already existing product
-     * and save a new amount to the new product
+     * and save a new quantity to the new product
      * 
      * @param original The original product to clone
-     * @param quantity The new int to set the amount to
+     * @param quantity The new int to set the quantity to
      */
     public Product(Product original, int quantity) {
         this.name = original.name;

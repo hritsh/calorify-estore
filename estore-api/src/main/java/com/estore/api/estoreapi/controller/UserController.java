@@ -30,7 +30,7 @@ import com.estore.api.estoreapi.model.User;
  */
 
 @RestController
-@RequestMapping("users")
+@RequestMapping("user")
 public class UserController {
     private UserDAO userDao;
     private static final Logger LOG = Logger.getLogger(UserController.class.getName());

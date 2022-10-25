@@ -1,0 +1,27 @@
+<body>
+  <div *ngIf="product != null">
+    <h1>{{ product.name }} Details</h1>
+    <div><span>id: </span>{{ product.id }}</div>
+    <div><span>price: </span>${{ product.price }}</div>
+    <div class="productAmount">
+      <span>quantity: </span>
+      <input
+        type="range"
+        min="1"
+        max="{{ product.quantity }}"
+        value="1"
+        class="slider"
+        id="myRange"
+        #amountSelect
+        (input)="amountInput(amountSelect.value)"
+      />
+      {{ currAmount }}
+    </div>
+
+    <button type="button" (click)="backButton()">Go Back</button>
+    <button type="button" (click)="addToCart(product, currAmount)">
+      Add to Cart
+    </button>
+    <label [textContent]="this.message"></label>
+  </div>
+</body>

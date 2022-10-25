@@ -159,7 +159,7 @@ public class ShoppingCartController {
      * 
      * @param username the {@link Customer customer} username who initiated the
      *                 action
-     * @param amount   the number of items the {@linke Customer customer} is
+     * @param quantity the number of items the {@linke Customer customer} is
      *                 attempting to add
      * @param id       the id of the specific {@link Product product} the
      *                 {@link Customer customer} is trying to add
@@ -169,12 +169,12 @@ public class ShoppingCartController {
      *         409 (CONFLICT) if the action failed
      *         500 (INTERNAL_SERVER_ERROR) if an issue arouse
      */
-    @PutMapping("/{username}/{amount}/{id}")
-    public ResponseEntity<Integer> addProduct(@PathVariable String username, @PathVariable Integer amount,
+    @PutMapping("/{username}/{quantity}/{id}")
+    public ResponseEntity<Integer> addProduct(@PathVariable String username, @PathVariable Integer quantity,
             @PathVariable Integer id) {
-        LOG.info("PUT /shoppingcart/customer=" + username + "/productID=" + id + "/amount=" + amount);
+        LOG.info("PUT /shoppingcart/customer=" + username + "/productID=" + id + "/quantity=" + quantity);
         try {
-            Product result = shoppingCartDao.addProduct(username, id, amount);
+            Product result = shoppingCartDao.addProduct(username, id, quantity);
             if (result != null) {
                 return new ResponseEntity<>(HttpStatus.CREATED);
             } else {

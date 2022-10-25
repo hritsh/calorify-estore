@@ -2,11 +2,9 @@ package com.estore.api.estoreapi.persistence;
 
 import java.io.IOException;
 
-import com.estore.api.estoreapi.controller.InventoryController;
 import com.estore.api.estoreapi.model.Product;
 import com.estore.api.estoreapi.model.ShoppingCart;
 import com.estore.api.estoreapi.model.Customer;
-import com.estore.api.estoreapi.persistence.InventoryDAO;
 
 import org.springframework.stereotype.Component;
 
@@ -44,9 +42,9 @@ public class ShoppingCartFileDAO implements ShoppingCartDAO {
      * {@inheritDoc}
      */
     @Override
-    public synchronized Product addProduct(String username, int id, int amount) throws IOException {
+    public synchronized Product addProduct(String username, int id, int quantity) throws IOException {
         Customer targetCustomer = (Customer) userDAO.getUser(username);
-        Product newProduct = this.inventoryFileDAO.createClone(id, amount);
+        Product newProduct = this.inventoryFileDAO.createClone(id, quantity);
         Product addedProduct = targetCustomer.addProduct(newProduct);
         userDAO.saveUsers();
         return addedProduct;

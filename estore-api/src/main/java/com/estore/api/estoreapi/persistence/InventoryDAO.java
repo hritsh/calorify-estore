@@ -98,9 +98,9 @@ public interface InventoryDAO {
     /**
      * Creates a clone of an already existing {@linkplain Product product}
      * 
-     * @param id     The id of the {@link Product product} to clone
-     * @param amount The new amount to set the clone to
+     * @param id       The id of the {@link Product product} to clone
+     * @param quantity The new quantity to set the clone to
      * @return The newly created {@link Product product}
      */
-    Product createClone(int id, int amount);
+    Product createClone(int id, int quantity);
 }

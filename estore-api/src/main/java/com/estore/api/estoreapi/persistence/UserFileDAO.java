@@ -10,7 +10,6 @@ import java.util.TreeMap;
 
 import com.estore.api.estoreapi.model.Customer;
 import com.estore.api.estoreapi.model.User;
-import com.estore.api.estoreapi.persistence.JsonUtilities;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -139,6 +138,7 @@ public class UserFileDAO implements UserDAO {
      */
     @Override
     public User getUser(String username) throws IOException {
+        load();
         synchronized (customers) {
             User currUser;
             if (customers.containsKey(username)) {

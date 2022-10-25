@@ -1,36 +1,44 @@
+/**
+ * SWEN 261
+ * Declares the components of the Calorify store.
+ * 
+ * Contributors: Team-E
+ */
+
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { InventoryPageComponent } from './inventory-page/inventory-page.component';
-import { ProductDetailsComponent } from './product-details/product-details.component';
-import { RegistrationPageComponent } from './registration-page/registration-page.component';
-import { LoginPageComponent } from './login-page/login-page.component';
-import { ProductListingComponent } from './product-listing/product-listing.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
-import { CustomerCheckoutComponent } from './customer-checkout/customer-checkout.component';
+import { UserLoginComponent } from './user-login/user-login.component';
+import { UserStoreComponent } from './user-store/user-store.component';
+import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule } from '@angular/common/http';
+import { InventoryComponent } from './inventory/inventory.component';
+import { ProductDetailsComponent } from './product-details/product-details.component';
+import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
 import { ProductSearchComponent } from './product-search/product-search.component';
-import { LandingPageComponent } from './landing-page/landing-page.component';
+import { UserProductViewComponent } from './user-product-view/user-product-view.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    InventoryPageComponent,
-    ProductDetailsComponent,
-    RegistrationPageComponent,
-    LoginPageComponent,
-    ProductListingComponent,
+    UserLoginComponent,
+    InventoryComponent,
     ShoppingCartComponent,
-    CustomerCheckoutComponent,
+    UserStoreComponent,
+    ProductDetailsComponent,
     ProductSearchComponent,
-    LandingPageComponent
+    UserProductViewComponent
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
-    AppRoutingModule
+    FormsModule,
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }
