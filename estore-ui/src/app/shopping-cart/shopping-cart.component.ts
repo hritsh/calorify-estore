@@ -25,7 +25,7 @@ export class ShoppingCartComponent implements OnInit {
   @Input() username!: string;
   cart: Product[] = [];
   @Input() user?: User;
-  ifSuceed: Boolean = false;
+  ifSucceed: Boolean = false;
   ifFailed: Boolean = false;
 
   constructor(
@@ -39,7 +39,7 @@ export class ShoppingCartComponent implements OnInit {
    * The initialization of this component
    */
   ngOnInit(): void {
-    this.ifSuceed = false;
+    this.ifSucceed = false;
     this.ifFailed = false;
     this.getUser();
     this.getCart();
@@ -94,7 +94,7 @@ export class ShoppingCartComponent implements OnInit {
   checkout(): void {
     this.shoppingCartService.checkout(this.username).subscribe(output => {
       if (output) {
-        this.ifSuceed = true;
+        this.ifSucceed = true;
         this.cart = [];
       } else { this.ifFailed = true; }
     });

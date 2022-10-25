@@ -15,9 +15,11 @@
   <ul class="wrapper">
     <div *ngFor="let product of inventory">
       <button class="btn-group" routerLink="/product-details/{{ product.id }}">
-        {{ product.name }}
-        <label class="quantity">Stock: {{ product.quantity }}</label>
+        <strong>{{ product.name }}</strong>
+        <label class="calories">Calories: {{ product.calories }}</label>
         <label class="price">Price: ${{ product.price }}</label>
+        <label class="quantity">Stock: {{ product.quantity }}</label>
+        <label class="image"><img src="{{ product.image }}" /></label>
       </button>
       <button
         type="button"
@@ -25,7 +27,7 @@
         title="Delete Product"
         (click)="deleteProduct(product)"
       >
-        x
+        <span>REMOVE</span>
       </button>
     </div>
   </ul>

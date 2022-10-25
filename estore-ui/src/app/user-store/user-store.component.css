@@ -87,5 +87,10 @@ h2 {
 }
 
 img {
-  width: 300%;
+  width: 100%;
+}
+
+.image {
+  grid-column-start: 1;
+  grid-column-end: 5;
 }

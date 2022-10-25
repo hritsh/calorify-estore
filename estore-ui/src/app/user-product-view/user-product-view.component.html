@@ -1,10 +1,15 @@
 <body>
   <div *ngIf="product != null">
     <h1>{{ product.name }} Details</h1>
-    <div><span>id: </span>{{ product.id }}</div>
-    <div><span>price: </span>${{ product.price }}</div>
+    <div><img src="{{ product.image }}" /></div>
+    <br />
+    <div><span>ID: </span>{{ product.id }}</div>
+    <div><span>Calories: </span>{{ product.calories }}</div>
+    <div><span>Price: </span>${{ product.price }}</div>
+    <div><span>Stock: </span>{{ product.quantity }}</div>
+    <br />
     <div class="productAmount">
-      <span>quantity: </span>
+      <span>Select Quantity: </span>
       <input
         type="range"
         min="1"
@@ -17,7 +22,9 @@
       />
       {{ currAmount }}
     </div>
-
+    <div><span>Total Price: </span>${{ product.quantity * currAmount}}</div>
+    <div><span>Total Calories: </span>{{ product.calories * currAmount}}</div>
+    <br />
     <button type="button" (click)="backButton()">Go Back</button>
     <button type="button" (click)="addToCart(product, currAmount)">
       Add to Cart
