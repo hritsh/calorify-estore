@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
  * is to be instantiated
  * and inserted into any class that needs it upon starting.
  * 
- * @author Alen Van
+ * @author Team-E
  */
 @Component
 public class ShoppingCartFileDAO implements ShoppingCartDAO {

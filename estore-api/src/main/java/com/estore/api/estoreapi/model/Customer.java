@@ -55,9 +55,8 @@ public class Customer extends User {
      *                 {@link Customer customer}
      */
     @JsonCreator
-    public Customer(@JsonProperty("username") String username, @JsonProperty("password") String password,
-            @JsonProperty("saltString") String saltString, @JsonProperty("cart") ShoppingCart cart) {
-        super(username, password, saltString);
+    public Customer(@JsonProperty("username") String username, @JsonProperty("cart") ShoppingCart cart) {
+        super(username);
         this.cart = cart;
     }
 
@@ -67,8 +66,8 @@ public class Customer extends User {
      * 
      * @param username the username of the {@link Customer customer}
      */
-    public Customer(String username, String password, String saltString) {
-        super(username, password, saltString);
+    public Customer(String username) {
+        super(username);
         this.cart = new ShoppingCart(null);
     }
 

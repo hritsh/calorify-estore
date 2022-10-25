@@ -1,10 +1,9 @@
 package com.estore.api.estoreapi.controller;
 
 import java.io.IOException;
-import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import com.estore.api.estoreapi.model.Product;
-import com.estore.api.estoreapi.model.ShoppingCart;
 import com.estore.api.estoreapi.persistence.ShoppingCartDAO;
 
 import org.springframework.http.HttpStatus;
@@ -14,169 +13,174 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Handles REST API requests for the ShoppingCart resource
- * (no longer used)
+ * Handles the REST API requests for the Inventory resource
+ * <p>
+ * {@literal @}RestController Spring annotation identifies this class as a REST
+ * API
+ * method handler to the Spring framework
+ * 
+ * @author Team-E
  */
+
 @RestController
-@RequestMapping("shoppingcart")
+@RequestMapping("shoppingCart")
 public class ShoppingCartController {
     private static final Logger LOG = Logger.getLogger(ShoppingCartController.class.getName());
-    private ShoppingCartDAO shoppingCartDAO;
+    private ShoppingCartDAO shoppingCartDao;
 
+    /**
+     * Creates a REST API controller to reponds to requests
+     * 
+     * @param shoppingCartDAO The {@link InventoryDAO Inventory Data Access Object}
+     *                        to
+     *                        perform CRUD operations
+     *                        <br>
+     *                        This dependency is injected by the Spring Framework
+     */
     public ShoppingCartController(ShoppingCartDAO shoppingCartDAO) {
-        this.shoppingCartDAO = shoppingCartDAO;
+        this.shoppingCartDao = shoppingCartDAO;
     }
 
     /**
-     * Responds to the GET request for a {@linkplain ShoppingCart shoppingCart} for
-     * the given
-     * user id
+     * Gets a {@linkplain Product product} array which holds the items inside of a
+     * {@link Customer customer's}
+     * {@link ShoppingCart cart}
      * 
-     * @param id The id used to locate the {@link User user} and get the users
-     *           shoppingCart
+     * @param username the username of the {@link Customer customer}
      * 
-     * @return ResponseEntity with {@link ShoppingCart shoppingCart} object and HTTP
-     *         status of
-     *         OK if found<br>
+     * @return A ResonseEntity with the {@link Product product} that was obtained
+     *         from the id
+     *         and a HTTP status code OK
+     *         A ResponseEntity with HTTP status of NOT_FOUND if no {@link Product
+     *         product} was
+     *         found
+     *         A ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     */
+    @GetMapping("/{username}")
+    public ResponseEntity<Product[]> getCart(@PathVariable String username) {
+        LOG.info("GET /shoppingcart/customer=" + username);
+        try {
+            Product[] cartFound = shoppingCartDao.getShoppingCart(username);
+            if (cartFound == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            } else {
+                return new ResponseEntity<Product[]>(cartFound, HttpStatus.OK);
+            }
+        } catch (IOException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * Deletes a {@linkplain Product product} with the given id
+     * 
+     * @param username the username of the {@link Customer customer} who initiaited
+     *                 this action
+     * @param id       The id of the {@linkplain Product product}to deleted
+     * 
+     * @return ResponseEntity HTTP status of OK if deleted<br>
      *         ResponseEntity with HTTP status of NOT_FOUND if not found<br>
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
-    @GetMapping("/{id}")
-    public ResponseEntity<ShoppingCart> getShoppingCart(@PathVariable int id) {
-        LOG.info("GET /shoppingCart/" + id);
+    @DeleteMapping("/{username}/{id}")
+    public ResponseEntity<Product> deleteProduct(@PathVariable String username, @PathVariable int id) {
+        LOG.info("DELETE /cart/customer=" + username + "/product/id=" + id);
         try {
-            ShoppingCart shoppingCart = shoppingCartDAO.getShoppingCart(id);
-            if (shoppingCart != null) {
-                return new ResponseEntity<>(shoppingCart, HttpStatus.OK);
+            boolean deleted = shoppingCartDao.deleteProduct(username, id);
+            if (deleted) {
+                return new ResponseEntity<Product>(HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
         } catch (IOException e) {
-            LOG.log(Level.SEVERE, "Error getting shoppingCart", e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     /**
-     * Creates a {@linkplain Product product} with the provided product object
+     * Clears the cart of the {@linkplain Customer customer} who initiated the
+     * method
      * 
-     * @param product - The {@link Product product} to create
+     * @param username the username of the {@link Customer customer}
      * 
-     * @return ResponseEntity with created {@link Product product} object and HTTP
-     *         status
-     *         of CREATED<br>
-     *         ResponseEntity with HTTP status of CONFLICT if {@link Product
-     *         product}
-     *         object already exists<br>
-     *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     * @return a boolean indicating of the success of the action as well as a
+     *         200 (OK) indicating that the action was successful
+     *         404 (NOT_FOUND) if the action failed
+     *         500 (INTERNAL_SERVER_ERROR) if an issue arouse
      */
-    @PostMapping("")
-    public ResponseEntity<Product> addToShoppingCart(@PathVariable int id, @RequestBody Product product,
-            @PathVariable int quantity) {
-        LOG.info("POST /shoppingcart " + id + product + quantity);
-        // default quantity is 1 if not specified
-        if (quantity == 0) {
-            quantity = 1;
-        }
+    @DeleteMapping("/{username}")
+    public ResponseEntity<Boolean> clearCart(@PathVariable String username) {
+        LOG.info("DELETE /cart/customer=" + username);
         try {
-            if (shoppingCartDAO.addProduct(id, product, quantity)) {
-                return new ResponseEntity<>(product, HttpStatus.CREATED);
+            boolean deleted = shoppingCartDao.clearShoppingCart(username);
+            if (deleted) {
+                return new ResponseEntity<Boolean>(deleted, HttpStatus.OK);
             } else {
-                return new ResponseEntity<>(HttpStatus.CONFLICT);
+                return new ResponseEntity<Boolean>(deleted, HttpStatus.NOT_FOUND);
             }
         } catch (IOException e) {
-            LOG.log(Level.SEVERE, "Error adding product to shopping cart", e);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @PutMapping("")
-    public ResponseEntity<Product> updateShoppingCart(@PathVariable int id, @RequestBody Product product,
-            @PathVariable int quantity) {
-        LOG.info("PUT /shoppingcart " + id + product + quantity);
-        try {
-            if (shoppingCartDAO.updateProductQuantity(id, product, quantity)) {
-                return new ResponseEntity<>(product, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-        } catch (IOException e) {
-            LOG.log(Level.SEVERE, "Error updating product in shopping cart", e);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @PutMapping("/remove/{id}")
-    public ResponseEntity<Product> removeFromShoppingCart(@PathVariable int id, @RequestBody Product product) {
-        LOG.info("PUT /shoppingcart/remove " + id + product);
-        try {
-            if (shoppingCartDAO.removeProduct(id, product)) {
-                return new ResponseEntity<>(product, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-        } catch (IOException e) {
-            LOG.log(Level.SEVERE, "Error removing product from shopping cart", e);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @PutMapping("/clear/{id}")
-    public ResponseEntity<ShoppingCart> clearShoppingCart(@PathVariable int id) {
-        LOG.info("PUT /shoppingcart/clear " + id);
-        try {
-            if (shoppingCartDAO.clearShoppingCart(id)) {
-                return new ResponseEntity<>(HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-        } catch (IOException e) {
-            LOG.log(Level.SEVERE, "Error clearing shopping cart", e);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @PutMapping("/checkout/{id}")
-    public ResponseEntity<ShoppingCart> checkoutShoppingCart(@PathVariable int id) {
-        LOG.info("PUT /shoppingcart/checkout " + id);
-        try {
-            if (shoppingCartDAO.checkoutShoppingCart(id)) {
-                return new ResponseEntity<>(HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-        } catch (IOException e) {
-            LOG.log(Level.SEVERE, "Error checking out shopping cart", e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     /**
-     * Deletes the {@linkplain ShoppingCart shoppingCart} with the given id
+     * A checkout execution for the {@linkplain Customer customer}
      * 
-     * @param id The id used to locate the {@link ShoppingCart shoppingCart} to
-     *           delete
+     * @param username the username of the {@linkplain Customer customer} who wishes
+     *                 to checkout
      * 
-     * @return ResponseEntity with HTTP status of OK if deleted<br>
-     *         ResponseEntity with HTTP status of NOT_FOUND if not found<br>
-     *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     * @return A boolean indicating the success of the action as well as a
+     *         201 (CREATED) indicating that the action was successful
+     *         409 (CONFLICT) if the action failed
+     *         500 (INTERNAL_SERVER_ERROR) if an issue arouse
      */
-    @DeleteMapping("/{id}")
-    public ResponseEntity<ShoppingCart> deleteShoppingCart(@PathVariable int id) {
-        LOG.info("DELETE /shoppingCart/" + id);
+    @PostMapping("/{username}")
+    public ResponseEntity<Boolean> checkout(@PathVariable String username) {
+        LOG.info("POST /shoppingcart/customer=" + username);
         try {
-            if (shoppingCartDAO.deleteShoppingCart(id)) {
-                return new ResponseEntity<>(HttpStatus.OK);
+            boolean result = shoppingCartDao.checkout(username);
+            if (result) {
+                return new ResponseEntity<Boolean>(result, HttpStatus.OK);
             } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                return new ResponseEntity<Boolean>(result, HttpStatus.CONFLICT);
             }
         } catch (IOException e) {
-            LOG.log(Level.SEVERE, "Error deleting shoppingCart", e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * Lets the {@linkplain Customer customer} add a {@link Product product} to
+     * their {@link ShoppingCart cart}
+     * 
+     * @param username the {@link Customer customer} username who initiated the
+     *                 action
+     * @param amount   the number of items the {@linke Customer customer} is
+     *                 attempting to add
+     * @param id       the id of the specific {@link Product product} the
+     *                 {@link Customer customer} is trying to add
+     * 
+     * @return the id of the {@link Product product} that was added as well as a
+     *         201 (CREATED) indicating that the action was successful
+     *         409 (CONFLICT) if the action failed
+     *         500 (INTERNAL_SERVER_ERROR) if an issue arouse
+     */
+    @PutMapping("/{username}/{amount}/{id}")
+    public ResponseEntity<Integer> addProduct(@PathVariable String username, @PathVariable Integer amount,
+            @PathVariable Integer id) {
+        LOG.info("PUT /shoppingcart/customer=" + username + "/productID=" + id + "/amount=" + amount);
+        try {
+            Product result = shoppingCartDao.addProduct(username, id, amount);
+            if (result != null) {
+                return new ResponseEntity<>(HttpStatus.CREATED);
+            } else {
+                return new ResponseEntity<Integer>(id, HttpStatus.CONFLICT);
+            }
+        } catch (IOException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

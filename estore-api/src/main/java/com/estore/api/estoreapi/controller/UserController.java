@@ -34,6 +34,7 @@ import com.estore.api.estoreapi.model.User;
 public class UserController {
     private UserDAO userDao;
     private static final Logger LOG = Logger.getLogger(UserController.class.getName());
+
     /**
      * Creates a REST API controller to reponds to requests
      * 
@@ -47,20 +48,21 @@ public class UserController {
     }
 
     /**
-     * Responds to the GET request for a {@linkplain User user} for the given id
+     * Responds to the GET request for a {@linkplain User user} for the given
+     * username
      * 
-     * @param id The id used to locate the {@link User user}
+     * @param id The username used to locate the {@link User user}
      * 
      * @return ResponseEntity with {@link User user} object and HTTP status of OK if
      *         found<br>
      *         ResponseEntity with HTTP status of NOT_FOUND if not found<br>
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
-    @GetMapping("/{id}")
-    public ResponseEntity<User> getUser(@PathVariable int id) {
-        LOG.info("POST /users/" + id);
+    @GetMapping("/{username:[a-zA-Z &+-]*}")
+    public ResponseEntity<User> getUser(@PathVariable String username) {
+        LOG.info("POST /users/" + username);
         try {
-            User user = userDao.getUser(id);
+            User user = userDao.getUser(username);
             if (user != null)
                 return new ResponseEntity<User>(user, HttpStatus.OK);
             else
@@ -72,115 +74,62 @@ public class UserController {
     }
 
     /**
-     * Responds to the GET request for all {@linkplain User users}
+     * Gets an array of the {@linkplain User users}
      * 
-     * @return ResponseEntity with array of {@link User user} objects (may be empty)
-     *         and
-     *         HTTP status of OK<br>
-     *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     * @return an array of the {@link User user} in the database
      */
     @GetMapping("")
     public ResponseEntity<User[]> getUsers() {
         LOG.info("GET /users");
 
-        // Replace below with your implementation
-        try {
-            User[] users = userDao.getUsers();
-            if (users.length != 0)
-                return new ResponseEntity<User[]>(users, HttpStatus.OK);
-        } catch (IOException e) {
-            LOG.log(Level.SEVERE, e.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        return null;
+        return new ResponseEntity<User[]>(userDao.getUsers(), HttpStatus.OK);
     }
 
     /**
-     * Creates a {@linkplain User user} with the provided user object
+     * Adds a new {@linkplain User user} to the database
      * 
-     * @param user - The {@link User user} to create
+     * @param username the username of the new {@link User user}
      * 
-     * @return ResponseEntity with created {@link User user} object and HTTP status
-     *         of CREATED<br>
-     *         ResponseEntity with HTTP status of CONFLICT if {@link User user}
-     *         object already exists<br>
-     *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     * @return the newly created {@link User user} as well as a
+     *         200 (OK) indicating that the action was successful
+     *         404 (NOT_FOUND) if the action failed
+     *         500 (INTERNAL_SERVER_ERROR) if an issue arouse
      */
-    @PostMapping("")
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        LOG.info("POST /users");
-        try{
-            User[] users = userDao.getUsers();
-            int duplicate = 0;
-            //Added functionality to check if user sends duplicate name and give status of CONFLICT if name already exists as per above documentation
-            for(int i=0; i< users.length; i++) {
-                User userListItem = users[i];
-                if((user.getUsername().contains(userListItem.getUsername())) == true) 
-                    duplicate = 1;
-            }
-            if(duplicate == 0) {
-                User userRep = userDao.createUser(user);
-                if(userRep != null)
-                    return new ResponseEntity<User>(userRep, HttpStatus.CREATED);
-            } else 
-                return new ResponseEntity<>(HttpStatus.CONFLICT);
-        }
-        catch(IOException e) {
-            LOG.log(Level.SEVERE, e.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        return null;
-    }
-
-    /**
-     * Updates the {@linkplain User user} with the provided {@linkplain User user}
-     * object, if it exists
-     * 
-     * @param user The {@link User user} to update
-     * 
-     * @return ResponseEntity with updated {@link User user} object and HTTP status
-     *         of OK if updated<br>
-     *         ResponseEntity with HTTP status of NOT_FOUND if not found<br>
-     *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
-     */
-    @PutMapping("")
-    public ResponseEntity<User> updateUser(@RequestBody User user) {
-        LOG.info("PUT /users");
-
+    @PostMapping("/{username}")
+    public ResponseEntity<User> addUser(@PathVariable String username) {
+        LOG.info("POST /user=" + username);
         try {
-            User updatedUser = userDao.updateUserDetails(user);
-            if(updatedUser != null)
-                return new ResponseEntity<User>(user, HttpStatus.OK);    
-            else
+            User result = userDao.addUser(username);
+            if (result != null) {
+                return new ResponseEntity<User>(result, HttpStatus.OK);
+            } else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            
-        } catch(IOException e) {
-            LOG.log(Level.SEVERE, e.getLocalizedMessage());
+            }
+        } catch (IOException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     /**
-     * Deletes a {@linkplain User user} with the given id
+     * Deletes a {@linkplain User user} with the given username
      * 
-     * @param id The id of the {@link User user} to deleted
+     * @param username The username of the {@linkplain User user} to be deleted
      * 
      * @return ResponseEntity HTTP status of OK if deleted<br>
      *         ResponseEntity with HTTP status of NOT_FOUND if not found<br>
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
-    @DeleteMapping("/{id}")
-    //should delete user require inputting username and password? maybe another api method which verifies password which deleteUser depends on for response
-    public ResponseEntity<User> deleteUser(@PathVariable int id) {
-        LOG.info("DELETE /users/" + id);
+    @DeleteMapping("/{username}")
+    public ResponseEntity<String> deleteUser(@PathVariable String username) {
+        LOG.info("DELETE /user=" + username);
         try {
-            boolean userDeleteStatus = userDao.deleteUser(id);
-            if(userDeleteStatus == true)
-                return new ResponseEntity<>(HttpStatus.OK);
-            else
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            boolean deleted = userDao.deleteUser(username);
+            if (deleted) {
+                return new ResponseEntity<String>(username, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<String>(username, HttpStatus.NOT_FOUND);
+            }
         } catch (IOException e) {
-            LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

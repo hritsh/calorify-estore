@@ -1,75 +1,82 @@
 package com.estore.api.estoreapi.persistence;
 
 import java.io.IOException;
+
+import com.estore.api.estoreapi.model.Customer;
 import com.estore.api.estoreapi.model.User;
 
+/**
+ * The interface for the UserDAO class
+ * This interface holds the abstracted methods for the UserFileDAO class.
+ * 
+ * @author Team-E
+ */
 public interface UserDAO {
+
     /**
-     * Retrieves a {@linkplain User user} with the given id
+     * Adds a {@linkplain User user} based on a given string passed in from the
+     * frontend. Typically, with this program,
+     * the getUser would be called first to check if the {@link User user}
+     * exists, if not then we automatically create
+     * a new user with the given string as their username. This all occurs from the
+     * login screen.
      * 
-     * @param id The id of the {@link User user} to get
+     * @param username The string the corresponds with the new {@link User user}
      * 
-     * @return a {@link User user} object with the matching id
-     *         <br>
-     *         null if no {@link User user} with a matching id is found
+     * @return The newly created {@link User user} object
      * 
-     * @throws IOException if an issue with underlying storage
+     * @throws IOException If an issue occured whilst accessing the json files
      */
-    User getUser(int id) throws IOException;
+    User addUser(String username) throws IOException;
+
     /**
-     * Retrieves all {@linkplain User users}
+     * Given a string, search the database for a {@linkplain User user} that
+     * corresponds with the string.
+     * If no {@link User user} is found, then create a new {@link User user} by
+     * calling addUser and pass the string as the username.
      * 
-     * @return An array of {@link User user} objects, may be empty
+     * @param username a string that is used to find a {@link User user} that
+     *                 correlates with the
+     *                 string
      * 
-     * @throws IOException if an issue with underlying storage
+     * @return the {@link User user} upon finding them, or upon creating them
+     * 
+     * @throws IOException If an issue occured whilst accessing the json files
      */
-    User[] getUsers() throws IOException;
+    User getUser(String username) throws IOException;
+
     /**
-     * Creates and saves a {@linkplain User user}
-     * 
-     * @param user {@linkplain User user} object to be created and saved
-     * <br>
-     * The id of the User object is ignored and a new uniqe id is assigned
+     * Given a string, search and delete a {@linkplain User user} that correlates
+     * with the given string.
      *
-     * @return new {@link User user} if successful, false otherwise 
+     * @param username a string that is passed in that is used to find a {@link User
+     *                 user} to
+     *                 delete from the database
      * 
-     * @throws IOException if an issue with underlying storage
+     * @return a boolean indicating whether or not the deletion was successful
+     * 
+     * @throws IOException If an issue occured whilst accessing the json files
      */
-    User createUser(User user) throws IOException;
+    Boolean deleteUser(String username) throws IOException;
+
     /**
-     * Updates and saves a {@linkplain User user} with selected details provided by user after authenticating
+     * Saves all of the {@linkplain User users} in the file into the corresponding
+     * json file,
+     * this is the public method that is called upon by the ShoppingCartDAO class
+     * whenever is needed.
      * 
-     * @param {@link User user} object to be updated and saved
+     * @return returns a boolean indicating that the save was successful
      * 
-     * @return updated {@link User user} if successful, null if
-     * {@link User user} could not be found
-     * 
-     * @throws IOException if underlying storage cannot be accessed
+     * @throws IOException If an issue occured whilst accessing the json files
      */
-    User updateUserDetails(User user) throws IOException;
+    Boolean saveUsers() throws IOException;
+
     /**
-     * Updates and saves logout status of {@linkplain User user}
+     * creates and returns an array of all the {@linkplain User users} listed in the
+     * system as the child class {@link Customer customer}
      * 
-     * @param {@link int userId} object to be updated and saved
-     * @param {@link boolean loggedInStatus}
-     * 
-     * @return updated {@link User user} login status if successful, null if
-     * {@link User user} could not be found
-     * 
-     * @throws IOException if underlying storage cannot be accessed
+     * @return an array of {@link Customers customers}
      */
-    User logoutUser(String username, String password, boolean loggedInStatus) throws IOException;
-    /**
-     * Deletes a {@linkplain User user} with the given id
-     * 
-     * @param id The id of the {@link User user}
-     * @param password The password of the {@link User user} to authenticate deleting account
-     * 
-     * @return true if the {@link User user} was deleted
-     * <br>
-     * false if user with the given id does not exist
-     * 
-     * @throws IOException if underlying storage cannot be accessed
-     */
-    boolean deleteUser(int userId) throws IOException;
+    public Customer[] getUsers();
+
 }
