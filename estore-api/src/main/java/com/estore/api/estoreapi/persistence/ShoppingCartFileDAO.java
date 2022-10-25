@@ -1,229 +1,101 @@
 package com.estore.api.estoreapi.persistence;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.io.File;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.logging.Logger;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-
+import com.estore.api.estoreapi.controller.InventoryController;
 import com.estore.api.estoreapi.model.Product;
 import com.estore.api.estoreapi.model.ShoppingCart;
+import com.estore.api.estoreapi.model.Customer;
+import com.estore.api.estoreapi.persistence.InventoryDAO;
 
+import org.springframework.stereotype.Component;
+
+/**
+ * The file that manipulates the {@link ShoppingCart shopping cart} of
+ * individual {@link Customer customer}. This class
+ * manipulates the saved data that corresponds to each user.
+ * 
+ * {@Literal @Component} is a spring annotation that indicates that this class
+ * is to be instantiated
+ * and inserted into any class that needs it upon starting.
+ * 
+ * @author Alen Van
+ */
 @Component
 public class ShoppingCartFileDAO implements ShoppingCartDAO {
-    private static final Logger LOG = Logger.getLogger(InventoryFileDAO.class.getName());
-    Map<Integer, ShoppingCart> carts; // Provides a local cache of the product objects
-    // so that we don't need to read from the file
-    // each time
-    private ObjectMapper objectMapper; // Provides conversion between Product
-                                       // objects and JSON text format written
-                                       // to the file
-    private String filename; // Filename to read from and write to
+
+    UserDAO userDAO; // the userDAO that corresponds with this DAO
+    InventoryDAO inventoryFileDAO;
 
     /**
-     * Creates a Product File Data Access Object
+     * Constructor for the shopping cart DAO class
      * 
-     * @param filename     Filename to read from and write to
-     * @param objectMapper Provides JSON Object to/from Java Object serialization
-     *                     and deserialization
-     * 
-     * @throws IOException when file cannot be accessed or read from
+     * @param userDAO the userDAO, we pass this in so that the shoppingCartDAO is
+     *                able to save the state of the users
+     *                since this class modifies the {@link ShoppingCart shopping
+     *                cart} which the {@link Customer customers} hold
      */
-    public ShoppingCartFileDAO(@Value("${shoppingcart.file}") String filename, ObjectMapper objectMapper)
-            throws IOException {
-        this.filename = filename;
-        this.objectMapper = objectMapper;
-        load(); // load the inventory from the file
+    public ShoppingCartFileDAO(UserDAO userDAO, InventoryDAO inventoryFileDAO) {
+        this.userDAO = userDAO;
+        this.inventoryFileDAO = inventoryFileDAO;
     }
 
     /**
-     * Saves the {@linkplain Product products} from the map into the file as an
-     * array of JSON objects
-     * 
-     * @return true if the {@link Product products} were written successfully
-     * 
-     * @throws IOException when file cannot be accessed or written to
+     * {@inheritDoc}
      */
-    private boolean save() throws IOException {
-        // Serializes the Java Objects to JSON objects into the file
-        // writeValue will thrown an IOException if there is an issue
-        // with the file or reading from the file
-        // ShoppingCart[] shoppingCarts = getShoppingCartsArray();
-
-        // inside each ShoppingCart object, convert Product objects to arrays
-
-        // objectMapper.writeValue(new File(filename), shoppingCarts);
-        return true;
+    @Override
+    public synchronized Product addProduct(String username, int id, int amount) throws IOException {
+        Customer targetCustomer = (Customer) userDAO.getUser(username);
+        Product newProduct = this.inventoryFileDAO.createClone(id, amount);
+        Product addedProduct = targetCustomer.addProduct(newProduct);
+        userDAO.saveUsers();
+        return addedProduct;
     }
 
     /**
-     * Loads {@linkplain Product products} from the JSON file into the map
-     * <br>
-     * Also sets next id to one more than the greatest id found in the file
-     * 
-     * @return true if the file was read successfully
-     * 
-     * @throws IOException when file cannot be accessed or read from
+     * {@inheritDoc}
      */
-    private boolean load() throws IOException {
-        carts = new TreeMap<>();
-
-        // Deserializes the JSON objects from the file into an array of products
-        // readValue will throw an IOException if there's an issue with the file
-        // or reading from the file
-        // ShoppingCart[] cartsArray = objectMapper.readValue(new File(filename),
-        // ShoppingCart[].class);
-
-        // Add each cart to the tree map
-        // for (ShoppingCart cart : cartsArray) {
-        // carts.put(cart.getUserId(), cart);
-        // }
-
-        return true;
+    @Override
+    public synchronized Boolean deleteProduct(String username, Integer id) throws IOException {
+        Customer targetCustomer = (Customer) userDAO.getUser(username);
+        Product removedProduct = targetCustomer.removeProduct(id);
+        userDAO.saveUsers();
+        return removedProduct != null;
     }
 
     /**
-     * Gets the {@linkplain Product products} as an array
+     * {@inheritDoc}
      * 
-     * @return The {@linkplain Product products} as an array
+     * @throws IOException
      */
-    private ShoppingCart[] getShoppingCartsArray() {
-        ShoppingCart[] cartsArray = new ShoppingCart[carts.size()];
-        cartsArray = carts.values().toArray(cartsArray);
-        return cartsArray;
+    @Override
+    public synchronized Product[] getShoppingCart(String username) throws IOException {
+        Customer targetCustomer = (Customer) userDAO.getUser(username);
+        return targetCustomer.getCart();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public ShoppingCart getShoppingCart(int id) throws IOException {
-        // If the cart is not in the map, load it from the file
-        if (!carts.containsKey(id)) {
-            load();
-        }
-
-        return carts.get(id);
+    public synchronized boolean clearShoppingCart(String username) throws IOException {
+        Customer targetCustomer = (Customer) userDAO.getUser(username);
+        boolean status = targetCustomer.clearCart();
+        userDAO.saveUsers();
+        return status;
     }
 
-    @Override
-    public int getTotalCalories(int id) throws IOException {
-        int totalCalories = 0;
-        if (carts.containsKey(id)) {
-            HashMap<Product, Integer> cart = carts.get(id).getShoppingCart();
-            for (Product product : cart.keySet()) {
-                totalCalories += product.getCalories() * cart.get(product);
-            }
+    /**
+     * {@inheritDoc}
+     */
+    public synchronized Boolean checkout(String username) throws IOException {
+        // Customer targetCustomer = (Customer) userDAO.getUser(username);
+        // boolean status = targetCustomer.checkout();
+        Product[] product_array = this.getShoppingCart(username);
+        boolean status = inventoryFileDAO.checkOut(product_array);
+        if (status) {
+            this.clearShoppingCart(username);
         }
-        return totalCalories;
-    }
-
-    @Override
-    public float getTotalPrice(int id) throws IOException {
-        float totalPrice = 0;
-        if (carts.containsKey(id)) {
-            HashMap<Product, Integer> cart = carts.get(id).getShoppingCart();
-            for (Product product : cart.keySet()) {
-                totalPrice += product.getPrice() * cart.get(product);
-            }
-        }
-        return totalPrice;
-    }
-
-    @Override
-    public boolean addProduct(int id, Product product, int quantity) throws IOException {
-        if (carts.containsKey(id)) {
-            ShoppingCart cart = carts.get(id);
-            HashMap<Product, Integer> shoppingCart = cart.getShoppingCart();
-            if (shoppingCart.containsKey(product)) {
-                shoppingCart.put(product, shoppingCart.get(product) + quantity);
-            } else {
-                shoppingCart.put(product, quantity);
-            }
-            cart.setShoppingCart(shoppingCart);
-            carts.put(id, cart);
-            save();
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    @Override
-    public boolean removeProduct(int id, Product product) throws IOException {
-        if (carts.containsKey(id)) {
-            ShoppingCart cart = carts.get(id);
-            HashMap<Product, Integer> shoppingCart = cart.getShoppingCart();
-            if (shoppingCart.containsKey(product)) {
-                shoppingCart.remove(product);
-            } else {
-                return false;
-            }
-            cart.setShoppingCart(shoppingCart);
-            carts.put(id, cart);
-            save();
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    @Override
-    public boolean updateProductQuantity(int id, Product product, int quantity) throws IOException {
-        if (carts.containsKey(id)) {
-            ShoppingCart cart = carts.get(id);
-            HashMap<Product, Integer> shoppingCart = cart.getShoppingCart();
-            if (shoppingCart.containsKey(product)) {
-                shoppingCart.put(product, quantity);
-            } else {
-                return false;
-            }
-            cart.setShoppingCart(shoppingCart);
-            carts.put(id, cart);
-            save();
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    @Override
-    public boolean clearShoppingCart(int id) throws IOException {
-        if (carts.containsKey(id)) {
-            ShoppingCart cart = carts.get(id);
-            cart.setShoppingCart(new HashMap<Product, Integer>());
-            carts.put(id, cart);
-            save();
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    @Override
-    public boolean checkoutShoppingCart(int id) throws IOException {
-        if (carts.containsKey(id)) {
-            ShoppingCart cart = carts.get(id);
-            cart.setShoppingCart(new HashMap<Product, Integer>());
-            carts.put(id, cart);
-            save();
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    @Override
-    public boolean deleteShoppingCart(int id) throws IOException {
-        if (carts.containsKey(id)) {
-            carts.remove(id);
-            save();
-            return true;
-        } else {
-            return false;
-        }
+        return status;
     }
 }
