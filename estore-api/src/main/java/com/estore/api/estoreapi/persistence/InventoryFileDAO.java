@@ -243,4 +243,56 @@ public class InventoryFileDAO implements InventoryDAO {
                 return false;
         }
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Product createClone(int id, int quantity) {
+        if (quantity == 0) {
+            return null;
+        } else {
+
+            Product result = new Product(products.get(id), quantity);
+            return result;
+        }
+    }
+
+    /**
+     * Changes the ammount of the inventory has in stock
+     * 
+     * @return false:
+     *         if the quantity of the {@linkplain Product product} that is being
+     *         checkedout is larger than the quantity the inventory has in stock
+     *         if a {@link Product product} that is being checked out no longer is
+     *         available in the inventory
+     *         true otherwise indicating a sucessful action
+     * 
+     * @throws IOException
+     */
+    public Boolean checkOut(Product[] passed) throws IOException {
+        // base cases for false
+        for (Product input : passed) {
+            if (!products.containsKey(input.getId())) {
+                return false;
+            } else {
+                if (input.getQuantity() > products.get(input.getId()).getQuantity()) {
+                    return false;
+                }
+            }
+        }
+
+        // execute the checkout in other terms: reduce the stock of each item based on
+        // the items being checkedout
+        for (int i = 0; i < passed.length; i++) {
+            products.get(passed[i].getId())
+                    .setQuantity(products.get(passed[i].getId()).getQuantity() - passed[i].getQuantity());
+            if (products.get(passed[i].getId()).getQuantity() <= 0) {
+                this.deleteProduct(passed[i].getId());
+            }
+        }
+
+        // save the changed inventory
+        this.save();
+        return true;
+    }
 }

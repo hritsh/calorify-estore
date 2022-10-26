@@ -15,18 +15,20 @@ public class Product {
     // Package private for tests
     static final String STRING_FORMAT = "Product [id=%d, name=%s, image=%s, calories=%d, price=%f]";
 
-// We intend to keep 30 products in the inventory.
+    // We intend to keep 30 products in the inventory.
 
     @JsonProperty("id")
     private int id;
     @JsonProperty("name")
     private String name;
-    @JsonProperty("image") 
+    @JsonProperty("image")
     private String image;
     @JsonProperty("calories")
     private int calories;
     @JsonProperty("price")
     private float price;
+    @JsonProperty("quantity")
+    private int quantity;
 
     /**
      * Create a product with the given id and name
@@ -53,6 +55,23 @@ public class Product {
         this.image = image;
         this.calories = calories;
         this.price = price;
+    }
+
+    /**
+     * secondary constructor for the product class
+     * this constructor specifically creates a clone of an already existing product
+     * and save a new quantity to the new product
+     * 
+     * @param original The original product to clone
+     * @param quantity The new int to set the quantity to
+     */
+    public Product(Product original, int quantity) {
+        this.id = original.id;
+        this.name = original.name;
+        this.image = original.image;
+        this.calories = original.calories;
+        this.price = original.price;
+        this.quantity = quantity;
     }
 
     /**
@@ -138,6 +157,25 @@ public class Product {
      */
     public float getPrice() {
         return price;
+    }
+
+    /**
+     * Sets the quantity of the product - necessary for JSON object to Java object
+     * deserialization
+     * 
+     * @param quantity The quantity of the product
+     */
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    /**
+     * Retrieves the quantity of the product
+     * 
+     * @return The quantity of the product
+     */
+    public int getQuantity() {
+        return quantity;
     }
 
     /**
