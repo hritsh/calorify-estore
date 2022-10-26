@@ -66,10 +66,12 @@ public class Product {
      * @param quantity The new int to set the quantity to
      */
     public Product(Product original, int quantity) {
-        this.name = original.name;
-        this.quantity = quantity;
-        this.price = original.price;
         this.id = original.id;
+        this.name = original.name;
+        this.image = original.image;
+        this.calories = original.calories;
+        this.price = original.price;
+        this.quantity = quantity;
     }
 
     /**

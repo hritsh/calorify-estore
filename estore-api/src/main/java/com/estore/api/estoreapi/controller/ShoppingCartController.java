@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.logging.Logger;
 
 import com.estore.api.estoreapi.model.Product;
+import com.estore.api.estoreapi.persistence.InventoryDAO;
 import com.estore.api.estoreapi.persistence.ShoppingCartDAO;
 
 import org.springframework.http.HttpStatus;
