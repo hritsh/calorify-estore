@@ -1,9 +1,9 @@
 /**
  * SWEN 261
  * shopping-cart.component.ts
- * 
+ *
  * The component that displays the current {@linkplain User user's} shopping cart
- * 
+ *
  * Contributors: Team-E
  */
 
@@ -63,8 +63,8 @@ export class ShoppingCartComponent implements OnInit {
    */
   getUser(): void {
     this.username = this.route.snapshot.paramMap.get('username') as string;
-    this.userService.getUser(this.username)
-      .subscribe(user => this.user = user);
+    //this.userService.getUser(this.username)
+    //  .subscribe(user => this.user = user);
   }
 
   getTotalCalories(): number {
@@ -90,7 +90,7 @@ export class ShoppingCartComponent implements OnInit {
   deleteProduct(product: Product): void {
     /**
      * Initilized with a button and deletes the product from the cart
-     * 
+     *
      * Input Argument:
      * product -- The product to be deleted
      */
