@@ -154,9 +154,36 @@ with the e-store application.
 > have not had any testing yet. Highlight the issues found during
 > acceptance testing and if there are any concerns._
 
-### Unit Testing and Code Coverage
+## Unit Testing and Code Coverage
 > Our unit testing strategy is to make sure that our tests are thorough, independent and readable. Thorough meaning that we are performing at a high code coverage - at least 90% overall. Independent meaning that we are testing one thing at a time. For example, we’ve decided that a unit is a class. We are testing each and every component of a class - its state and functions as well as those functions method arguments.
+ ### Controller Tier
+ ![eStore API](a.png)
+ ![estorecontroller](b.png)
+> Analysis
+For our Inventory Controller file, we have 95% coverage which is really good already. searchProducts is 87% instructions covered. All the other are 100% instructions covered. The ideal coverage for controller file should 90% and above so our controller satisfies the requirement
+Most of the missed instructions and branches are in searchProduct(). 
 
+![estorecontroller](c.png)
+>As such, for proper coverage, we could write tests that cover a test that tests product.length in terms of whether, if product.length == 0, assert that the result is NOT_FOUND. We should also cover the code branches of when name != null or name =null in our tests. Along with this we can write tests to cover products != null or products = null
+
+ ### Model Tier
+ ![eStoreModel](d.png)
+ ![estoreModel](e.png)
+ 
+> Analysis
+It is very well tested file and all code is covered as we can above we achieved 100% code coverage
+ 
+ ### Persistence Tier
+ ![eStoreModel](f.png)
+ ![estoreModel](g.png)
+ 
+> Analysis
+We are only 2% short of the ideal requirement of 90%. We would have to test our getProduct array, createproduct elements in our InventoryFileDAO more thoroughly in order to achieve a decent coverage. As we can see, all the other elements have been covered 100%. 
+![estorePersistence](h.png)
+
+>We could add tests that take into account when containsCalories == null and containsCalories != null. We could add tests that account for if containsText == null and getCalories<=containsCalories, expect the product to be added to productArrayList. We could write the tests that are alternative to this. A final set of testcases could expect that product was added if containsCalories and containsText != null along with products name matches the text searched. One alternative to this would be expect product not to be added if these if conditions are not met.
+
+ 
 ## Object Oriented Principle Adherence
  ### Single Responsibility
    >Single Responsibility is very essential for our project. We ensure that the same is well applied and highly utilized in our project. Single Responsibility is one of the most important principles across all the principles. It simply means that each class defined must have only one single responsibility. It makes the application easier to maintain and also easier to understand. It is also done to ensure that in the future, if any changes are made to the code, it does not affect every class or dependent since each key functionality has its own separate class. Each class in our project has a very well-defined responsibility it must adhere to. The methods and attributes inside the class also contribute to the same. For example, the Product Class, holds information regarding every aspect of the product pertaining to that itself and has only that responsibility. It has many advantages, but the notable ones are that it is easier to understand the scope of a change in a class. It is easier to manage concurrent modifications or changes made. 
