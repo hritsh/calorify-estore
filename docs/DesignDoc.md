@@ -22,8 +22,7 @@ geometry: margin=1in
 This is a summary of the project. Calorify is an estore which is dedicated to allowing the customers to choose and order healthy products in order to cater to their calorie intake requirements. We want to provide a platform on which customers can, easily and safely, browse and purchase various healthy food products including salads, wraps, dips and our signature dishes.
 
 ### Purpose
-> _Provide a very brief statement about the project and the most
-> important user group and user goals._
+> Our purpose is to allow our customers to purchase high quality healthy food products  to satisfy their daily calorie requirements with a considerable amount of freedom towards customization. The inventory manager or the owner of the store, their functionality includes that they can view, add, update, and delete products from the menu listing.
 
 ### Glossary and Acronyms
 > _Provide a table of terms and acronyms._
