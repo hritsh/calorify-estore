@@ -30,6 +30,18 @@ This is a summary of the project. Calorify is an estore which is dedicated to al
 | Term | Definition |
 |------|------------|
 | SPA | Single Page |
+| User | Any person who accesses our calorify website |
+| Buyer | A person who register a new account and logs in with the intention to purchase the food products |
+| Admin | A person who logs in with the admin username and upkeeps the inventory of calorify |
+| Shopping cart | A collection of food products chosen by the buyer for them to purchase at the checkout |
+| Product | The food products which are sold in the estore |
+| MVP | Minimum Viable Product |
+| 10% feature | An additional feature implemented on top of the MVP |
+| DAO | Data Access Object, within the persistence tier |
+| HTTP | HyperText Transfer Protocol, a network protocol for specifications on how data should be transferred |
+| CSS | Cascading Style Spreadsheets that describe how HTML elements are to be displayed on screen and deals with the styling of the website |
+| UI | View section of the project to be shown to the user |
+| API | Application Programming Interface, connection interface between computers or computer programs. It helps the client application communicate with the server application. |
 
 
 ## Requirements
