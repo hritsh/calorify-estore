@@ -8,13 +8,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
+import { RegistrationPageComponent } from './registration-page/registration-page.component';
 
 const routes: Routes = [
+  { path: 'register', component: RegistrationPageComponent },
   //{ path: 'login', component: UserLoginComponent },
   //{ path: 'user-store/:username', component: UserStoreComponent },
   //{ path: 'admin-store', component: InventoryComponent },
   //{ path: 'product-details/:id', component: ProductDetailsComponent },
-  { path: 'user-store/:username/shopping-cart', component: ShoppingCartComponent },
+  { path: 'user-store/:username/shopping-cart', component: ShoppingCartComponent }
   //{ path: 'user-product-view/:username/:id', component: UserProductViewComponent }
 ]
 

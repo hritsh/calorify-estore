@@ -14,12 +14,14 @@ import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 
-import { FormsModule } from '@angular/forms'; // <-- NgModel lives here
+import { FormsModule } from '@angular/forms';
+import { RegistrationPageComponent } from './registration-page/registration-page.component'; // <-- NgModel lives here
 
 @NgModule({
   declarations: [
     AppComponent,
-    ShoppingCartComponent
+    ShoppingCartComponent,
+    RegistrationPageComponent
   ],
   imports: [
     HttpClientModule,
