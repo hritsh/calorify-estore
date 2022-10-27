@@ -19,7 +19,7 @@ geometry: margin=1in
 
 ## Executive Summary
 
-This is a summary of the project.
+This is a summary of the project. Calorify is an estore which is dedicated to allowing the customers to choose and order healthy products in order to cater to their calorie intake requirements. We want to provide a platform on which customers can, easily and safely, browse and purchase various healthy food products including salads, wraps, dips and our signature dishes.
 
 ### Purpose
 > _Provide a very brief statement about the project and the most
