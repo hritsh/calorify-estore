@@ -28,21 +28,6 @@ public class Customer extends User {
     @JsonProperty("loggedIn")
     private boolean loggedIn;
 
-    /**
-     * Create a product with the given id and name
-     * 
-     * @param id   The id of the product
-     * @param name The name of the product
-     * 
-     *             {@literal @}JsonProperty is used in serialization and
-     *             deserialization
-     *             of the JSON object to the Java object in mapping the
-     *             fields. If a field
-     *             is not provided in the JSON object, the Java field gets
-     *             the default Java
-     *             value, i.e. 0 for int
-     */
-
     @JsonProperty("cart")
     private ShoppingCart cart;
 
@@ -51,12 +36,13 @@ public class Customer extends User {
      * string
      * 
      * @param username the username of the {@link Customer customer}
+     * @param password the password of the {@link Customer customer}
      * @param cart     the {@link ShoppingCart cart} that is associated with the
      *                 {@link Customer customer}
      */
     @JsonCreator
-    public Customer(@JsonProperty("username") String username, @JsonProperty("cart") ShoppingCart cart) {
-        super(username);
+    public Customer(@JsonProperty("username") String username, @JsonProperty("password") String password, @JsonProperty("isAdmin") boolean isAdmin, @JsonProperty("cart") ShoppingCart cart) {
+        super(username, password, isAdmin);
         this.cart = cart;
     }
 
@@ -65,9 +51,10 @@ public class Customer extends User {
      * {@link ShoppingCart cart}
      * 
      * @param username the username of the {@link Customer customer}
+     * @param password the password of the {@link Customer customer}
      */
-    public Customer(String username) {
-        super(username);
+    public Customer(String username, String password, boolean isAdmin) {
+        super(username, password, isAdmin);
         this.cart = new ShoppingCart(null);
     }
 
@@ -116,7 +103,7 @@ public class Customer extends User {
      * 
      * @return The id of the product
      */
-    public boolean getloggedIn() {
+    public boolean getLoggedIn() {
         return loggedIn;
     }
 

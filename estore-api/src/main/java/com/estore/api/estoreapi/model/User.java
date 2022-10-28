@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 /**
  * Represents a User entity
@@ -14,16 +15,21 @@ public class User {
     private static final Logger LOG = Logger.getLogger(User.class.getName());
 
     // Package private for tests
-    static final String STRING_FORMAT = "Product [name=%s, image=%s, calories=%d, price=%f]";
+    static final String STRING_FORMAT = "User [username=%s, firstName=%s, lastName=%s, height=%d, weight=%d, age=%d, loggedIn=%b, isAdmin=%b]";
     public static final String ADMIN = "admin";
 
-    // We intend to keep 30 products in the inventory.
+    //Testing with atleast 4 users
     @JsonProperty("username")
     private String username;
-
+    @JsonProperty("password")
+    private String password;
+    @JsonProperty("isAdmin")
+    private boolean isAdmin;
     @JsonCreator
-    public User(@JsonProperty("username") String username) {
+    public User(@JsonProperty("username") String username, @JsonProperty("password") String password, @JsonProperty("isAdmin") boolean isAdmin) {
         this.username = username;
+        this.password = password;
+        this.isAdmin = isAdmin;
     }
 
     /**
@@ -44,7 +50,38 @@ public class User {
     public void setUsername(String username) {
         this.username = username;
     }
-
+    /**
+     * returns the string that represents the user password
+     * 
+     * @return a string representing this user's password
+     */
+    public String getPassword() {
+        return this.password;
+    }
+    /**
+     * Sets the password of the User
+     * 
+     * @param password The password of the User
+     */
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    /**
+     * returns the boolean value of true or false whether current user account is admin
+     * 
+     * @return true or false value representing user account roles
+     */
+    public boolean getIsAdmin() {
+        return this.isAdmin;
+    }
+    /**
+     * Sets the admin status of the User
+     * 
+     * @param isAdmin The value representing admin status of the User
+     */
+    public void setIsAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
+    }
     /**
      * {@inheritDoc}
      */
