@@ -47,10 +47,10 @@ public class ShoppingCartTest {
 
     @Test
     public void testClearCart() {
-        // invoke
+        // Setup & Invoke
         testShoppingCart.clearCart();
         int cartLength = testShoppingCart.getItems().length;
-        // analyze
+        // Analyze
         assertEquals(0, cartLength);
     }
 
@@ -62,7 +62,7 @@ public class ShoppingCartTest {
         actual.addProduct(product);
 
         // Invoke
-        actual.removeProduct(0);
+        actual.removeProduct(1);
         int cartLength = actual.getItems().length;
 
         // Analysis
