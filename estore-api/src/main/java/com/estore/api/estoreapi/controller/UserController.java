@@ -30,7 +30,7 @@ import com.estore.api.estoreapi.model.User;
  */
 
 @RestController
-@RequestMapping("user")
+@RequestMapping("users")
 public class UserController {
     private UserDAO userDao;
     private static final Logger LOG = Logger.getLogger(UserController.class.getName());
@@ -95,11 +95,11 @@ public class UserController {
      *         404 (NOT_FOUND) if the action failed
      *         500 (INTERNAL_SERVER_ERROR) if an issue arouse
      */
-    @PostMapping("/{username}")
-    public ResponseEntity<User> addUser(@PathVariable String username) {
-        LOG.info("POST /user=" + username);
+    @PostMapping("")
+    public ResponseEntity<User> addUser(@RequestBody User user) {
+        LOG.info("POST /users");
         try {
-            User result = userDao.addUser(username);
+            User result = userDao.addUser(user);
             if (result != null) {
                 return new ResponseEntity<User>(result, HttpStatus.OK);
             } else {

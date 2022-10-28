@@ -106,10 +106,12 @@ public class UserFileDAO implements UserDAO {
     public Customer[] getUsers() {
         // init
         ArrayList<Customer> userList = new ArrayList<>();
-        userList.add(new Customer(User.ADMIN));
+        //userList.add(new Customer(User.ADMIN));
 
         // get all users saved in a local list
         for (Customer user : customers.values()) {
+            //setting password from retrieved JSON to null for security purposes
+            user.setPassword("NULL");
             userList.add(user);
         }
 
@@ -124,11 +126,13 @@ public class UserFileDAO implements UserDAO {
      * {@inheritDoc}
      */
     @Override
-    public User addUser(String username) throws IOException {
+    public User addUser(User user) throws IOException {
         synchronized (customers) {
-            Customer newUser = new Customer(username);
+            String username = user.getUsername();
+            Customer newUser = new Customer(user.getUsername(), user.getPassword(), user.getIsAdmin());
             customers.put(username, newUser);
             save();
+            newUser.setPassword("NULL");
             return newUser;
         }
     }
@@ -140,17 +144,14 @@ public class UserFileDAO implements UserDAO {
     public User getUser(String username) throws IOException {
         load();
         synchronized (customers) {
-            User currUser;
+            User currUser = null;
             if (customers.containsKey(username)) {
                 currUser = customers.get(username);
             } else {
                 if (username.toLowerCase().equals(User.ADMIN)) {
                     currUser = admin;
-                } else {
-                    currUser = addUser(username);
                 }
             }
-
             return currUser;
         }
     }

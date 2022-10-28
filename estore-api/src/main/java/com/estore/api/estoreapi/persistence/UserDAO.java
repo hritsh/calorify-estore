@@ -12,7 +12,6 @@ import com.estore.api.estoreapi.model.User;
  * @author Team-E
  */
 public interface UserDAO {
-
     /**
      * Adds a {@linkplain User user} based on a given string passed in from the
      * frontend. Typically, with this program,
@@ -27,7 +26,7 @@ public interface UserDAO {
      * 
      * @throws IOException If an issue occured whilst accessing the json files
      */
-    User addUser(String username) throws IOException;
+    User addUser(User user) throws IOException;
 
     /**
      * Given a string, search the database for a {@linkplain User user} that
