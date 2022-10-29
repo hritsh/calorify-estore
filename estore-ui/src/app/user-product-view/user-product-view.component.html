@@ -1,5 +1,5 @@
 <body>
-    <div ngIf="product != null">
+    <div *ngIf="product != null">
       <h1>{{ product.name }} Details</h1>
       <div><img src="{{ product.image }}" /></div>
       <br />
@@ -20,16 +20,17 @@
           #amountSelect
           (input)="amountInput(amountSelect.value)"
         />
-        {{ currAmount }
+        {{ currAmount }}
       </div>
       <div><span>Total Price: </span>${{ product.quantity * currAmount}}</div>
       <div><span>Total Calories: </span>{{ product.calories * currAmount}}</div>
       <br />
-      <button type="button" (click)="backButton()>Go Back</button>
+      <button type="button" (click)="backButton()">Go Back</button>
       <button type="button" (click)="addToCart(product, currAmount)">
         Add to Cart
       </button>
       <label [textContent]="this.message"></label>
     </div>
   </body>
+  
   
