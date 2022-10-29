@@ -1,5 +1,6 @@
 package com.estore.api.estoreapi.model;
 
+import java.util.Set;
 import java.util.logging.Logger;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -23,13 +24,14 @@ public class User {
     private String username;
     @JsonProperty("password")
     private String password;
-    @JsonProperty("isAdmin")
-    private boolean isAdmin;
+    @JsonProperty("role")
+    //as user can have multiple roles
+    private Set<Role> role;
     @JsonCreator
-    public User(@JsonProperty("username") String username, @JsonProperty("password") String password, @JsonProperty("isAdmin") boolean isAdmin) {
+    public User(@JsonProperty("username") String username, @JsonProperty("password") String password, @JsonProperty("role") Set<Role> role) {
         this.username = username;
         this.password = password;
-        this.isAdmin = isAdmin;
+        this.role = role;
     }
 
     /**
@@ -71,16 +73,16 @@ public class User {
      * 
      * @return true or false value representing user account roles
      */
-    public boolean getIsAdmin() {
-        return this.isAdmin;
+    public Set<Role> getRole() {
+        return this.role;
     }
     /**
      * Sets the admin status of the User
      * 
      * @param isAdmin The value representing admin status of the User
      */
-    public void setIsAdmin(boolean isAdmin) {
-        this.isAdmin = isAdmin;
+    public void setRole(Set<Role> role) {
+        this.role = role;
     }
     /**
      * {@inheritDoc}

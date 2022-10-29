@@ -11,7 +11,9 @@ import java.util.TreeMap;
 import com.estore.api.estoreapi.model.Customer;
 import com.estore.api.estoreapi.model.User;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 /**
@@ -23,13 +25,14 @@ import org.springframework.stereotype.Component;
  * is to be instantiated
  * and inserted into any class that needs it upon starting.
  * 
- * @author Alen Van
+ * @author Team E
  */
 @Component
 public class UserFileDAO implements UserDAO {
 
     Map<String, Customer> customers; // local data storage of the inventory
     User admin;
+
     // to object
     private String filename; // the file to read and write to
     private JsonUtilities jsonUtilities; // provides json conversions
@@ -111,7 +114,7 @@ public class UserFileDAO implements UserDAO {
         // get all users saved in a local list
         for (Customer user : customers.values()) {
             //setting password from retrieved JSON to null for security purposes
-            user.setPassword("NULL");
+            //user.setPassword("NULL");
             userList.add(user);
         }
 
@@ -129,10 +132,10 @@ public class UserFileDAO implements UserDAO {
     public User addUser(User user) throws IOException {
         synchronized (customers) {
             String username = user.getUsername();
-            Customer newUser = new Customer(user.getUsername(), user.getPassword(), user.getIsAdmin());
+            Customer newUser = new Customer(user.getUsername(), user.getPassword(), user.getRole());
             customers.put(username, newUser);
             save();
-            newUser.setPassword("NULL");
+            //newUser.setPassword("NULL");
             return newUser;
         }
     }

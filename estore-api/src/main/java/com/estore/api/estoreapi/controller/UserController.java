@@ -1,5 +1,6 @@
 package com.estore.api.estoreapi.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,6 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.estore.api.estoreapi.persistence.UserDAO;
+import com.estore.api.estoreapi.service.UserService;
 import com.estore.api.estoreapi.model.User;
 
 /**
@@ -34,6 +36,8 @@ import com.estore.api.estoreapi.model.User;
 public class UserController {
     private UserDAO userDao;
     private static final Logger LOG = Logger.getLogger(UserController.class.getName());
+    @Autowired
+    private UserService userService;
 
     /**
      * Creates a REST API controller to reponds to requests
@@ -99,7 +103,7 @@ public class UserController {
     public ResponseEntity<User> addUser(@RequestBody User user) {
         LOG.info("POST /users");
         try {
-            User result = userDao.addUser(user);
+            User result = userService.registerNewUser(user);
             if (result != null) {
                 return new ResponseEntity<User>(result, HttpStatus.OK);
             } else {

@@ -1,5 +1,7 @@
 package com.estore.api.estoreapi.model;
 
+import java.util.Set;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -41,8 +43,8 @@ public class Customer extends User {
      *                 {@link Customer customer}
      */
     @JsonCreator
-    public Customer(@JsonProperty("username") String username, @JsonProperty("password") String password, @JsonProperty("isAdmin") boolean isAdmin, @JsonProperty("cart") ShoppingCart cart) {
-        super(username, password, isAdmin);
+    public Customer(@JsonProperty("username") String username, @JsonProperty("password") String password, @JsonProperty("role") Set<Role> role, @JsonProperty("cart") ShoppingCart cart) {
+        super(username, password, role);
         this.cart = cart;
     }
 
@@ -53,8 +55,8 @@ public class Customer extends User {
      * @param username the username of the {@link Customer customer}
      * @param password the password of the {@link Customer customer}
      */
-    public Customer(String username, String password, boolean isAdmin) {
-        super(username, password, isAdmin);
+    public Customer(String username, String password, Set<Role> role) {
+        super(username, password, role);
         this.cart = new ShoppingCart(null);
     }
 
