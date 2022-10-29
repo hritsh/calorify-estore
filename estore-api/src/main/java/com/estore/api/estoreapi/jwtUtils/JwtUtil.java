@@ -3,6 +3,8 @@ package com.estore.api.estoreapi.jwtUtils;
 import java.security.Key;
 import java.util.Base64;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 
 import javax.crypto.spec.SecretKeySpec;
@@ -18,8 +20,10 @@ import io.jsonwebtoken.SignatureAlgorithm;
 public class JwtUtil {
     private static final String SECRET_KEY = "CaloriTeamE";
 
+    private static final int TOKEN_VALIDITY = 3600 * 5;
+
     Key hmacKey = new SecretKeySpec(Base64.getDecoder().decode(SECRET_KEY), 
-                            SignatureAlgorithm.HS256.getJcaName());
+                            SignatureAlgorithm.HS512.getJcaName());
 
     public String getUserNameFromJWT(String token) {
         return getClaimFromJWT(token, Claims::getSubject);
@@ -44,5 +48,14 @@ public class JwtUtil {
 
     private Date getExpirationDateFromToken(String token) {
         return getClaimFromJWT(token, Claims::getExpiration);
+    }
+
+    public String generateToken(UserDetails userDetails) {
+        Map<String, Object> claims = new HashMap<>();
+        return Jwts.builder().setClaims(claims)
+        .setSubject(userDetails.getUsername())
+        .setIssuedAt(new Date(System.currentTimeMillis()))
+        .setExpiration(new Date(System.currentTimeMillis()+ TOKEN_VALIDITY * 1000))
+        .signWith(hmacKey).compact();
     }
 }
