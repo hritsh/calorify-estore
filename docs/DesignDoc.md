@@ -46,11 +46,11 @@ This is a summary of the project. Calorify is an estore which is dedicated to al
 
 ## Requirements
 
-This section describes the features of the application.
+>Calorify supports user creation via signup and will display an error message to the user if the username provided is not already a logged user. Calorify supports userLogin via username, with “admin” reserved for the inventory manager, to control traffic into two main pages: the customer browse page and the admin browse page.
 
-> _In this section you do not need to be exhaustive and list every
-> story.  Focus on top-level features from the Vision document and
-> maybe Epics and critical Stories._
+User Features: Users can see the list of products in the inventory. This inventory can be filtered by max price where the list of products shown will update on the user’s screen to only display products beneath the user-defined max price, calories. The inventory shown can also be updated live via a product search. Only products containing the user-defined search term will be shown on the screen. The user can click on any product shown to be redirected to each product’s detail page. From there the user can select their product, and eventually adding the product to their shopping cart. The user can continue to shop, add to their shopping cart, and remove from the shopping cart. From the shopping cart, the user can see the list of products they have in their shopping cart and can click on the checkout button to finalize their purchase. At all times, the user can navigate from Login, Browse, and ShoppingCart pages. Admin Features: The admin can see the list of products in the inventory, search for specific products, and add new product listings on their browse page. When the admin clicks on a specific product listing, they are directed to the product’s detail page where they can update the price and quantity, calories, image.
+
+
 
 ### Definition of MVP
 > _Provide a simple description of the Minimum Viable Product._
