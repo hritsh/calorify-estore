@@ -53,7 +53,7 @@
     * @returns The {@link User user} that is logged in
     */
    getUser(): User {
-     const username = this.route.snapshot.paramMap.get('username');
+     const username = this.route.snapshot.paramMap.get('username')!;
  
      this.userService.getUser(username)
        .subscribe(user => this.user = user)
