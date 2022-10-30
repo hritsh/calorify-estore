@@ -53,7 +53,7 @@ User Features: Users can see the list of products in the inventory. This invento
 
 
 ### Definition of MVP
-> _Provide a simple description of the Minimum Viable Product._
+> The minimum viable product includes: Login and logout functionality, where an inventory manager can log in as "admin" and no passwords are required Customer functionality, including searching for products, adding products to their shopping cart, and checking out Inventory management, which allows inventory managers to add, remove, and update products in the inventory Data persistence, so that the inventory, users, and user shopping carts are saved 10% feature - An additional feature implemented on top of the MVP.
 
 ### MVP Features
 > _Provide a list of top-level Epics and/or Stories of the MVP._
