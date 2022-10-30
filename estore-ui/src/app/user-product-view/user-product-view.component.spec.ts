@@ -11,7 +11,9 @@ describe('UserProductViewComponent', () => {
       declarations: [ UserProductViewComponent ]
     })
     .compileComponents();
+  });
 
+  beforeEach(() => {
     fixture = TestBed.createComponent(UserProductViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
