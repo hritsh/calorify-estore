@@ -31,21 +31,16 @@ public class RoleFileDAO implements RoleDAO{
         ++nextId;
         return id;
     }
-    private Role[] getRolesArray() {
-        return getRolesArray(null);
-    }
-    private Role[] getRolesArray(String containsText) { // if containsText == null, no filter
+    private Role[] getRolesArray() { 
         ArrayList<Role> roleArrayList = new ArrayList<>();
 
         for (Role role : roles.values()) {
-            if (containsText == null) {
-                roleArrayList.add(role);
-            }
+            roleArrayList.add(role);
         }
 
-        Role[] heroArray = new Role[roleArrayList.size()];
-        roleArrayList.toArray(heroArray);
-        return heroArray;
+        Role[] roleArray = new Role[roleArrayList.size()];
+        roleArrayList.toArray(roleArray);
+        return roleArray;
     }
     private boolean save() throws IOException {
         Role[] roleArray = getRolesArray();
@@ -94,18 +89,14 @@ public class RoleFileDAO implements RoleDAO{
     @Override
     public Role createRole(Role role) throws IOException {
         synchronized (roles) {
-            // We create a new product object because the id field is immutable
-            // and we need to assign the next unique id
-            // check if a product name already exists in products
-            // if it does, return null
             for (Role r : roles.values()) {
-                if (r.getRoleName().equals(role.getRoleName())) {
+                if (r.getRoleName().equals(role.getRoleName().toLowerCase())) {
                     save();
                     return null;
                 }
             }
-            // else, create a new product and add it to products
-            Role newRole = new Role(nextId(), role.getRoleName(), role.getRoleDescription());
+            //role is made to be lowercase
+            Role newRole = new Role(nextId(),  role.getRoleName().toLowerCase());
             roles.put(newRole.getRoleId(), newRole);
             save(); // may throw an IOException
             return newRole;
