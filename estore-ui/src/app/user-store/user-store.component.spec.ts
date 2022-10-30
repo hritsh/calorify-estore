@@ -11,7 +11,9 @@ describe('UserStoreComponent', () => {
       declarations: [ UserStoreComponent ]
     })
     .compileComponents();
+  });
 
+  beforeEach(() => {
     fixture = TestBed.createComponent(UserStoreComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
