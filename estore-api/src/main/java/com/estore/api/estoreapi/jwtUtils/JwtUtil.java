@@ -18,12 +18,12 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 @Component
 public class JwtUtil {
-    private static final String SECRET_KEY = "CaloriTeamE";
+    private static final String SECRET_KEY = "PIGSd1uVlo28HGCaXUS1wcCNWQC83XW81LB64Ty2YPgNZxXj2N";
 
     private static final int TOKEN_VALIDITY = 3600 * 5;
 
     Key hmacKey = new SecretKeySpec(Base64.getDecoder().decode(SECRET_KEY), 
-                            SignatureAlgorithm.HS512.getJcaName());
+                            SignatureAlgorithm.HS256.getJcaName());
 
     public String getUserNameFromJWT(String token) {
         return getClaimFromJWT(token, Claims::getSubject);

@@ -60,12 +60,14 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .antMatchers(HttpMethod.DELETE, "/products/{id}").hasRole("admin")
                     .antMatchers(HttpMethod.PUT, "/products").hasRole("admin")
                     .antMatchers(HttpMethod.GET, "/products**").permitAll()
-                    .antMatchers("/roles**").permitAll()
+                    .antMatchers("/roles**").hasRole("admin")
                     .antMatchers(HttpMethod.POST, "/users").permitAll()
                     .antMatchers(HttpMethod.DELETE, "/users**").hasAnyRole("admin", "user")
+                    .antMatchers(HttpMethod.PUT, "/users**").hasRole("user")
                     .antMatchers(HttpMethod.GET, "/users").hasRole("admin")
                     .antMatchers(HttpMethod.GET, "/users/{username:[a-zA-Z &+-]*}").hasAnyRole("admin", "user")
                     .antMatchers("/shoppingcart**").hasAnyRole("admin", "user")
+                    .antMatchers(HttpMethod.POST, "/auth/login").permitAll()
                     .antMatchers(HttpHeaders.ALLOW).permitAll()
                     .anyRequest().authenticated();
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
