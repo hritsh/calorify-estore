@@ -9,6 +9,7 @@ import com.estore.api.estoreapi.persistence.ShoppingCartDAO;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -62,7 +63,8 @@ public class ShoppingCartController {
      *         A ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
     @GetMapping("/{username}")
-    public ResponseEntity<Product[]> getCart(@PathVariable String username) {
+    @PreAuthorize("#username == authentication.name")
+    public ResponseEntity<Product[]> getCart(@PathVariable("username") String username) {
         LOG.info("GET /shoppingcart/customer=" + username);
         try {
             Product[] cartFound = shoppingCartDao.getShoppingCart(username);
@@ -88,7 +90,8 @@ public class ShoppingCartController {
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
     @DeleteMapping("/{username}/{id}")
-    public ResponseEntity<Product> deleteProduct(@PathVariable String username, @PathVariable int id) {
+    @PreAuthorize("#username == authentication.name")
+    public ResponseEntity<Product> deleteProduct(@PathVariable("username") String username, @PathVariable int id) {
         LOG.info("DELETE /cart/customer=" + username + "/product/id=" + id);
         try {
             boolean deleted = shoppingCartDao.deleteProduct(username, id);
@@ -114,7 +117,8 @@ public class ShoppingCartController {
      *         500 (INTERNAL_SERVER_ERROR) if an issue arouse
      */
     @DeleteMapping("/{username}")
-    public ResponseEntity<Boolean> clearCart(@PathVariable String username) {
+    @PreAuthorize("#username == authentication.name")
+    public ResponseEntity<Boolean> clearCart(@PathVariable("username") String username) {
         LOG.info("DELETE /cart/customer=" + username);
         try {
             boolean deleted = shoppingCartDao.clearShoppingCart(username);
@@ -140,7 +144,8 @@ public class ShoppingCartController {
      *         500 (INTERNAL_SERVER_ERROR) if an issue arouse
      */
     @PostMapping("/{username}")
-    public ResponseEntity<Boolean> checkout(@PathVariable String username) {
+    @PreAuthorize("#username == authentication.name")
+    public ResponseEntity<Boolean> checkout(@PathVariable("username") String username) {
         LOG.info("POST /shoppingcart/customer=" + username);
         try {
             boolean result = shoppingCartDao.checkout(username);
@@ -171,7 +176,8 @@ public class ShoppingCartController {
      *         500 (INTERNAL_SERVER_ERROR) if an issue arouse
      */
     @PutMapping("/{username}/{quantity}/{id}")
-    public ResponseEntity<Integer> addProduct(@PathVariable String username, @PathVariable Integer quantity,
+    @PreAuthorize("#username == authentication.name")
+    public ResponseEntity<Integer> addProduct(@PathVariable("username") String username, @PathVariable Integer quantity,
             @PathVariable Integer id) {
         LOG.info("PUT /shoppingcart/customer=" + username + "/productID=" + id + "/quantity=" + quantity);
         try {

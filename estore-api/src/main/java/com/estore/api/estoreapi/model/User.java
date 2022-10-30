@@ -5,7 +5,6 @@ import java.util.logging.Logger;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 /**
  * Represents a User entity

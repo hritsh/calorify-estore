@@ -43,7 +43,17 @@ public interface UserDAO {
      * @throws IOException If an issue occured whilst accessing the json files
      */
     User getUser(String username) throws IOException;
-
+    /**
+     * Updates and saves a {@linkplain User user} with selected details provided by user after authenticating
+     * 
+     * @param {@link User user} object to be updated and saved
+     * 
+     * @return updated {@link User user} if successful, null if
+     * {@link User user} could not be found
+     * 
+     * @throws IOException if underlying storage cannot be accessed
+     */
+    Customer updateUserDetails(Customer customer) throws IOException;
     /**
      * Given a string, search and delete a {@linkplain User user} that correlates
      * with the given string.
