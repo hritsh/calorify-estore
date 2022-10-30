@@ -6,9 +6,13 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import java.util.logging.Level;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.estore.api.estoreapi.model.Role;
@@ -25,6 +29,27 @@ public class RoleController {
     public RoleController(RoleDAO roleDao) {
         this.roleDao = roleDao;
     }
+    /**
+     * Responds to the GET request for all {@linkplain Role roles}
+     * 
+     * @return ResponseEntity with array of {@link Role roles} objects (may be
+     *         empty)
+     *         and
+     *         HTTP status of OK<br>
+     *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     */
+    @GetMapping("")
+    public ResponseEntity<Role[]> getRoles() {
+        LOG.info("GET /roles");
+        try {
+            Role[] roles = roleDao.getRoles();
+            return new ResponseEntity<Role[]>(roles, HttpStatus.OK);
+        } catch (IOException e) {
+            LOG.log(Level.SEVERE, e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PostMapping({"/"})
     public ResponseEntity<Role> createNewRole(@RequestBody Role role) {
         LOG.info("POST /roles " + role);
@@ -38,5 +63,29 @@ public class RoleController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         
+    }
+
+    /**
+     * Deletes a {@linkplain Role role} with the given id
+     * 
+     * @param id The id of the {@link Role role} to deleted
+     * 
+     * @return ResponseEntity HTTP status of OK if deleted<br>
+     *         ResponseEntity with HTTP status of NOT_FOUND if not found<br>
+     *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     */
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Role> deleteRole(@PathVariable int id) {
+        LOG.info("DELETE /roles/" + id);
+        try {
+            boolean role = roleDao.deleteRole(id);
+            if (role != false)
+                return new ResponseEntity<>(HttpStatus.OK);
+            else
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (IOException e) {
+            LOG.log(Level.SEVERE, e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
