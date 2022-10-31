@@ -53,3 +53,17 @@
  backButton(): void {
   this.location.back();
 }
+  /**
+   * allows the admin to save the {@linkplain Product product} that they have just modified
+   */
+   saveButton(): void {
+    /**
+     * Saves the current form of the product
+     */
+    if (this.product) {
+      this.productService.updateProduct(this.product)
+        .subscribe(() => this.backButton());
+    }
+  }
+
+}
