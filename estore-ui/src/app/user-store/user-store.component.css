@@ -90,7 +90,7 @@ body {
     width: 100%;
   }
   
-  image {
+  .image {
     grid-column-start: 1;
     grid-column-end: 5;
   }
