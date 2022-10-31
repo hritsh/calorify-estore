@@ -47,3 +47,9 @@
   this.productService.getProduct(id)
     .subscribe(product => this.product = product)
 }
+/**
+   * Returns the user to the previous page
+   */
+ backButton(): void {
+  this.location.back();
+}
