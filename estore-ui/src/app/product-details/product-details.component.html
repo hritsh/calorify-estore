@@ -1,0 +1,50 @@
+<div *ngIf="product != null">
+  <h1>{{ product.name }} Details</h1>
+  <div><span>id: </span>{{ product.id }}</div>
+  <div>
+    <label for="product-name">Product name: </label>
+    <input
+      id="product-name"
+      [(ngModel)]="product.name"
+      placeholder="Product name"
+    />
+
+    <br />
+
+    <label for="product-image">Product image: </label>
+    <input
+      id="product-image"
+      [(ngModel)]="product.image"
+      placeholder="Product image"
+    />
+
+    <br />
+
+    <label for="product-calories">Product calories: </label>
+    <input
+      id="product-calories"
+      [(ngModel)]="product.calories"
+      placeholder="Product calories"
+    />
+
+    <br />
+
+    <label for="product-price">Product price: </label>
+    <input
+      id="product-price"
+      [(ngModel)]="product.price"
+      placeholder="Product price"
+    />
+    <br />
+
+    <label for="product-stock">Product stock: </label>
+    <input
+      id="product-stock"
+      [(ngModel)]="product.quantity"
+      placeholder="Product stock"
+    />
+  </div>
+</div>
+
+<button type="button" (click)="backButton()">Go Back</button>
+<button type="button" (click)="saveButton()">Save</button>
