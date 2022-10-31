@@ -12,3 +12,13 @@ describe('ProductDetailsComponent', () => {
     })
     .compileComponents();
   });
+  beforeEach(() => {
+    fixture = TestBed.createComponent(ProductDetailsComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});
