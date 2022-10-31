@@ -19,3 +19,19 @@
    templateUrl: './product-details.component.html',
    styleUrls: ['./product-details.component.css']
  })
+ export class ProductDetailsComponent implements OnInit {
+  @Input() product?: Product;
+
+  constructor(
+    private productService: ProductService,
+    private route: ActivatedRoute,
+    public router: Router,
+    private location: Location) {
+  }
+
+  /**
+   * on initialization of this component
+   */
+  ngOnInit(): void {
+    this.getProduct();
+  }
