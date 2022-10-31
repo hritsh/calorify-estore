@@ -45,4 +45,17 @@ export class ProductService {
     return this.http.delete<Product>(url, this.httpOptions);
   }
 
+ /**
+   * Sends a {@linkplain Product product} back to the backend in order to update it's details
+   *
+   * @param product The {@link Product product} that is to be updated
+   *
+   * @returns an observable that is created from observing the return state of the put request
+   *
+   */
+  updateProduct(product: Product): Observable<any> {
+    const url = `${this.productsURL}`
+    return this.http.put(url, product, this.httpOptions);
+  }
+
 
