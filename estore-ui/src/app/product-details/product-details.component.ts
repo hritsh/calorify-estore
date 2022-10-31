@@ -35,3 +35,15 @@
   ngOnInit(): void {
     this.getProduct();
   }
+/**
+   * Gets a specific {@linkplain Product product} to display
+   */
+ getProduct(): void {
+  /**
+   * Gets the id from the route to get the product
+   */
+  const id = parseInt(this.route.snapshot.paramMap.get('id')!, 10);
+
+  this.productService.getProduct(id)
+    .subscribe(product => this.product = product)
+}
