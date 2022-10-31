@@ -5,5 +5,6 @@ export interface Product {
     image: string;
     calories: number;
     price: number;
+
     quantity: number;
 }
