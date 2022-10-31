@@ -33,3 +33,16 @@ export class ProductService {
     return this.http.get<Product[]>(url, this.httpOptions);
   }
 
+ /**
+   * sends information of the {@linkplain Product product} to be deleted from the inventory to the backend
+   *
+   * @param id the id that is associated with the to be deleted {@link Product product}
+   *
+   * @returns The {@link Product product} that was deleted
+   */
+  deleteProduct(id: number): Observable<Product> {
+    const url = `${this.productsURL}/${id}`;
+    return this.http.delete<Product>(url, this.httpOptions);
+  }
+
+
