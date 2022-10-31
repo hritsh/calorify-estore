@@ -43,8 +43,6 @@ export class ShoppingCartComponent implements OnInit {
     this.ifFailed = false;
     this.getUser();
     this.getCart();
-    this.getTotalCalories();
-    this.getTotalPrice();
   }
 
   /**
@@ -65,22 +63,6 @@ export class ShoppingCartComponent implements OnInit {
     this.username = this.route.snapshot.paramMap.get('username') as string;
     this.userService.getUser(this.username)
       .subscribe(user => this.user = user);
-  }
-
-  getTotalCalories(): number {
-    let totalCalories = 0;
-    for (let i = 0; i < this.cart.length; i++) {
-      totalCalories += this.cart[i].calories * this.cart[i].quantity;
-    }
-    return totalCalories;
-  }
-
-  getTotalPrice(): number {
-    let totalPrice = 0;
-    for (let i = 0; i < this.cart.length; i++) {
-      totalPrice += this.cart[i].price * this.cart[i].quantity;
-    }
-    return totalPrice;
   }
 
   /**
