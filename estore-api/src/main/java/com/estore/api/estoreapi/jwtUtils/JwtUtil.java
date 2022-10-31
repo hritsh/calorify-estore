@@ -15,7 +15,12 @@ import org.springframework.stereotype.Component;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-
+/**
+ * The JwtUtil class
+ * A utilities class that has methods that are all related to JWT
+ * 
+ * @author Team-E
+ */
 @Component
 public class JwtUtil {
     private static final String SECRET_KEY = "PIGSd1uVlo28HGCaXUS1wcCNWQC83XW81LB64Ty2YPgNZxXj2N";
@@ -24,7 +29,12 @@ public class JwtUtil {
 
     Key hmacKey = new SecretKeySpec(Base64.getDecoder().decode(SECRET_KEY), 
                             SignatureAlgorithm.HS256.getJcaName());
-
+    /**
+     * Create a Role with the given roleId, and name
+     * @param token The id of the role
+     * 
+     * @return a number representing this roles id
+     */
     public String getUserNameFromJWT(String token) {
         return getClaimFromJWT(token, Claims::getSubject);
     }

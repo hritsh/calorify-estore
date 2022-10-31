@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.logging.Logger;
 
 import com.estore.api.estoreapi.model.Product;
-import com.estore.api.estoreapi.persistence.InventoryDAO;
 import com.estore.api.estoreapi.persistence.ShoppingCartDAO;
 
 import org.springframework.http.HttpStatus;
@@ -19,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Handles the REST API requests for the Inventory resource
+ * Handles the REST API requests for the Shopping Cart resource
  * <p>
  * {@literal @}RestController Spring annotation identifies this class as a REST
  * API
@@ -35,9 +34,9 @@ public class ShoppingCartController {
     private ShoppingCartDAO shoppingCartDao;
 
     /**
-     * Creates a REST API controller to reponds to requests
+     * Creates a REST API controller to responds to requests
      * 
-     * @param shoppingCartDAO The {@link InventoryDAO Inventory Data Access Object}
+     * @param shoppingCartDAO The {@link ShoppingCartDAO Shopping Cart Data Access Object}
      *                        to
      *                        perform CRUD operations
      *                        <br>
@@ -79,7 +78,7 @@ public class ShoppingCartController {
     }
 
     /**
-     * Deletes a {@linkplain Product product} with the given id
+     * Deletes a {@linkplain Product product} with the given id from the Shopping Cart
      * 
      * @param username the username of the {@link Customer customer} who initiaited
      *                 this action

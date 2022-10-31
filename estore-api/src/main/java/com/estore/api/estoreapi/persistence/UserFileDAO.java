@@ -35,13 +35,14 @@ public class UserFileDAO implements UserDAO {
     private RoleDAO roleDAO;
     // to object
     private String filename; // the file to read and write to
-    private JsonUtilities jsonUtilities; // provides json conversions
+    private JsonUtilities jsonUtilities; 
 
     /**
      * Creates an Inventory File Data Access Object
      * 
      * @param filename     filename to read from and write to
-     * @param objectMapper provides conversion between JSON files to object
+     * @param jsonUtilities provides conversion between JSON files to object
+     * @param roleDAO      used for role operations while creating user
      * 
      * @throws IOException when file cannot be accessed or read from
      */
@@ -52,7 +53,7 @@ public class UserFileDAO implements UserDAO {
         load(); // load the users from the file
     }
     /**
-     * Loads all {@linkplain User users} that were in the file that was passed in
+     * Loads all {@linkplain Customer customers } that were in the file that was passed in
      * Deserialize all JSON products and saves it into a local storage for easy
      * access
      * 
@@ -89,7 +90,7 @@ public class UserFileDAO implements UserDAO {
     }
 
     /**
-     * saves the list of {@linkplain User users}
+     * saves the list of {@linkplain Customer customers}
      *
      * @return a true indicating the save was successful
      *         An exception if an error occured
@@ -123,6 +124,7 @@ public class UserFileDAO implements UserDAO {
         return result;
 
     }
+    //to check if admin exists in users.json already if so, return true , else false
     private boolean checkIfAdminExists() {
         boolean adminExists = false;
         for (Customer user : customers.values()) {

@@ -38,6 +38,7 @@ public class Customer extends User {
      * string
      * 
      * @param username the username of the {@link Customer customer}
+     * @param role     the set of roles of the {@link Customer customer}
      * @param password the password of the {@link Customer customer}
      * @param cart     the {@link ShoppingCart cart} that is associated with the
      *                 {@link Customer customer}
@@ -53,6 +54,7 @@ public class Customer extends User {
      * {@link ShoppingCart cart}
      * 
      * @param username the username of the {@link Customer customer}
+     * @param role     the set of roles associated with the customer
      * @param password the password of the {@link Customer customer}
      */
     public Customer(String username, String password, Set<Role> role) {
@@ -85,6 +87,8 @@ public class Customer extends User {
 
     /**
      * clears the {@linkplain ShoppingCart cart}
+     * 
+     * @return true indicating that the cart was cleared
      */
     public boolean clearCart() {
         return this.cart.clearCart();
@@ -166,7 +170,7 @@ public class Customer extends User {
     /**
      * Sets the weight of the User
      * 
-     * @return The weight of the User
+     * @param weight The weight of the User
      */
     public void setWeight(Integer weight) {
         this.weight = weight;
@@ -184,7 +188,7 @@ public class Customer extends User {
     /**
      * Retrieves the age of the User
      * 
-     * @return The age of the User
+     * @param age The age of the User
      */
     public void setAge(Integer age) {
         this.age = age;

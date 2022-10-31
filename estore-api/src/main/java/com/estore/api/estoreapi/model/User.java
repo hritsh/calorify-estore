@@ -14,11 +14,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class User {
     private static final Logger LOG = Logger.getLogger(User.class.getName());
 
-    // Package private for tests
-    static final String STRING_FORMAT = "User [username=%s, firstName=%s, lastName=%s, height=%d, weight=%d, age=%d, loggedIn=%b, isAdmin=%b]";
+    static final String STRING_FORMAT = "User [username=%s]";
     public static final String ADMIN = "admin";
 
-    //Testing with atleast 4 users
     @JsonProperty("username")
     private String username;
     @JsonProperty("password")
@@ -26,6 +24,18 @@ public class User {
     @JsonProperty("role")
     //as user can have multiple roles
     private Set<Role> role;
+
+    /**
+     * Create a user with the given username, password and set of designated roles
+     * @param username The username of the user
+     * @param password The password of the user
+     * @param role The set of roles of the user
+     * 
+     * {@literal @}JsonProperty is used in serialization and deserialization
+     * of the JSON object to the Java object in mapping the fields.  If a field
+     * is not provided in the JSON object, the Java field gets the default Java
+     * value, i.e. 0 for int
+     */
     @JsonCreator
     public User(@JsonProperty("username") String username, @JsonProperty("password") String password, @JsonProperty("role") Set<Role> role) {
         this.username = username;
@@ -43,7 +53,7 @@ public class User {
     }
 
     /**
-     * Sets the name of the User - necessary for JSON object to Java object
+     * Sets the username of the User - necessary for JSON object to Java object
      * deserialization
      * 
      * @param username The username of the User
@@ -68,17 +78,17 @@ public class User {
         this.password = password;
     }
     /**
-     * returns the boolean value of true or false whether current user account is admin
+     * returns the Roles designated with the User
      * 
-     * @return true or false value representing user account roles
+     * @return Set of roles which represent the privileges of the current user
      */
     public Set<Role> getRole() {
         return this.role;
     }
     /**
-     * Sets the admin status of the User
+     * Assigns the set of roles that are the users privileges
      * 
-     * @param isAdmin The value representing admin status of the User
+     * @param role The value representing privileges of the current user
      */
     public void setRole(Set<Role> role) {
         this.role = role;

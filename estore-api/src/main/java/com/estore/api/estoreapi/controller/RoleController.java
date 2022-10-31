@@ -18,7 +18,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.estore.api.estoreapi.model.Role;
 import com.estore.api.estoreapi.persistence.RoleDAO;
 import com.estore.api.estoreapi.service.RoleService;
-
+/**
+ * Handles the REST API requests for CRUD operations related to Role model resource
+ * <p>
+ * {@literal @}RestController Spring annotation identifies this class as a REST
+ * API
+ * method handler to the Spring framework
+ * 
+ * @author Team-E
+ */
 @RestController
 @RequestMapping("roles")
 public class RoleController {
@@ -26,6 +34,13 @@ public class RoleController {
     private RoleDAO roleDao;
     @Autowired
     private RoleService roleService;
+    /**
+     * Creates a REST API controller to respond to requests
+     * 
+     * @param roleDao The {@link RoleDAO Role Data Access Object} to be used in operations relating to RoleFileDAO and roles.json
+     *                     <br>
+     *                     This dependency is injected by the Spring Framework
+     */
     public RoleController(RoleDAO roleDao) {
         this.roleDao = roleDao;
     }
@@ -49,7 +64,19 @@ public class RoleController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    /**
+     * Creates a {@linkplain Role role} with the provided Role object
+     * 
+     * @param role - The {@link Role role} to create
+     * 
+     * @return ResponseEntity with created {@link Role role} object and HTTP
+     *         status
+     *         of CREATED<br>
+     *         ResponseEntity with HTTP status of CONFLICT if {@link Role
+     *         role}
+     *         object already exists<br>
+     *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     */
     @PostMapping({"/"})
     public ResponseEntity<Role> createNewRole(@RequestBody Role role) {
         LOG.info("POST /roles " + role);

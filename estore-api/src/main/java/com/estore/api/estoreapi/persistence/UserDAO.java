@@ -13,14 +13,14 @@ import com.estore.api.estoreapi.model.User;
  */
 public interface UserDAO {
     /**
-     * Adds a {@linkplain User user} based on a given string passed in from the
+     * Adds a {@linkplain User user} based on a given details passed in from the
      * frontend. Typically, with this program,
      * the getUser would be called first to check if the {@link User user}
      * exists, if not then we automatically create
-     * a new user with the given string as their username. This all occurs from the
-     * login screen.
+     * a new user with the given details such as their username. This all occurs from the
+     * register page.
      * 
-     * @param username The string the corresponds with the new {@link User user}
+     * @param user The object containing all the details related to the new {@link User user}
      * 
      * @return The newly created {@link User user} object
      * 
@@ -44,12 +44,13 @@ public interface UserDAO {
      */
     User getUser(String username) throws IOException;
     /**
-     * Updates and saves a {@linkplain User user} with selected details provided by user after authenticating
+     * Updates and saves a {@linkplain Customer customer} which is an 
+     * extension of User with selected details provided by user after authenticating
      * 
-     * @param {@link User user} object to be updated and saved
+     * @param {@link Customer customer} object to be updated and saved
      * 
-     * @return updated {@link User user} if successful, null if
-     * {@link User user} could not be found
+     * @return updated {@link Customer customer} if successful, null if
+     * {@link Customer customer} could not be found
      * 
      * @throws IOException if underlying storage cannot be accessed
      */

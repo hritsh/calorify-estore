@@ -31,7 +31,6 @@ import com.estore.api.estoreapi.model.User;
  * 
  * @author Team-E
  */
-
 @RestController
 @RequestMapping("users")
 public class UserController {
@@ -41,10 +40,10 @@ public class UserController {
     private UserService userService;
 
     /**
-     * Creates a REST API controller to reponds to requests
+     * Creates a REST API controller to responds to requests
      * 
-     * @param userDao The {@link userDAO Inventory Data Access Object} to
-     *                perform CRUD operations
+     * @param userDao The {@link userDAO User Data Access Object} to
+     *                perform CRUD operations related to User
      *                <br>
      *                This dependency is injected by the Spring Framework
      */
@@ -95,7 +94,7 @@ public class UserController {
     /**
      * Adds a new {@linkplain User user} to the database
      * 
-     * @param username the username of the new {@link User user}
+     * @param user the {@link User user} object that will be added to file
      * 
      * @return the newly created {@link User user} as well as a
      *         200 (OK) indicating that the action was successful
@@ -117,12 +116,12 @@ public class UserController {
         }
     }
     /**
-     * Updates the {@linkplain User user} with the provided {@linkplain User user}
-     * object, if it exists
+     * Updates the {@linkplain User user} in users.json with the provided {@linkplain Customer customer}
+     * object and its details, if it exists
      * 
-     * @param user The {@link User user} to update
+     * @param customer The {@link Customer customer} to update
      * 
-     * @return ResponseEntity with updated {@link User user} object and HTTP status
+     * @return ResponseEntity with updated {@link Customer customer} object and HTTP status
      *         of OK if updated<br>
      *         ResponseEntity with HTTP status of NOT_FOUND if not found<br>
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise

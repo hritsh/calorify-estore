@@ -23,7 +23,7 @@ import org.springframework.stereotype.Component;
 public class ShoppingCartFileDAO implements ShoppingCartDAO {
 
     UserDAO userDAO; // the userDAO that corresponds with this DAO
-    InventoryDAO inventoryFileDAO;
+    InventoryDAO inventoryDAO;
 
     /**
      * Constructor for the shopping cart DAO class
@@ -32,10 +32,11 @@ public class ShoppingCartFileDAO implements ShoppingCartDAO {
      *                able to save the state of the users
      *                since this class modifies the {@link ShoppingCart shopping
      *                cart} which the {@link Customer customers} hold
+     * @param inventoryDAO the inventoryDAO, used for checkout
      */
-    public ShoppingCartFileDAO(UserDAO userDAO, InventoryDAO inventoryFileDAO) {
+    public ShoppingCartFileDAO(UserDAO userDAO, InventoryDAO inventoryDAO) {
         this.userDAO = userDAO;
-        this.inventoryFileDAO = inventoryFileDAO;
+        this.inventoryDAO = inventoryDAO;
     }
 
     /**
@@ -44,7 +45,7 @@ public class ShoppingCartFileDAO implements ShoppingCartDAO {
     @Override
     public synchronized Product addProduct(String username, int id, int quantity) throws IOException {
         Customer targetCustomer = (Customer) userDAO.getUser(username);
-        Product newProduct = this.inventoryFileDAO.createClone(id, quantity);
+        Product newProduct = this.inventoryDAO.createClone(id, quantity);
         Product addedProduct = targetCustomer.addProduct(newProduct);
         userDAO.saveUsers();
         return addedProduct;
@@ -86,11 +87,10 @@ public class ShoppingCartFileDAO implements ShoppingCartDAO {
     /**
      * {@inheritDoc}
      */
+    @Override
     public synchronized Boolean checkout(String username) throws IOException {
-        // Customer targetCustomer = (Customer) userDAO.getUser(username);
-        // boolean status = targetCustomer.checkout();
         Product[] product_array = this.getShoppingCart(username);
-        boolean status = inventoryFileDAO.checkOut(product_array);
+        boolean status = inventoryDAO.checkOut(product_array);
         if (status) {
             this.clearShoppingCart(username);
         }
