@@ -1,0 +1,31 @@
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <app-product-search></app-product-search>
+  
+    <br /><br />
+  
+    <h2 *ngIf="user != null">
+      <button class="cart" routerLink="shopping-cart">
+        <span>Shopping Cart</span>
+      </button>
+    </h2>
+  
+    <h1>Available Products:</h1>
+    <ul class="wrapper">
+      <div *ngFor="let product of inventory">
+        <button
+          class="btn-group"
+          routerLink="/user-product-view/{{ user?.username }}/{{ product.id }}"
+        >
+          <strong>{{ product.name }}</strong>
+          <label class="calories">Calories: {{ product.calories }}</label>
+          <label class="price">Price: ${{ product.price }}</label>
+          <label class="quantity">Stock: {{ product.quantity }}</label>
+          <label class="image"><img src="{{ product.image }}" /></label>
+        </button>
+      </div>
+    </ul>
+  </body>
+  
