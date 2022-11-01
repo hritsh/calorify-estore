@@ -43,11 +43,6 @@ Our purpose is to allow our customers to purchase high quality healthy food prod
 
 Calorify supports user creation via signup and will display an error message to the user if the username provided is already a logged user. 
 Calorify supports userLogin via username, with “admin” reserved for the inventory manager, to control traffic into two main pages: the customer browse page and the admin browse page.
-2) Non-functional requirements:
-- The website must be secure and protect the customer's personal information
-- The website must be responsive and work on all devices
-- The website must be easy to use and navigate
-- The website must have a modern and sleek design
 
 User Features: Users can see the list of products in the inventory. This inventory can be filtered by max price where the list of products shown will update on the user’s screen to only display products beneath the user-defined max price, calories. The inventory shown can also be updated live via a product search. Only products containing the user-defined search term will be shown on the screen. The user can click on any product shown to be redirected to each product’s detail page. From there the user can select their product, and eventually adding the product to their shopping cart. The user can continue to shop, add to their shopping cart, and remove from the shopping cart. From the shopping cart, the user can see the list of products they have in their shopping cart and can click on the checkout button to finalize their purchase. At all times, the user can navigate from Login, Browse, and ShoppingCart pages. 
 
@@ -178,7 +173,7 @@ Calorie Adder
 ![Domain Model](Calorify.png)
 
 
-There are two main entities in the domain model: the user and the product. The user can be a customer or an admin. The product is the food item that the user can purchase. The user can add products to their shopping cart, and the shopping cart can be persisted. The user can also search for products by name, price, and calories. The admin can add, remove, and update products in the inventory.
+There is a parent entity which represents the user, is then extended into two based on privileges of the role: 1) admin/owner 2) customer. Another crucial entity is the product/food that is being sold for purchase by a customer. The products being sold are kept inside inventory. A customer has access to the menu which displays all the products present in the inventory. If the customer wants to filter for a specific product or type of product, they use the Search bar. The admin is able to modify the contents of this inventory. The user can add products from inventory to their shopping cart, which can be described as an attribute of User and the shopping cart is persistent across login sessions. The customer can checkout from shopping cart to place an order. This order will be put for delivery after purchase. The user can also search for products by name, price, and calories. The admin is the only one allowed to add, remove, and update products in the inventory. The customer can use ingredients in the inventory to make their own salad which will be a custom product created by the user that will be placed in the shopping cart and can be purchased in checkout. The customer can place reviews for their purchased products. These purchased orders can give rewards that are a discount on certain products. Finally the customers personal details can be usd to calculate BMI and the recommended calories. This can be used by the user to filter products based their suggested calorie intake
 
 
 ## Architecture and Design
