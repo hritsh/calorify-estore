@@ -9,5 +9,15 @@
     <input type="password" id="password" name="password" #password>
   </div>
   <div>
+    <div *ngFor="let role of roles">
+      <input type="checkbox" (change)="getCheckBoxValue($event)"id={{role.roleId}} name={{role.roleName}}>
+      <label for={{role.roleName}}>{{role.roleName}}</label>
+    </div>
+  </div>
+  <div>
     <button type="button" (click)="submit(username.value, password.value)">Register</button>
+  </div>
+  <div *ngIf="createdUsername">
+    <span>{{createdUsername}} has been created!</span>
+  </div>
 </div>

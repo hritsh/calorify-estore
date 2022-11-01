@@ -85,7 +85,7 @@ public class LoginController {
             if(user != null) {
                 userDetails = new org.springframework.security.core.userdetails.User(username, password, getAuthorities(user));
             } else {
-                throw new UsernameNotFoundException("username is not valid");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             }
             
             newGeneratedToken = jwtUtil.generateToken(userDetails);            
