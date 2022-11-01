@@ -41,16 +41,38 @@ Our purpose is to allow our customers to purchase high quality healthy food prod
 
 ## Requirements
 
-Calorify supports user creation via signup and will display an error message to the user if the username provided is already a logged user. 
-Calorify supports userLogin via username, with “admin” reserved for the inventory manager, to control traffic into two main pages: the customer browse page and the admin browse page.
+The store will be based on Spring Boot as a backend and Angular JS as front end working together to provide the functionality of the Calorify store.
+We have considered the following functional and non-functional requirements:
 
-User Features: Users can see the list of products in the inventory. This inventory can be filtered by max price where the list of products shown will update on the user’s screen to only display products beneath the user-defined max price, calories. The inventory shown can also be updated live via a product search. Only products containing the user-defined search term will be shown on the screen. The user can click on any product shown to be redirected to each product’s detail page. From there the user can select their product, and eventually adding the product to their shopping cart. The user can continue to shop, add to their shopping cart, and remove from the shopping cart. From the shopping cart, the user can see the list of products they have in their shopping cart and can click on the checkout button to finalize their purchase. At all times, the user can navigate from Login, Browse, and ShoppingCart pages. 
+1) Functional requirements:
 
-Admin Features: The admin can see the list of products in the inventory, search for specific products, and add new product listings on their browse page. When the admin clicks on a specific product listing, they are directed to the product’s detail page where they can update the price and quantity, calories, image.
+* The website must allow the customer to create an account and login
+* The website must not allow identical users to be registered
+* The website must allow the customer to view the list of products and their nutritional information
+* The application will support adding new products to the inventory, with only the administrator having access to this function.
+* The website must allow admin to create, update, read and delete products from inventory
+* The website must only allow specific pages to be viewed by admin
+* The website must not allow specific pages to be viewed by customer
+* The website must not allow specific pages to be viewed by unregistered user
+* The website must allow the customer to filter products by price
+* The website must allow customers to find products containing the user search term in their name
+* The application will support sorting products by price, name, and calories.
+* The website must allow customer to see details of a product of interest
+* The website must allow the customer to read, add, remove, update and delete products from their cart
+* The website must allow the customer to checkout and purchase the products in their cart
+* The website must allow the customer to view their purchase history
+* The website must allow the customer to provide feedback on the products
+
+2) Non-functional requirements:
+
+* The website must be secure and protect the customer's personal information
+* The website must be responsive and work on all devices
+* The website must be easy to use and navigate
+* The website must have a modern and sleek design
 
 ### Definition of MVP
 
-The minimum viable product includes: 
+The minimum viable product includes
 
 Login and logout functionality, where an inventory manager can log in as "admin" and no passwords are required
 
@@ -59,7 +81,6 @@ Customer functionality, including searching for products, adding products to the
 10% feature - An additional feature implemented on top of the MVP.
 
 ### MVP Features
-
 
 #### Epics
 
@@ -172,13 +193,21 @@ Calorie Adder
 
 ![Domain Model](Calorify.png)
 
-
 There is a parent entity which represents the user, is then extended into two based on privileges of the role: 1) admin/owner 2) customer. Another crucial entity is the product/food that is being sold for purchase by a customer. The products being sold are kept inside inventory. A customer has access to the menu which displays all the products present in the inventory. If the customer wants to filter for a specific product or type of product, they use the Search bar. The admin is able to modify the contents of this inventory. The user can add products from inventory to their shopping cart, which can be described as an attribute of User and the shopping cart is persistent across login sessions. The customer can checkout from shopping cart to place an order. This order will be put for delivery after purchase. The user can also search for products by name, price, and calories. The admin is the only one allowed to add, remove, and update products in the inventory. The customer can use ingredients in the inventory to make their own salad which will be a custom product created by the user that will be placed in the shopping cart and can be purchased in checkout. The customer can place reviews for their purchased products. These purchased orders can give rewards that are a discount on certain products. Finally the customers personal details can be usd to calculate BMI and the recommended calories. This can be used by the user to filter products based their suggested calorie intake
-
 
 ## Architecture and Design
 
-Our application consists of three main components: the model, the controller and the persistence. The Angular framework is used to create the Estore-UI, which is contained within the view component and is made up of HTML, CSS, and TypeScript. The Estore-API receives HTTP requests from the view and responds with HTTP answers. The view model and the model are both parts of the Estore-API component. The view model houses the controller and services, which are both built in Java and make use of the Spring framework. Our persistence and application models, which are both written in Java, are included in the model. The Estore-API uses I/O to communicate with the storage. JSON files constitute the storage.
+The Estore-UI is the graphical user interface front end for our application. It is made up of HTML, CSS, and TypeScript code and uses the Angular framework. The Estore-UI communicates with the Estore-API to fetch data and to send data back to the backend for processing.
+
+The Estore-API is the back end for our application. It is made up of Java code and uses the Spring framework. The Estore-API receives HTTP requests from the Estore-UI and responds with HTTP answers. The Estore-API uses I/O to communicate with the storage for read and write. JSON files constitute the storage and format of requests and response bodies
+
+Our application consists of three main components: the model, the controller and the persistence.
+
+The model is the part of the application representing the data layer of our application with classes. The model is the format in which information may be saved in a persistent file. For example, a User that stores information about users in the form of Object
+
+The controller is responsible for handling user requests and responses. It is what will call the Data Access Object when appropriate to retrieve and add information and perform logic on them. The controller is written in Java and makes use of the Spring framework.
+
+The services are responsible for business logic.
 
 ### Summary
 
@@ -275,7 +304,7 @@ As such, for proper coverage, we could write tests that cover a test that tests 
  ![estoreModel](e.png)
 
 Analysis
- 
+
  It is very well tested file and all code is covered as we can above we achieved 100% code coverage
 
 ### Coverage: Persistence Tier
