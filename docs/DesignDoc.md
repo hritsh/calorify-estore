@@ -15,7 +15,7 @@ geometry: margin=1in
 
 ## Executive Summary
 
-This is a summary of the project. Calorify is an estore which is dedicated to allowing the customers to choose and order healthy products in order to cater to their calorie intake requirements. We want to provide a platform on which customers can, easily and safely, browse and purchase various healthy food products including salads, wraps, dips and our signature dishes. It is completely user-input based so that we can cater to the needs of our customer and help them acheive their diet goals.
+> Calorify is an e-commerce store which is dedicated to allowing the customers to choose and purchase healthy food products in order to cater to their calorie intake requirements. We want to provide a platform on which customers can, easily and safely, browse and purchase various healthy food products including salads, wraps, dips and our signature dishes. It is completely user-input based so that we can meet the needs of our customer and help them acheive their diet goals.
 
 ### Purpose
 
@@ -41,7 +41,7 @@ This is a summary of the project. Calorify is an estore which is dedicated to al
 
 ## Requirements
 
->Calorify supports user creation via signup and will display an error message to the user if the username provided is already a logged user. 
+> Calorify supports user creation via signup and will display an error message to the user if the username provided is already a logged user. 
 Calorify supports userLogin via username, with “admin” reserved for the inventory manager, to control traffic into two main pages: the customer browse page and the admin browse page.
 
 User Features: Users can see the list of products in the inventory. This inventory can be filtered by max price where the list of products shown will update on the user’s screen to only display products beneath the user-defined max price, calories. The inventory shown can also be updated live via a product search. Only products containing the user-defined search term will be shown on the screen. The user can click on any product shown to be redirected to each product’s detail page. From there the user can select their product, and eventually adding the product to their shopping cart. The user can continue to shop, add to their shopping cart, and remove from the shopping cart. From the shopping cart, the user can see the list of products they have in their shopping cart and can click on the checkout button to finalize their purchase. At all times, the user can navigate from Login, Browse, and ShoppingCart pages. 
