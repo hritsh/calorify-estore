@@ -44,8 +44,8 @@ geometry: margin=1in
 > Calorify supports user creation via signup and will display an error message to the user if the username provided is already a logged user. 
 Calorify supports userLogin via username, with “admin” reserved for the inventory manager, to control traffic into two main pages: the customer browse page and the admin browse page.
 
-User Features: Users can see the list of products in the inventory. This inventory can be filtered by max price where the list of products shown will update on the user’s screen to only display products beneath the user-defined max price, calories. The inventory shown can also be updated live via a product search. Only products containing the user-defined search term will be shown on the screen. The user can click on any product shown to be redirected to each product’s detail page. From there the user can select their product, and eventually adding the product to their shopping cart. The user can continue to shop, add to their shopping cart, and remove from the shopping cart. From the shopping cart, the user can see the list of products they have in their shopping cart and can click on the checkout button to finalize their purchase. At all times, the user can navigate from Login, Browse, and ShoppingCart pages. 
-Admin Features: The admin can see the list of products in the inventory, search for specific products, and add new product listings on their browse page. When the admin clicks on a specific product listing, they are directed to the product’s detail page where they can update the price and quantity, calories, image.
+> User Features: Users can see the list of products in the inventory. This inventory can be filtered by max price where the list of products shown will update on the user’s screen to only display products beneath the user-defined max price, calories. The inventory shown can also be updated live via a product search. Only products containing the user-defined search term will be shown on the screen. The user can click on any product shown to be redirected to each product’s detail page. From there the user can select their product, and eventually adding the product to their shopping cart. The user can continue to shop, add to their shopping cart, and remove from the shopping cart. From the shopping cart, the user can see the list of products they have in their shopping cart and can click on the checkout button to finalize their purchase. At all times, the user can navigate from Login, Browse, and ShoppingCart pages. 
+> Admin Features: The admin can see the list of products in the inventory, search for specific products, and add new product listings on their browse page. When the admin clicks on a specific product listing, they are directed to the product’s detail page where they can update the price and quantity, calories, image.
 
 ### Definition of MVP
 
@@ -166,9 +166,10 @@ Admin Features: The admin can see the list of products in the inventory, search 
 
 ## Application Domain
 
-This section describes the application domain.
-
 ![Domain Model](Calorify.png)
+
+> There are two main entities in the domain model: the user and the product. The user can be a customer or an admin. The product is the food item that the user can purchase. The user can add products to their shopping cart, and the shopping cart can be persisted. The user can also search for products by name, price, and calories. The admin can add, remove, and update products in the inventory.
+
 
 > _Provide a high-level overview of the domain for this application. You
 > can discuss the more important domain entities and their relationship
@@ -176,7 +177,7 @@ This section describes the application domain.
 
 ## Architecture and Design
 
-This section describes the application architecture.
+>Our application consists of three main components: the model, the controller and the persistence. The Angular framework is used to create the Estore-UI, which is contained within the view component and is made up of HTML, CSS, and TypeScript. The Estore-API receives HTTP requests from the view and responds with HTTP answers. The view model and the model are both parts of the Estore-API component. The view model houses the controller and services, which are both built in Java and make use of the Spring framework. Our persistence and application models, which are both written in Java, are included in the model. The Estore-API uses I/O to communicate with the storage. JSON files constitute the storage.
 
 ### Summary
 
@@ -193,9 +194,6 @@ The View is the client-side SPA built with Angular utilizing HTML, CSS and TypeS
 Both the ViewModel and Model are built using Java and Spring Framework. Details of the components within these tiers are supplied below.
 
 ### Overview of User Interface
-
-This section describes the web interface flow; this is how the user views and interacts
-with the e-store application.
 
 > When a user first launches the application, they see the login page, where they are given the option to either login or to sign up. From the sign up option, the user is taken to a page which prompts for a username. The user can then either select to create their account, or to cancel. Cancel takes the user back to the login page. Create account will create a new account for the user with the given username, log them in, and bring them to the browse page unless there is already an account with that username, in which case, the user will receive a message alerting them of this issue. Now, when the user is on the login page, enters an existing username that is not “admin,” and selects the login option, they are logged into the application and are taken to the browse page, where they see the inventory of products below a menu bar, with the options of login, browse, and shopping cart, along with a search bar where they can search for products whose names contain the entered string. If they select a product from this browse page, they are taken to a page containing details of the product, which also gives them the option to add the item to their cart, and to personalize the item (i.e. add an engraving message, choose their varnish). If they select the shopping cart option from the menu, they are taken to a page which displays the items currently in their shopping cart. When the user is on the login page and enters the username “admin,” they are brought to the admin-browse page where they can view and add products to, or remove products from, the inventory. When they select a specific product, they are brought to the admin-product-detail page, where they can update the product’s information.
 
@@ -262,7 +260,7 @@ with the e-store application.
  ![eStore API](a.png)
  ![estorecontroller](b.png)
 > Analysis
-For our Inventory Controller file, we have 95% coverage which is really good already. searchProducts is 87% instructions covered. All the other are 100% instructions covered. The ideal coverage for controller file should 90% and above so our controller satisfies the requirement
+> For our Inventory Controller file, we have 95% coverage which is really good already. searchProducts is 87% instructions covered. All the other are 100% instructions covered. The ideal coverage for controller file should 90% and above so our controller satisfies the requirement
 Most of the missed instructions and branches are in searchProduct().
 
 ![estorecontroller](c.png)
@@ -274,7 +272,7 @@ Most of the missed instructions and branches are in searchProduct().
  ![estoreModel](e.png)
 
 > Analysis
-It is very well tested file and all code is covered as we can above we achieved 100% code coverage
+> It is very well tested file and all code is covered as we can above we achieved 100% code coverage
 
 ### Coverage: Persistence Tier
 
@@ -282,7 +280,7 @@ It is very well tested file and all code is covered as we can above we achieved 
  ![estoreModel](g.png)
 
 > Analysis
-We are only 2% short of the ideal requirement of 90%. We would have to test our getProduct array, createproduct elements in our InventoryFileDAO more thoroughly in order to achieve a decent coverage. As we can see, all the other elements have been covered 100%.
+> We are only 2% short of the ideal requirement of 90%. We would have to test our getProduct array, createproduct elements in our InventoryFileDAO more thoroughly in order to achieve a decent coverage. As we can see, all the other elements have been covered 100%.
 
 ![estorePersistence](h.png)
 
