@@ -1,0 +1,21 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  font-family: 'Roboto', sans-serif;
+  font-size: large;
+}
+
+.login-form {
+  padding: 1em;
+}
+.content {
+  padding: 1em 0em;
+}
+
+button {
+  padding: 0em 1em;
+  margin: 8px 0;
+  cursor: pointer;
+}
