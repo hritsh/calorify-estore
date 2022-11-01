@@ -43,6 +43,11 @@ Our purpose is to allow our customers to purchase high quality healthy food prod
 
 Calorify supports user creation via signup and will display an error message to the user if the username provided is already a logged user. 
 Calorify supports userLogin via username, with “admin” reserved for the inventory manager, to control traffic into two main pages: the customer browse page and the admin browse page.
+2) Non-functional requirements:
+- The website must be secure and protect the customer's personal information
+- The website must be responsive and work on all devices
+- The website must be easy to use and navigate
+- The website must have a modern and sleek design
 
 User Features: Users can see the list of products in the inventory. This inventory can be filtered by max price where the list of products shown will update on the user’s screen to only display products beneath the user-defined max price, calories. The inventory shown can also be updated live via a product search. Only products containing the user-defined search term will be shown on the screen. The user can click on any product shown to be redirected to each product’s detail page. From there the user can select their product, and eventually adding the product to their shopping cart. The user can continue to shop, add to their shopping cart, and remove from the shopping cart. From the shopping cart, the user can see the list of products they have in their shopping cart and can click on the checkout button to finalize their purchase. At all times, the user can navigate from Login, Browse, and ShoppingCart pages. 
 
