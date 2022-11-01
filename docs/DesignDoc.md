@@ -200,16 +200,9 @@ When a user first launches the application, they see the login page, where they 
 
 ### View Tier
 
-> _Provide a summary of the View Tier UI of your architecture.
-> Describe the types of components in the tier and describe their
-> responsibilities.  This should be a narrative description, i.e. it has
-> a flow or "story line" that the reader can follow._
-
-> _You must also provide sequence diagrams as is relevant to a particular aspects
-> of the design that you are describing.  For example, in e-store you might create a
-> sequence diagram of a customer searching for an item and adding to their cart.
-> Be sure to include an relevant HTTP reuqests from the client-side to the server-side
-> to help illustrate the end-to-end flow._
+The view tier is the user interface of the application. It is responsible for displaying data to the user and for gathering input from the user. The view tier consists of two types of components: UI components and presentation components.
+The UI components are responsible for generating the HTML that is sent to the client. They use the presentation components to get the data that they need to display. The presentation components are responsible for getting the data from the business tier and for formatting it for the UI components.
+The sequence diagram below shows a customer searching for an item and adding it to their cart. The customer starts by entering a search term into the search box. This sends an HTTP GET request to the server. The server then calls the business tier to get a list of items that match the search term. The business tier returns a list of items to the server. The server then calls the presentation tier to format the data for the UI components. The presentation tier returns the formatted data to the server. The server then calls the UI components to generate the HTML for the search results page. The UI components return the HTML to the server. The server then sends the HTML to the client. The client displays the HTML to the user.
 
 ### ViewModel Tier
 
