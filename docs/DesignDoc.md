@@ -306,7 +306,7 @@ For example, in this case the framework creates an InventoryFileDAO object. It t
 ### Information Expert
 
 Information Expert is a design pattern that states “Assign responsibility to the class that has the information needed to fulfill the responsibility.”
-According to this principle, responsibilities are assigned in the form of methods which are fields to classes. All behaviors that directly work with a class's attributes should be implemented in the class itself. Any operations that the client would perform using the attribute data or class methods should also be considered for implementation. The client shouldn’t be doing any “heavy-lifting”, all methods should be simplified for their use.
+According to this principle, responsibilities are assigned in the form of methods which are fields to classes. All behaviors that directly work with a class's attributes should be implemented in the class itself. Any operations that the client would perform using the attribute data or class methods should also be considered for implementation. The client shouldn’t be doing any “heavy-lifting”, all methods should be simplified for their use. For example, let’s say we have a class called “Animal”, and this class has a field called “name”. The “name” field is used to store the name of the animal. We would want to implement a method in the Animal class to set the name of the animal, and another method to get the name of the animal. This way, the client doesn’t have to worry about how the name is stored, or how to set it. They can simply call the methods that are provided.
 
 ### Low Coupling
 
