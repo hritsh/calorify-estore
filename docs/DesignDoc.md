@@ -244,8 +244,7 @@ The view tier of the e-store has the following components:
 * Shopping Cart Page
 * Checkout Page
 * Order Confirmation Page
-The home page is the first page that a user sees when they visit the e-store. It contains a featured product, a list of the most popular products, and a list of the latest products.
-The product listing page shows a list of products that are in a particular category. The user can use the filters to narrow down the list of products.
+The home page is the first page that a user sees when they visit the e-store.
 The product details page shows the details of a particular product.
 
 ### Model Tier
