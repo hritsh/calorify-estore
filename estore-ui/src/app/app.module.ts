@@ -16,12 +16,24 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { FormsModule } from '@angular/forms';
 import { RegistrationPageComponent } from './registration-page/registration-page.component'; // <-- NgModel lives here
+import { InventoryComponent } from './inventory/inventory.component';
+import { ProductSearchComponent } from './product-search/product-search.component';
+import { ProductDetailsComponent } from './product-details/product-details.component';
+import { UserLoginComponent } from './user-login/user-login.component';
+import { UserStoreComponent } from './user-store/user-store.component';
+import { UserProductViewComponent } from './user-product-view/user-product-view.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ShoppingCartComponent,
-    RegistrationPageComponent
+    RegistrationPageComponent,
+    InventoryComponent,
+    ProductSearchComponent,
+    ProductDetailsComponent,
+    UserLoginComponent,
+    UserStoreComponent,
+    UserProductViewComponent
   ],
   imports: [
     HttpClientModule,
