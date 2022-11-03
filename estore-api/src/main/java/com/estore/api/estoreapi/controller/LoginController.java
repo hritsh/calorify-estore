@@ -1,7 +1,6 @@
 package com.estore.api.estoreapi.controller;
 
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.io.IOException;
 import java.util.logging.Logger;
@@ -70,7 +69,7 @@ public class LoginController {
      */
     @PostMapping("login")
     public ResponseEntity<JwtResponse> login(@RequestBody JwtRequest jwtRequest) {
-        LOG.info("/auth/login for user:"+jwtRequest.getUsername());
+        LOG.info("/auth/login for user:");
         User user=null;
         UserDetails userDetails=null;
 

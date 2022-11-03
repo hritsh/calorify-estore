@@ -17,6 +17,8 @@ public class JwtRequest {
         this.username = username;
         this.password = password; 
     }
+    public JwtRequest() {
+    }
 
     /**
      * returns the string that represents the username that was sent in the user request
