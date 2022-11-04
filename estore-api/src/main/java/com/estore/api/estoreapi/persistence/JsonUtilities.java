@@ -60,6 +60,8 @@ public class JsonUtilities {
      * @param filename the name of the file to serialize to
      * @param content  the object to serialize
      * 
+     * @return A serialization of the json string
+     * 
      * @throws IOException if an error occured
      */
     public <T> void SerializeObject(String filename, T content) throws IOException {

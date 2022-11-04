@@ -72,12 +72,16 @@ public class InventoryFileDAO implements InventoryDAO {
 
     /**
      * Generates an array of {@linkplain Product products} from the tree map for any
-     * {@linkplain Product products} that contains the text specified by
-     * containsText
+     * {@linkplain Product products} that contains the either text,calories or both specified by
+     * containsText,containsCalories or getAll
      * <br>
      * If containsText is null, the array contains all of the {@linkplain Product
      * products}
      * in the tree map
+     * 
+     * @param containsText     The text to match against
+     * @param containsCalories The calories to match against
+     * @param getAll           true if we want to get all products without search filter
      * 
      * @return The array of {@link Product products}, may be empty
      */
@@ -204,21 +208,23 @@ public class InventoryFileDAO implements InventoryDAO {
         }
     }
 
-    @Override
+    
     /**
      ** {@inheritDoc}
      ** called searchProduct on Trello card
      */
+    @Override
     public Product[] searchProduct(String containsText, Integer containsCalories) throws IOException {
         synchronized (products) {
             return getProductsArray(containsText, containsCalories, false);
         }
     }
 
-    @Override
+    
     /**
      ** {@inheritDoc}
      */
+    @Override
     public Product updateProduct(Product product) throws IOException {
         synchronized (products) {
             if (products.containsKey(product.getId()) == false)
@@ -230,10 +236,11 @@ public class InventoryFileDAO implements InventoryDAO {
         }
     }
 
-    @Override
+    
     /**
      ** {@inheritDoc}
      */
+    @Override
     public boolean deleteProduct(int id) throws IOException {
         synchronized (products) {
             if (products.containsKey(id)) {
@@ -258,16 +265,7 @@ public class InventoryFileDAO implements InventoryDAO {
     }
 
     /**
-     * Changes the ammount of the inventory has in stock
-     * 
-     * @return false:
-     *         if the quantity of the {@linkplain Product product} that is being
-     *         checkedout is larger than the quantity the inventory has in stock
-     *         if a {@link Product product} that is being checked out no longer is
-     *         available in the inventory
-     *         true otherwise indicating a sucessful action
-     * 
-     * @throws IOException
+     * {@inheritDoc}
      */
     public Boolean checkOut(Product[] passed) throws IOException {
         // base cases for false

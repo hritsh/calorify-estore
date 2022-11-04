@@ -7,8 +7,10 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.logging.Logger;
 
 import com.estore.api.estoreapi.model.Customer;
+import com.estore.api.estoreapi.model.Role;
 import com.estore.api.estoreapi.model.User;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -23,33 +25,35 @@ import org.springframework.stereotype.Component;
  * is to be instantiated
  * and inserted into any class that needs it upon starting.
  * 
- * @author Alen Van
+ * @author Team E
  */
 @Component
 public class UserFileDAO implements UserDAO {
-
+    private static final Logger LOG = Logger.getLogger(UserFileDAO.class.getName());
     Map<String, Customer> customers; // local data storage of the inventory
     User admin;
+    private RoleDAO roleDAO;
     // to object
     private String filename; // the file to read and write to
-    private JsonUtilities jsonUtilities; // provides json conversions
+    private JsonUtilities jsonUtilities; 
 
     /**
      * Creates an Inventory File Data Access Object
      * 
      * @param filename     filename to read from and write to
-     * @param objectMapper provides conversion between JSON files to object
+     * @param jsonUtilities provides conversion between JSON files to object
+     * @param roleDAO      used for role operations while creating user
      * 
      * @throws IOException when file cannot be accessed or read from
      */
-    public UserFileDAO(@Value("${users.file}") String filename, JsonUtilities jsonUtilities) throws IOException {
+    public UserFileDAO(@Value("${users.file}") String filename, RoleDAO roleDAO, JsonUtilities jsonUtilities) throws IOException {
         this.filename = filename;
+        this.roleDAO = roleDAO;
         this.jsonUtilities = jsonUtilities;
-        load(); // load the products from the file
+        load(); // load the users from the file
     }
-
     /**
-     * Loads all {@linkplain User users} that were in the file that was passed in
+     * Loads all {@linkplain Customer customers } that were in the file that was passed in
      * Deserialize all JSON products and saves it into a local storage for easy
      * access
      * 
@@ -59,11 +63,9 @@ public class UserFileDAO implements UserDAO {
      */
     private boolean load() throws IOException {
         customers = new TreeMap<>();
-
         // deserialize the JSON file into a list of users
         try {
             String JSONString = Files.readString(Path.of(filename));
-
             if (JSONString.length() > 0) {
                 Customer[] customerPassedIn = jsonUtilities.DeserializeObject(JSONString, Customer[].class);
 
@@ -80,6 +82,7 @@ public class UserFileDAO implements UserDAO {
             }
 
         } catch (EOFException e) {
+            LOG.info(e.toString());
         }
         // set the nextId to be the next available id
         return true;
@@ -87,7 +90,7 @@ public class UserFileDAO implements UserDAO {
     }
 
     /**
-     * saves the list of {@linkplain User users}
+     * saves the list of {@linkplain Customer customers}
      *
      * @return a true indicating the save was successful
      *         An exception if an error occured
@@ -106,10 +109,12 @@ public class UserFileDAO implements UserDAO {
     public Customer[] getUsers() {
         // init
         ArrayList<Customer> userList = new ArrayList<>();
-        userList.add(new Customer(User.ADMIN));
+        //userList.add(new Customer(User.ADMIN));
 
         // get all users saved in a local list
         for (Customer user : customers.values()) {
+            //setting password from retrieved JSON to null for security purposes
+            //user.setPassword("NULL");
             userList.add(user);
         }
 
@@ -119,20 +124,60 @@ public class UserFileDAO implements UserDAO {
         return result;
 
     }
-
+    //to check if admin exists in users.json already if so, return true , else false
+    private boolean checkIfAdminExists() {
+        boolean adminExists = false;
+        for (Customer user : customers.values()) {
+            if(user.getUsername().equals("admin")) {
+                adminExists = true;
+            }
+        }
+        return adminExists;
+    }
     /**
      * {@inheritDoc}
      */
     @Override
-    public User addUser(String username) throws IOException {
+    public User addUser(User user) throws IOException {
+        int roleDoesNotExist = 0;
+        Role role;
+        for(Role r: user.getRole()){
+            role = roleDAO.getRole(r.getRoleId());
+            if (role == null) {
+                roleDoesNotExist += 1;
+            }
+            if(r.getRoleName().equals("admin") == true && checkIfAdminExists() == true) {
+                return new User("ERROR: Admin already exists", null, null);
+            }
+        }
         synchronized (customers) {
-            Customer newUser = new Customer(username);
+            String username = user.getUsername();
+            if(roleDoesNotExist > 0) {
+                //return null if even one of the roles does not exist in roles.json
+                return new User("ERROR: Role does not exist", null, null);
+            }
+            Customer newUser = new Customer(user.getUsername(), user.getPassword(), user.getRole());
             customers.put(username, newUser);
             save();
+            //newUser.setPassword("NULL");
             return newUser;
         }
     }
-
+    /**
+    ** {@inheritDoc}
+     */
+    @Override
+    public Customer updateUserDetails(Customer customer) throws IOException {
+        synchronized(customers) {
+            if(customers.containsKey(customer.getUsername()) == false)
+                return null;
+            String originalPass = customers.get(customer.getUsername()).getPassword();
+            customer.setPassword(originalPass);
+            customers.put(customer.getUsername(), customer);
+            save();
+            return customer;
+        }
+    }
     /**
      * {@inheritDoc}
      */
@@ -140,17 +185,14 @@ public class UserFileDAO implements UserDAO {
     public User getUser(String username) throws IOException {
         load();
         synchronized (customers) {
-            User currUser;
+            User currUser = null;
             if (customers.containsKey(username)) {
                 currUser = customers.get(username);
             } else {
                 if (username.toLowerCase().equals(User.ADMIN)) {
                     currUser = admin;
-                } else {
-                    currUser = addUser(username);
                 }
             }
-
             return currUser;
         }
     }

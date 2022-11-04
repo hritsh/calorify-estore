@@ -17,7 +17,8 @@ public interface ShoppingCartDAO {
     /**
      * When given a {@linkplain Customer customer}'s username and the desired
      * {@link Product
-     * product} to add to their {@link ShoppingCart shopping cart}, this method
+     * product} indicated by id along with quantity 
+     * to add to their {@link ShoppingCart shopping cart}, this method
      * calls upon the underlying method within the {@link Customer customer} class
      * to add
      * the {@link Product product} to their {@link ShoppingCart shopping cart}.
@@ -25,7 +26,8 @@ public interface ShoppingCartDAO {
      * @param username the username of the {@link Customer customer} that is adding
      *                 a
      *                 {@link Product product}
-     * @param product  the {@link Product product} that is being added
+     * @param id   the id of the {@link Product product} that is being added
+     * @param quantity  the number of {@link Product product} to be added
      * 
      * @return the {@link Product product} that was added
      * 

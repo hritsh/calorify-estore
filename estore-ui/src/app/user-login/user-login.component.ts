@@ -1,9 +1,9 @@
 /**
  * SWEN 261
  * Huser-login.components.ts
- * 
+ *
  * This component handles the action of logging in for the {@linkplain User user}
- * 
+ *
  * Contributors: Team-E
  */
 
@@ -68,7 +68,7 @@ export class UserLoginComponent implements OnInit {
 
     // New User
     else {
-      this.userService.createUser(username);
+      //this.userService.createUser(username);
       this.router.navigate([`user-store/${username}`]);
     }
 

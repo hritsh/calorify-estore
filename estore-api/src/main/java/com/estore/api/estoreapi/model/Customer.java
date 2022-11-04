@@ -1,5 +1,7 @@
 package com.estore.api.estoreapi.model;
 
+import java.util.Set;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -28,21 +30,6 @@ public class Customer extends User {
     @JsonProperty("loggedIn")
     private boolean loggedIn;
 
-    /**
-     * Create a product with the given id and name
-     * 
-     * @param id   The id of the product
-     * @param name The name of the product
-     * 
-     *             {@literal @}JsonProperty is used in serialization and
-     *             deserialization
-     *             of the JSON object to the Java object in mapping the
-     *             fields. If a field
-     *             is not provided in the JSON object, the Java field gets
-     *             the default Java
-     *             value, i.e. 0 for int
-     */
-
     @JsonProperty("cart")
     private ShoppingCart cart;
 
@@ -51,12 +38,14 @@ public class Customer extends User {
      * string
      * 
      * @param username the username of the {@link Customer customer}
+     * @param role     the set of roles of the {@link Customer customer}
+     * @param password the password of the {@link Customer customer}
      * @param cart     the {@link ShoppingCart cart} that is associated with the
      *                 {@link Customer customer}
      */
     @JsonCreator
-    public Customer(@JsonProperty("username") String username, @JsonProperty("cart") ShoppingCart cart) {
-        super(username);
+    public Customer(@JsonProperty("username") String username, @JsonProperty("password") String password, @JsonProperty("role") Set<Role> role, @JsonProperty("cart") ShoppingCart cart) {
+        super(username, password, role);
         this.cart = cart;
     }
 
@@ -65,9 +54,11 @@ public class Customer extends User {
      * {@link ShoppingCart cart}
      * 
      * @param username the username of the {@link Customer customer}
+     * @param role     the set of roles associated with the customer
+     * @param password the password of the {@link Customer customer}
      */
-    public Customer(String username) {
-        super(username);
+    public Customer(String username, String password, Set<Role> role) {
+        super(username, password, role);
         this.cart = new ShoppingCart(null);
     }
 
@@ -96,6 +87,8 @@ public class Customer extends User {
 
     /**
      * clears the {@linkplain ShoppingCart cart}
+     * 
+     * @return true indicating that the cart was cleared
      */
     public boolean clearCart() {
         return this.cart.clearCart();
@@ -116,7 +109,7 @@ public class Customer extends User {
      * 
      * @return The id of the product
      */
-    public boolean getloggedIn() {
+    public boolean getLoggedIn() {
         return loggedIn;
     }
 
@@ -177,7 +170,7 @@ public class Customer extends User {
     /**
      * Sets the weight of the User
      * 
-     * @return The weight of the User
+     * @param weight The weight of the User
      */
     public void setWeight(Integer weight) {
         this.weight = weight;
@@ -195,7 +188,7 @@ public class Customer extends User {
     /**
      * Retrieves the age of the User
      * 
-     * @return The age of the User
+     * @param age The age of the User
      */
     public void setAge(Integer age) {
         this.age = age;

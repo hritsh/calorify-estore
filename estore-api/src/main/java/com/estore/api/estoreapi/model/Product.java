@@ -13,7 +13,7 @@ public class Product {
     private static final Logger LOG = Logger.getLogger(Product.class.getName());
 
     // Package private for tests
-    static final String STRING_FORMAT = "Product [id=%d, name=%s, image=%s, calories=%d, price=%f]";
+    static final String STRING_FORMAT = "Product [id=%d, name=%s, image=%s, calories=%d, price=%f, quantity=%d]";
 
     // We intend to keep 30 products in the inventory.
 

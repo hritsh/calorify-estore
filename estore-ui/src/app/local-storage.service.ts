@@ -1,8 +1,8 @@
 /**
  * Saves the username of the currently logged in {@linkplain User user}
  * In order to be retrieved from other components
- * 
- * @author Team jadin
+ *
+ * @author Team E
  */
 
 import { Injectable } from '@angular/core';
@@ -12,7 +12,7 @@ import { Injectable } from '@angular/core';
 })
 export class LocalStorageService
 {
-  
+
   private username!: string;
 
   constructor() { }

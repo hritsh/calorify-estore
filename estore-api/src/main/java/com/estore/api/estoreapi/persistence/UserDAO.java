@@ -12,22 +12,21 @@ import com.estore.api.estoreapi.model.User;
  * @author Team-E
  */
 public interface UserDAO {
-
     /**
-     * Adds a {@linkplain User user} based on a given string passed in from the
+     * Adds a {@linkplain User user} based on a given details passed in from the
      * frontend. Typically, with this program,
      * the getUser would be called first to check if the {@link User user}
      * exists, if not then we automatically create
-     * a new user with the given string as their username. This all occurs from the
-     * login screen.
+     * a new user with the given details such as their username. This all occurs from the
+     * register page.
      * 
-     * @param username The string the corresponds with the new {@link User user}
+     * @param user The object containing all the details related to the new {@link User user}
      * 
      * @return The newly created {@link User user} object
      * 
      * @throws IOException If an issue occured whilst accessing the json files
      */
-    User addUser(String username) throws IOException;
+    User addUser(User user) throws IOException;
 
     /**
      * Given a string, search the database for a {@linkplain User user} that
@@ -44,7 +43,18 @@ public interface UserDAO {
      * @throws IOException If an issue occured whilst accessing the json files
      */
     User getUser(String username) throws IOException;
-
+    /**
+     * Updates and saves a {@linkplain Customer customer} which is an 
+     * extension of User with selected details provided by user after authenticating
+     * 
+     * @param {@link Customer customer} object to be updated and saved
+     * 
+     * @return updated {@link Customer customer} if successful, null if
+     * {@link Customer customer} could not be found
+     * 
+     * @throws IOException if underlying storage cannot be accessed
+     */
+    Customer updateUserDetails(Customer customer) throws IOException;
     /**
      * Given a string, search and delete a {@linkplain User user} that correlates
      * with the given string.

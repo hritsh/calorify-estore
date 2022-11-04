@@ -46,16 +46,18 @@ public interface InventoryDAO {
     Product createProduct(Product product) throws IOException;
 
     /**
-     * Finds all {@linkplain Product products} whose name contains the given text
+     * Finds all {@linkplain Product products} whose name contains the given text and whose calories is less than or equal given calories
+     * It can use a combination of name and calories for advanced search query
      * 
      * @param containsText The text to match against
+     * @param containsCalories The calories to match against
      * 
      * @return An array of {@link Product product} whose names contains the given
-     *         text, may be empty
+     *         text or have calories that less than or equal given calories, may be empty
      * 
      * @throws IOException if an issue with underlying storage
      */
-    Product[] searchProduct(String containsText, Integer containsPrice) throws IOException;
+    Product[] searchProduct(String containsText, Integer containsCalories) throws IOException;
 
     /**
      * Deletes a {@linkplain Product product} with the given id of a particular
@@ -84,14 +86,18 @@ public interface InventoryDAO {
     Product updateProduct(Product product) throws IOException;
 
     /**
-     * Deletes a {@link Product product} that corresponds with the given id
+     * Changes the ammount of the inventory has in stock
      * 
-     * @param id the id of the {@link Product product} to delete
+     * @param {@link Product passed} array of products to be checked out
      * 
-     * @return true if the {@link Product product} was deleted successfully,
-     *         otherwise false
+     * @return false:
+     *         if the quantity of the {@linkplain Product product} that is being
+     *         checked out is larger than the quantity the inventory has in stock
+     *         if a {@link Product product} that is being checked out no longer is
+     *         available in the inventory
+     *         true otherwise indicating a successful action
      * 
-     * @throws IOException if an issue with underlying storage occurs
+     * @throws IOException
      */
     Boolean checkOut(Product[] passed) throws IOException;
 
