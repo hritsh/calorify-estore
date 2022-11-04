@@ -70,6 +70,7 @@ We have considered the following functional and non-functional requirements:
 * The website must be easy to use and navigate
 * The website must have a modern and sleek design
 
+
 ### Definition of MVP
 
 The minimum viable product includes
