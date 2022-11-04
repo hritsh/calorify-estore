@@ -11,9 +11,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { UserService } from '../user.service';
-import { Observable } from 'rxjs';
 import { User } from '../user';
-import { LocalStorageService } from '../local-storage.service';
+import { LoginService } from '../login.service';
+import { jwtRequest } from '../jwtRequest';
+import jwt_decode from "jwt-decode";
+
 
 @Component({
   selector: 'app-user-login',
@@ -21,14 +23,16 @@ import { LocalStorageService } from '../local-storage.service';
   styleUrls: ['./user-login.component.css']
 })
 export class UserLoginComponent implements OnInit {
-
+  jwtToken!: any;
+  user!: User;
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
     private location: Location,
     public router: Router,
-    private localStorage: LocalStorageService
-  ) { }
+    private loginService: LoginService
+  ) {
+  }
 
   /**
    * The initialization of this component
@@ -48,29 +52,15 @@ export class UserLoginComponent implements OnInit {
    * This methods gets the input in the login textbox and uses that to determine whether or not to proceed
    * To the admin page or the customer's page
    */
-  login(): void {
-    /**
-     * Checks the information inputted by the user to direct them
-     * to either admin-store or user-store, or displaying the
-     * incorrect login message.
-     */
-    var username = (<HTMLInputElement>document.getElementById("username-box")).value;
-    this.localStorage.setUsername(username);
-    // Admin Login
-    if (username == 'admin') {
-      this.router.navigate(['admin-store']);
+  login(username: string, password:string): void {
+    if(username && password) {
+      const sentLoginRequest = new jwtRequest(username, password);
+      this.loginService.login(sentLoginRequest).subscribe(response => {
+        this.jwtToken = jwt_decode(response.jwtToken);
+        this.loginService.setSession(this.jwtToken, response.jwtToken);
+        this.user = response.user;
+        this.router.navigateByUrl("/user-store/"+this.user.username);
+      });
     }
-
-    // User Login
-    else if (this.userService.userExists(username)) {
-      this.router.navigate([`user-store/${username}`]);
-    }
-
-    // New User
-    else {
-      //this.userService.createUser(username);
-      this.router.navigate([`user-store/${username}`]);
-    }
-
   }
 }

@@ -26,7 +26,7 @@
  export class ProductSearchComponent implements OnInit {
    products$!: Observable<Product[]>
    private searchTerms = new Subject<string>();
-   @Input() username!: string;
+   @Input() username!: any;
 
    constructor(private productService: ProductService, private localStorage: LocalStorageService) { }
 
@@ -45,7 +45,7 @@
     * Upon initialization this method gets the {@linkplain Product products} that matches this component's search string
     */
    ngOnInit(): void {
-     this.username = this.localStorage.getUsername();
+     this.username = localStorage.getItem('sub');
      this.products$ = this.searchTerms.pipe(
        // wait 300ms after each keystroke before considering the term
        debounceTime(300),

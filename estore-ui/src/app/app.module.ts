@@ -12,7 +12,7 @@ import { AppComponent } from './app.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { FormsModule } from '@angular/forms';
 import { RegistrationPageComponent } from './registration-page/registration-page.component'; // <-- NgModel lives here
@@ -22,7 +22,9 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
 import { UserLoginComponent } from './user-login/user-login.component';
 import { UserStoreComponent } from './user-store/user-store.component';
 import { UserProductViewComponent } from './user-product-view/user-product-view.component';
-
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { AuthInterceptor } from './auth-interceptor';
+import { LogoutComponent } from './logout/logout.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,7 +35,9 @@ import { UserProductViewComponent } from './user-product-view/user-product-view.
     ProductDetailsComponent,
     UserLoginComponent,
     UserStoreComponent,
-    UserProductViewComponent
+    UserProductViewComponent,
+    PageNotFoundComponent,
+    LogoutComponent
   ],
   imports: [
     HttpClientModule,
@@ -41,7 +45,11 @@ import { UserProductViewComponent } from './user-product-view/user-product-view.
     FormsModule,
     AppRoutingModule,
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 

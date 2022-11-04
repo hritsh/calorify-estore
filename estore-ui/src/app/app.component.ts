@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { LoginService } from './login.service';
+
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Calorify';
+  constructor(public loginService: LoginService) {}
+  isLoggedIn(): boolean {
+    return this.loginService.isLoggedIn();
+  }
 }
