@@ -295,6 +295,7 @@ For our Inventory Controller file, we have 95% coverage which is really good alr
 Most of the missed instructions and branches are in searchProduct().
 
 ![estorecontroller](c.png)
+
 As such, for proper coverage, we could write tests that cover a test that tests product.length in terms of whether, if product.length == 0, assert that the result is NOT_FOUND. We should also cover the code branches of when name != null or name =null in our tests. Along with this we can write tests to cover products != null or products = null
 
 ### Coverage: Model Tier
@@ -315,6 +316,7 @@ Analysis
  We are only 2% short of the ideal requirement of 90%. We would have to test our getProduct array, createproduct elements in our InventoryFileDAO more thoroughly in order to achieve a decent coverage. As we can see, all the other elements have been covered 100%.
 
 ![estorePersistence](h.png)
+
 
 We could add tests that take into account when containsCalories == null and containsCalories != null. We could add tests that account for if containsText == null and getCalories<=containsCalories, expect the product to be added to productArrayList. We could write the tests that are alternative to this. A final set of testcases could expect that product was added if containsCalories and containsText != null along with products name matches the text searched. One alternative to this would be expect product not to be added if these if conditions are not met.
 
