@@ -8,7 +8,10 @@
 
   <ul class="wrapper">
     <div *ngFor="let product of cart">
-      <button class="btn-group">
+      <button
+        class="btn-group"
+        routerLink="/user-product-view/{{ user?.username }}/{{ product.id }}"
+      >
         <strong>{{ product.name }}</strong>
         <label class="calories">Calories: {{ product.calories }}</label>
         <label class="price">Price: ${{ product.price }}</label>
