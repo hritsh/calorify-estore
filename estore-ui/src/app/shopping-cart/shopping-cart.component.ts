@@ -22,9 +22,8 @@ import { User } from '../user';
 })
 export class ShoppingCartComponent implements OnInit {
 
-  @Input() username!: string;
+  @Input() username!: any;
   cart: Product[] = [];
-  @Input() user?: User;
   ifSucceed: Boolean = false;
   ifFailed: Boolean = false;
 
@@ -60,9 +59,7 @@ export class ShoppingCartComponent implements OnInit {
    * Gets the information of the currently logged in {@linkplain User user}
    */
   getUser(): void {
-    this.username = this.route.snapshot.paramMap.get('username') as string;
-    //this.userService.getUser(this.username)
-    //  .subscribe(user => this.user = user);
+    this.username = localStorage.getItem("sub");
   }
 
   /**

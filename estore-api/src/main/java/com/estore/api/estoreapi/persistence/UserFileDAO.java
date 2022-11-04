@@ -128,8 +128,10 @@ public class UserFileDAO implements UserDAO {
     private boolean checkIfAdminExists() {
         boolean adminExists = false;
         for (Customer user : customers.values()) {
-            if(user.getUsername().equals("admin")) {
-                adminExists = true;
+            for(Role r: user.getRole()) {
+                if(r.getRoleName().equals("admin")) {
+                    adminExists = true;
+                }
             }
         }
         return adminExists;
@@ -146,6 +148,7 @@ public class UserFileDAO implements UserDAO {
             if (role == null) {
                 roleDoesNotExist += 1;
             }
+            //to make unique admin
             if(r.getRoleName().equals("admin") == true && checkIfAdminExists() == true) {
                 return new User("ERROR: Admin already exists", null, null);
             }

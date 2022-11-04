@@ -59,7 +59,11 @@ export class UserLoginComponent implements OnInit {
         this.jwtToken = jwt_decode(response.jwtToken);
         this.loginService.setSession(this.jwtToken, response.jwtToken);
         this.user = response.user;
-        this.router.navigateByUrl("/user-store/"+this.user.username);
+        if(this.user.username == "admin") {
+          this.router.navigateByUrl("/admin-store");
+        } else {
+          this.router.navigateByUrl("/user-store/"+this.user.username);
+        }
       });
     }
   }
