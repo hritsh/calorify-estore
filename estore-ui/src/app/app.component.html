@@ -4,13 +4,13 @@
 <body>
   <h1>{{title}}</h1>
   <nav>
-    <a routerLink="/"></a>
+    <div>
+      <button class="button" routerLink="/login"><span>Login</span></button>
+    </div>
+    <div>
+      <button class="button" routerLink="/register"><span>Register</span></button>
+    </div>
+    <app-logout *ngIf="isLoggedIn()"></app-logout>
   </nav>
-  <div>
-    <button class="button" routerLink="/login"><span>Login</span></button>
-  </div>
-  <div>
-    <button class="button" routerLink="/register"><span>Register</span></button>
-  </div>
   <router-outlet></router-outlet>
 </body>

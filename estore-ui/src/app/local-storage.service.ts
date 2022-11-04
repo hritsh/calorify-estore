@@ -14,6 +14,7 @@ export class LocalStorageService
 {
 
   private username!: string;
+  private jwtToken!: string;
 
   constructor() { }
 

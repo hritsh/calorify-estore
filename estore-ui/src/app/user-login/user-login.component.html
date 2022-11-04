@@ -11,22 +11,16 @@
 
 <body>
   <!-- partial:index.partial.html -->
+  <h1>Login</h1>
   <div class="login-form">
-    <form>
-      <h1>Login</h1>
-      <div class="content">
-        <div class="input-field">
-          <input
-            type="text"
-            id="username-box"
-            placeholder="Username"
-            autocomplete="nope"
-          />
-        </div>
-      </div>
-      <div class="action">
-        <button type="button" (click)="login()">Submit</button>
-      </div>
-    </form>
+    <div class="input-field">
+      <input type="text" id="username-box" placeholder="username" name="username" autocomplete="off" required #username/>
+    </div>
+    <div class="input-field">
+      <input type="password" id="password-box" placeholder="password" name="password" autocomplete="current-password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,24}$" required #password/>
+    </div>
+    <div class="action">
+      <button type="button" (click)="login(username.value, password.value)">Sign in</button>
+    </div>
   </div>
 </body>

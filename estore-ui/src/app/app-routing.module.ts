@@ -14,15 +14,19 @@ import { UserStoreComponent } from './user-store/user-store.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { InventoryComponent } from './inventory/inventory.component';
 import { UserProductViewComponent } from './user-product-view/user-product-view.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { AuthGuard } from './auth-guard';
 
 const routes: Routes = [
-  { path: 'register', component: RegistrationPageComponent },
   { path: 'login', component: UserLoginComponent },
+  { path: 'register', component: RegistrationPageComponent },
   { path: 'user-store/:username', component: UserStoreComponent },
-  { path: 'admin-store', component: InventoryComponent },
-  { path: 'product-details/:id', component: ProductDetailsComponent },
-  { path: 'user-store/:username/shopping-cart', component: ShoppingCartComponent },
-  { path: 'user-product-view/:username/:id', component: UserProductViewComponent }
+  { path: 'admin-store', component: InventoryComponent, canActivate: [AuthGuard] },
+  { path: 'product-details/:id', component: ProductDetailsComponent, canActivate: [AuthGuard] },
+  { path: 'user-store/:username/shopping-cart', component: ShoppingCartComponent, canActivate: [AuthGuard] },
+  { path: 'user-product-view/:username/:id', component: UserProductViewComponent },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  {path: '**', component: PageNotFoundComponent}
 ]
 
 @NgModule({
