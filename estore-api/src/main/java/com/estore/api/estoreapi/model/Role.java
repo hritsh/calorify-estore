@@ -62,4 +62,11 @@ public class Role {
     public void setRoleName(String roleName) {
         this.roleName = roleName;
     }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return String.format(STRING_FORMAT, roleId, roleName);
+    }
 }

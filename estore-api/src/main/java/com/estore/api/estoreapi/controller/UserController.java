@@ -103,7 +103,7 @@ public class UserController {
      */
     @PostMapping("")
     public ResponseEntity<User> addUser(@RequestBody User user) {
-        LOG.info("POST /users");
+        LOG.info("POST /users"+user.getUsername());
         try {
             User result = userService.registerNewUser(user);
             if (result != null) {
@@ -129,7 +129,7 @@ public class UserController {
     @PutMapping("")
     @PreAuthorize("#customer.getUsername() == authentication.name")
     public ResponseEntity<Customer> updateUser(@RequestBody Customer customer) {
-        LOG.info("PUT /users");
+        LOG.info("PUT /users"+customer.getUsername());
 
         try {
             Customer updatedCustomer = userDao.updateUserDetails(customer);

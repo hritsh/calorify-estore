@@ -183,6 +183,6 @@ public class Product {
      */
     @Override
     public String toString() {
-        return String.format(STRING_FORMAT, id, name, image, calories, price);
+        return String.format(STRING_FORMAT, id, name, image, calories, price, quantity);
     }
 }

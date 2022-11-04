@@ -6,7 +6,11 @@ import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
+import com.estore.api.estoreapi.model.Role;
 import com.estore.api.estoreapi.model.Product;
 import com.estore.api.estoreapi.model.Customer;
 
@@ -39,7 +43,10 @@ public class ShoppingCartFileDAOTest {
         mockUserFileDAO = mock(UserFileDAO.class);
         mockInventoryDAO = mock(InventoryDAO.class);
         shoppingCartFileDAO = new ShoppingCartFileDAO(mockUserFileDAO, mockInventoryDAO);
-        customer = new Customer("username");
+        Role role = new Role(0, "admin");
+        Set<Role> roleSet = new HashSet<>();
+        roleSet.add(role);
+        customer = new Customer("username", "pass", roleSet);
         mockCustomer = mock(Customer.class);
         when(mockCustomer.getUsername()).thenReturn("mock");
         when(mockUserFileDAO.getUser(customer.getUsername())).thenReturn(customer);

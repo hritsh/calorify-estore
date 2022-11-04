@@ -164,7 +164,7 @@ public class InventoryController {
      */
     @PostMapping("")
     public ResponseEntity<Product> createProduct(@RequestBody Product product) {
-        LOG.info("POST /products " + product);
+        LOG.info("POST /products " + product.getName());
 
         try {
             Product newProduct = inventoryDao.createProduct(product);
@@ -188,7 +188,7 @@ public class InventoryController {
      */
     @PutMapping("")
     public ResponseEntity<Product> updateProduct(@RequestBody Product product) {
-        LOG.info("PUT /products " + product);
+        LOG.info("PUT /products "+product.getName());
 
         try {
             Product updateProduct = inventoryDao.updateProduct(product);

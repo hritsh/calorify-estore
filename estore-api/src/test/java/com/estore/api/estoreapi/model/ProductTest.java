@@ -58,7 +58,8 @@ public class ProductTest {
         String image = "";
         int calories = 200;
         float price = 5;
-        String expected_string = String.format(Product.STRING_FORMAT, id, name, image, calories, price);
+        int quantity = 0;
+        String expected_string = String.format(Product.STRING_FORMAT, id, name, image, calories, price, quantity);
         Product product = new Product(id, name, image, calories, price);
 
         // Invoke

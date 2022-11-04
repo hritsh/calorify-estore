@@ -79,7 +79,7 @@ public class RoleController {
      */
     @PostMapping({"/"})
     public ResponseEntity<Role> createNewRole(@RequestBody Role role) {
-        LOG.info("POST /roles " + role);
+        LOG.info("POST /roles " + role.getRoleName());
         try {
             Role newRole = roleService.createNewRole(role);
             if (newRole != null)
