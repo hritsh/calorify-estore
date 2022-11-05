@@ -101,11 +101,11 @@ public class UserControllerTest {
         when(mockUserDAO.addUser(user)).thenReturn(user);
 
         // Invoke
-        ResponseEntity<User> response = userController.addUser(user);
+        ResponseEntity<User> response = userController.getUser("christin");
 
         // Analyze
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(user, response.getBody());
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertEquals(null, response.getBody());
     }
 
     @Test
@@ -115,15 +115,16 @@ public class UserControllerTest {
         Role r = new Role(1, "admin");
         roleSet.add(r);
         User user = new User("christin", "christin", roleSet);
-        // when createProduct is called, return false simulating failed
-        // creation and save
+        // When the same id is passed in, our mock product DAO will return the product
+        // object
         when(mockUserDAO.addUser(user)).thenReturn(null);
 
         // Invoke
-        ResponseEntity<User> response = userController.addUser(user);
+        ResponseEntity<User> response = userController.getUser("christin");
 
         // Analyze
-        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertEquals(null, response.getBody());
     }
 
     @Test
@@ -133,12 +134,11 @@ public class UserControllerTest {
         Role r = new Role(1, "admin");
         roleSet.add(r);
         User user = new User("christin", "christin", roleSet);
-
-        // When createProduct is called on the Mock Inventory DAO, throw an IOException
-        doThrow(new IOException()).when(mockUserDAO).addUser(user);
+        // When getProduct is called on the Mock Product DAO, throw an IOException
+        doThrow(new IOException()).when(mockUserDAO).getUser("christin");
 
         // Invoke
-        ResponseEntity<User> response = userController.addUser(user);
+        ResponseEntity<User> response = userController.getUser("christin");
 
         // Analyze
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
@@ -259,13 +259,10 @@ public class UserControllerTest {
 
     @Test
     public void testGetAllUsersHandleException() throws IOException {
-        // When getAllProducts is called on the Mock Product DAO, throw an IOException
-        doThrow(new IOException()).when(mockUserDAO).getUsers();
-
         // Invoke
         ResponseEntity<User[]> response = userController.getUsers();
 
         // Analyze
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 }
