@@ -30,6 +30,7 @@ import org.springframework.http.ResponseEntity;
 public class RoleControllerTest {
     private RoleController roleController;
     private RoleDAO mockRoleDAO;
+
     /**
      * Before each test, create a new roleController object and inject
      * a mock Inventory DAOateProduct
@@ -39,19 +40,20 @@ public class RoleControllerTest {
         mockRoleDAO = mock(RoleDAO.class);
         roleController = new RoleController(mockRoleDAO);
     }
+
     @Test
     public void testcreateRole() throws IOException { // createRole may throw IOException
         // Setup
         Role role = new Role(1, "admin");
-        // when createRole is called, return true simulating successful
-        // creation and save
+        // When the same id is passed in, our mock product DAO will return the product
+        // object
         when(mockRoleDAO.createRole(role)).thenReturn(role);
 
         // Invoke
         ResponseEntity<Role> response = roleController.createNewRole(role);
 
         // Analyze
-        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(role, response.getBody());
     }
 
@@ -84,6 +86,7 @@ public class RoleControllerTest {
         // Analyze
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     }
+
     @Test
     public void testDeleteRole() throws IOException { // DeleteRole may throw IOException
         // Setup
@@ -97,6 +100,7 @@ public class RoleControllerTest {
         // Analyze
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
+
     @Test
     public void testDeleteRoleNotFound() throws IOException { // DeleteRole may throw IOException
         // Setup
@@ -120,10 +124,9 @@ public class RoleControllerTest {
         ResponseEntity<Role> response = roleController.deleteRole(productId);
     }
 
-
     @Test
     public void testGetAllRoles() throws IOException {
-        
+
         Role[] roles = new Role[1];
         roles[0] = new Role(1, "admin");
         roles[1] = new Role(2, "user");
@@ -134,8 +137,8 @@ public class RoleControllerTest {
         ResponseEntity<Role[]> response = roleController.getRoles();
 
         // Analyzing
-        assertEquals(HttpStatus.OK,response.getStatusCode());
-        assertEquals(roles,response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(roles, response.getBody());
     }
 
     @Test
@@ -147,6 +150,6 @@ public class RoleControllerTest {
         ResponseEntity<Role[]> response = roleController.getRoles();
 
         // Analyze
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     }
 }

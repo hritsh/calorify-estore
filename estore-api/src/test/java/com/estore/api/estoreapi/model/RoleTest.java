@@ -1,4 +1,5 @@
 package com.estore.api.estoreapi.model;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Tag;
@@ -13,29 +14,20 @@ import org.junit.jupiter.api.Test;
 public class RoleTest {
     @Test
     public void testCtor() {
-        int expected_roleId = 1;
-        String expected_roleName = "admin";
-        
-        Role role = new Role(expected_roleId, expected_roleName);
-
-        assertEquals(expected_roleId, role.getRoleId());
-        assertEquals(expected_roleName, role.getRoleName());
+        // Setup
+        // Invoke
+        Role role = new Role(1, "admin");
+        // Analyze
+        assertEquals(1, role.getRoleId());
+        assertEquals("admin", role.getRoleName());
     }
+
     @Test
     public void testName() {
-        // Setup
-        int roleId = 1;
-        String roleName = "admin";
-
-        Role role = new Role(roleId, roleName);
-
-        String expected_name = "admin";
-
         // Invoke
-        role.setRoleName(expected_name);
-
+        Role role = new Role(1, "admin");
         // Analyze
-        assertEquals(expected_name, role.getRoleName());
+        assertEquals("admin", role.getRoleName());
     }
 
     @Test

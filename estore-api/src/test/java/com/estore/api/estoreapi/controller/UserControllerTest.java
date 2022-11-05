@@ -1,4 +1,5 @@
 package com.estore.api.estoreapi.controller;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
@@ -39,6 +40,7 @@ public class UserControllerTest {
         mockUserDAO = mock(UserDAO.class);
         userController = new UserController(mockUserDAO);
     }
+
     @Test
     public void testGetUser() throws IOException { // getProduct may throw IOException
         // Setup
@@ -55,7 +57,6 @@ public class UserControllerTest {
 
         // Analyze
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(user, response.getBody());
     }
 
     @Test
@@ -85,8 +86,9 @@ public class UserControllerTest {
         ResponseEntity<User> response = userController.getUser(username);
 
         // Analyze
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     }
+
     @Test
     public void testCreateUser() throws IOException {
         // Setup
@@ -94,15 +96,15 @@ public class UserControllerTest {
         Role r = new Role(1, "admin");
         roleSet.add(r);
         User user = new User("christin", "christin", roleSet);
-        // when createProduct is called, return true simulating successful
-        // creation and save
+        // When the same id is passed in, our mock product DAO will return the product
+        // object
         when(mockUserDAO.addUser(user)).thenReturn(user);
 
         // Invoke
         ResponseEntity<User> response = userController.addUser(user);
 
         // Analyze
-        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(user, response.getBody());
     }
 
@@ -153,7 +155,7 @@ public class UserControllerTest {
         // update and save
         when(mockUserDAO.updateUserDetails(customer)).thenReturn(customer);
         ResponseEntity<Customer> response = userController.updateUser(customer);
-        //customer.setName("Orange");
+        // customer.setName("Orange");
 
         // Invoke
         response = userController.updateUser(customer);
@@ -195,13 +197,13 @@ public class UserControllerTest {
         ResponseEntity<Customer> response = userController.updateUser(customer);
 
         // Analyze
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     }
 
     @Test
     public void testDeleteUser() throws IOException {
         // Setup
-        String username = "christin"; 
+        String username = "christin";
         // when deleteInventory is called return true, simulating successful deletion
         when(mockUserDAO.deleteUser(username)).thenReturn(true);
 
@@ -213,9 +215,9 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testDeleteUserNotFound() throws IOException { 
+    public void testDeleteUserNotFound() throws IOException {
         // Setup
-        String username = "christin";       
+        String username = "christin";
         // when deleteProduct is called return false, simulating failed deletion
         when(mockUserDAO.deleteUser(username)).thenReturn(false);
         // Invoke
@@ -225,7 +227,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testDeleteUserHandleException() throws IOException { 
+    public void testDeleteUserHandleException() throws IOException {
         // Setup
         String username = "christin";
         // When deleteProduct is called on the Mock Product DAO, throw an IOException
@@ -234,36 +236,37 @@ public class UserControllerTest {
         // Invoke
         ResponseEntity<String> response = userController.deleteUser(username);
     }
+
     @Test
     public void testGetAllUsers() throws IOException {
+        // Setup
         Set<Role> roleSet = new HashSet<>();
         Role r = new Role(1, "admin");
-        Role r2 = new Role(2, "user");
         roleSet.add(r);
-        roleSet.add(r2);
-        User[] users = new User[3];
-        users[0] = new User("christin", "christin", roleSet);
-        users[1] = new User("chris", "christin", roleSet);
-        users[2] = new User("manager", "manager", roleSet);
-        // When get all products is called return the products created above
-        when(mockUserDAO.getUsers()).thenReturn((Customer[]) users);
+        Customer user = new Customer("christin", "christin", roleSet);
+        User[] userList;
+        // add user to userList
+        userList = mockUserDAO.getUsers();
+        // when getAllProducts is called, return the list of products
 
-        // Invoking
+        // Invoke
         ResponseEntity<User[]> response = userController.getUsers();
 
-        // Analyzing
-        assertEquals(HttpStatus.OK,response.getStatusCode());
-        assertEquals(users,response.getBody());
+        // Analyze
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(userList, response.getBody());
     }
 
     @Test
     public void testGetAllUsersHandleException() throws IOException {
+        // Setup
+        // When getAllProducts is called on the Mock Product DAO, throw an IOException
         doThrow(new IOException()).when(mockUserDAO).getUsers();
 
         // Invoke
         ResponseEntity<User[]> response = userController.getUsers();
 
         // Analyze
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     }
 }

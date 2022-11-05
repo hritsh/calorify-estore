@@ -7,6 +7,7 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+
 /**
  * The unit test suite for the User class
  * 
@@ -16,53 +17,43 @@ import org.junit.jupiter.api.Test;
 public class CustomerTest {
     @Test
     public void testCtor() {
-        String expected_firstName = "chris";
-        String expected_lastName = "Alex";
-        String expected_gender = "M";
-        int expected_height = 50;
-        int expected_weight = 50;
-        int expected_age = 30;
+        // Setup
         Set<Role> roleSet = new HashSet<>();
         Role r = new Role(1, "admin");
         roleSet.add(r);
-        String expected_roleName = "admin";
-
+        // Invoke
         Customer customer = new Customer("christin", "christin", roleSet);
-        Customer customer = new Customer(expected_roleId, expected_roleName);
+        ;
+        // Analyze
+        assertEquals("christin", customer.getUsername());
+        assertEquals("christin", customer.getPassword());
+        assertEquals(roleSet, customer.getRole());
 
-        assertEquals(expected_roleId, role.getRoleId());
-        assertEquals(expected_roleName, role.getRoleName());
     }
+
     @Test
     public void testName() {
         // Setup
-        int roleId = 1;
-        String roleName = "admin";
-
-        Customer customer = new Customer(roleId, roleName);
-
-        String expected_name = "admin";
-
+        Set<Role> roleSet = new HashSet<>();
+        Role r = new Role(1, "admin");
+        roleSet.add(r);
         // Invoke
-        role.setRoleName(expected_name);
-
+        Customer customer = new Customer("christin", "christin", roleSet);
+        ;
         // Analyze
-        assertEquals(expected_name, role.getRoleName());
+        assertEquals(customer.getUsername(), customer.getUsername());
     }
 
     @Test
     public void testToString() {
         // Setup
-        int roleId = 1;
-        String roleName = "admin";
-
-        String expected_string = String.format(Role.STRING_FORMAT, roleId, roleName);
-        Customer customer = new Customer(roleId, roleName);
-
+        Set<Role> roleSet = new HashSet<>();
+        Role r = new Role(1, "admin");
+        roleSet.add(r);
         // Invoke
-        String actual_string = role.toString();
-
+        Customer customer = new Customer("christin", "christin", roleSet);
+        ;
         // Analyze
-        assertEquals(expected_string, actual_string);
+        assertEquals(customer.getUsername(), customer.getUsername());
     }
 }

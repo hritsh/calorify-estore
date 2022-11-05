@@ -1,4 +1,5 @@
 package com.estore.api.estoreapi.model;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.HashSet;
@@ -6,6 +7,7 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+
 /**
  * The unit test suite for the User class
  * 
@@ -15,18 +17,20 @@ import org.junit.jupiter.api.Test;
 public class UserTest {
     @Test
     public void testCtor() {
-        String expected_username = "christin";
-        String expected_password = "christin";
-        Set<Role> expected_roleSet = new HashSet<>();
+        // Setup
+        Set<Role> roleSet = new HashSet<>();
         Role r = new Role(1, "admin");
-        expected_roleSet.add(r);
-        
-        User user = new User(expected_username, expected_password, expected_roleSet);
+        roleSet.add(r);
+        // Invoke
+        User user = new User("christin", "christin", roleSet);
+        ;
+        // Analyze
+        assertEquals("christin", user.getUsername());
+        assertEquals("christin", user.getPassword());
+        assertEquals(roleSet, user.getRole());
 
-        assertEquals(expected_username, user.getUsername());
-        assertEquals(expected_password, user.getPassword());
-        assertEquals(expected_roleSet, user.getRole());
     }
+
     @Test
     public void testName() {
         // Setup
