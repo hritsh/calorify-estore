@@ -86,6 +86,10 @@ public class InventoryFileDAOTest {
         // Invoke
         Product result = assertDoesNotThrow(() -> inventoryFileDAO.createProduct(product),
                 "Unexpected exception thrown");
+        Product result2 = assertDoesNotThrow(() -> inventoryFileDAO.createProduct(product),
+                "Unexpected exception thrown");
+
+        Product clone = inventoryFileDAO.createClone(4, 12);
 
         // Analyze
         assertNotNull(result);
@@ -98,25 +102,29 @@ public class InventoryFileDAOTest {
     public void testSearchProduct() throws IOException {
         // Invoke
         Product[] products = inventoryFileDAO.searchProduct("salad", null);
+        Product[] products2 = inventoryFileDAO.searchProduct(null, 120);
+        Product[] products3 = inventoryFileDAO.searchProduct("salad", 120);
 
         // Analyze
         assertEquals(products.length, 1);
+        assertEquals(products2.length, 1);
+        assertEquals(products3.length, 0);
         assertEquals(products[0], testProducts[0]);
     }
 
     @Test
-        public void testSaveException() throws IOException{
-            doThrow(new IOException())
+    public void testSaveException() throws IOException {
+        doThrow(new IOException())
                 .when(mockObjectMapper)
-                    .writeValue(any(File.class),any(Product[].class));
+                .writeValue(any(File.class), any(Product[].class));
 
         Product product = new Product(2, "Guacamole",
-        "",
-        100, 10);
+                "",
+                100, 10);
 
         assertThrows(IOException.class,
-                        () -> inventoryFileDAO.createProduct(product),
-                        "IOException not thrown");
+                () -> inventoryFileDAO.createProduct(product),
+                "IOException not thrown");
     }
 
     @Test
@@ -130,13 +138,13 @@ public class InventoryFileDAOTest {
         // from the inventoryFileDAO load method, an IOException is
         // raised
         doThrow(new IOException())
-            .when(mockObjectMapper)
-                .readValue(new File("doesnt_matter.txt"),Product[].class);
+                .when(mockObjectMapper)
+                .readValue(new File("doesnt_matter.txt"), Product[].class);
 
         // Invoke & Analyze
         assertThrows(IOException.class,
-                        () -> new InventoryFileDAO("doesnt_matter.txt",mockObjectMapper),
-                        "IOException not thrown");
+                () -> new InventoryFileDAO("doesnt_matter.txt", mockObjectMapper),
+                "IOException not thrown");
     }
 
     @Test
@@ -195,14 +203,33 @@ public class InventoryFileDAOTest {
         // we can access it directly
         assertEquals(inventoryFileDAO.products.size(), testProducts.length - 1);
     }
+
     @Test
     public void testGetProducts() {
         // Invoke
         Product[] products = inventoryFileDAO.getProducts();
 
         // Analyze
-        assertEquals(products.length,testProducts.length);
-        for (int i = 0; i < testProducts.length;++i)
-            assertEquals(products[i],testProducts[i]);
+        assertEquals(products.length, testProducts.length);
+        for (int i = 0; i < testProducts.length; ++i)
+            assertEquals(products[i], testProducts[i]);
+    }
+
+    @Test
+    public void testCheckOut() {
+        // Setup
+        Product product = new Product(4, "Fattoush Salad",
+                "", 100, 10);
+
+        // Invoke
+        Product result = assertDoesNotThrow(() -> inventoryFileDAO.createProduct(product),
+                "Unexpected exception thrown");
+        Product[] products = inventoryFileDAO.getProducts();
+
+        Boolean checkedOut = assertDoesNotThrow(() -> inventoryFileDAO.checkOut(products),
+                "Unexpected exception thrown");
+
+        // Analyze
+        assertNotNull(checkedOut);
     }
 }

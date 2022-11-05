@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ShoppingCart.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">estore-api</a> &gt; <a href="index.source.html" class="el_package">com.estore.api.estoreapi.model</a> &gt; <span class="el_source">ShoppingCart.java</span></div><h1>ShoppingCart.java</h1><pre class="source lang-java linenums">package com.estore.api.estoreapi.model;
+
+import java.util.ArrayList;
+import java.util.TreeMap;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+/**
+ * The class that holds the manipulation of the customer's shopping cart
+ * 
+ * @author Team-E
+ */
+public class ShoppingCart {
+
+    @JsonProperty(&quot;items&quot;)
+    private TreeMap&lt;Integer, Product&gt; items;
+
+    /**
+     * The json constructor that creates a shopping cart instance
+     * This constructor is used whenever a deserialization takes place
+     * 
+     * @param items a map of {@linkplain Product products}
+     */
+<span class="fc" id="L25">    public ShoppingCart(@JsonProperty(&quot;items&quot;) TreeMap&lt;Integer, Product&gt; items) {</span>
+        // items can be null indicating this should be a new empty cart
+<span class="fc bfc" id="L27" title="All 2 branches covered.">        if (items != null) {</span>
+<span class="fc" id="L28">            this.items = items;</span>
+        } else {
+<span class="fc" id="L30">            this.items = new TreeMap&lt;&gt;();</span>
+        }
+<span class="fc" id="L32">    }</span>
+
+    /**
+     * Adds a {@linkplain Product product} to the shopping cart
+     * 
+     * @param product the {@link Product product} to add
+     * @return the {@link Product product} that was added
+     */
+    public Product addProduct(Product product) {
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        if (items.containsKey(product.getId())) {</span>
+<span class="fc" id="L42">            items.get(product.getId()).setQuantity(product.getQuantity());</span>
+        } else {
+<span class="fc" id="L44">            items.put(product.getId(), product);</span>
+        }
+<span class="fc" id="L46">        return product;</span>
+    }
+
+    /**
+     * Removes a {@linkplain Product product} from the shopping cart
+     * 
+     * @param id the id of the {@link Product product} to remove
+     * @return the {@link Product product} that was removed, null if no product was
+     *         removed
+     */
+    public Product removeProduct(int id) {
+<span class="fc" id="L57">        return items.remove(id);</span>
+    }
+
+    /**
+     * clears the shopping cart
+     * 
+     * @return true indicating that the cart was cleared
+     */
+    public boolean clearCart() {
+<span class="fc" id="L66">        this.items.clear();</span>
+<span class="fc" id="L67">        return true;</span>
+    }
+
+    /**
+     * transforms the map of {@linkplain Product products} into an array of
+     * {@link Product products} and returns it
+     * 
+     * @return an array of products that represents the items that are in the cart
+     */
+    @JsonIgnore
+    public Product[] getItems() {
+<span class="fc" id="L78">        ArrayList&lt;Product&gt; products = new ArrayList&lt;&gt;();</span>
+
+<span class="fc bfc" id="L80" title="All 2 branches covered.">        for (Product i : items.values()) {</span>
+<span class="fc" id="L81">            products.add(i);</span>
+<span class="fc" id="L82">        }</span>
+
+<span class="fc" id="L84">        Product[] results = new Product[products.size()];</span>
+<span class="fc" id="L85">        products.toArray(results);</span>
+
+<span class="fc" id="L87">        return results;</span>
+
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

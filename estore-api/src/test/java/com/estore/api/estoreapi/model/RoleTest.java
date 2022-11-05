@@ -17,6 +17,9 @@ public class RoleTest {
         // Setup
         // Invoke
         Role role = new Role(1, "admin");
+        role.setRoleId(1);
+        role.setRoleName("admin");
+
         // Analyze
         assertEquals(1, role.getRoleId());
         assertEquals("admin", role.getRoleName());

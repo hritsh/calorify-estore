@@ -1,4 +1,5 @@
 package com.estore.api.estoreapi.model;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Tag;
@@ -22,6 +23,11 @@ public class ProductTest {
 
         // Invoke
         Product product = new Product(expected_id, expected_name, expected_image, expected_calories, expected_price);
+        Product newProduct = new Product(product, 1);
+
+        product.setImage("");
+        product.setCalories(200);
+        product.setPrice(5);
 
         // Analyze
         assertEquals(expected_id, product.getId());

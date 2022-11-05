@@ -38,6 +38,7 @@ public class ShoppingCartTest {
 
         // Invoke
         cart.addProduct(addedProduct);
+        cart.addProduct(addedProduct);
         Product[] actual = cart.getItems();
         Product[] expected = { addedProduct };
 

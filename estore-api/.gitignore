@@ -1,7 +1,6 @@
-target/
+target/classes/*
 !.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+!src/target/site/jacoco
 
 ### STS ###
 .apt_generated

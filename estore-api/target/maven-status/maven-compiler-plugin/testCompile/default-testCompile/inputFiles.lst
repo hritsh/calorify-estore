@@ -1,0 +1,15 @@
+/Users/hritish/Documents/UG/S3/SWEN-261/team-project-2221-swen-261-600-e-calorify/estore-api/src/test/java/com/estore/api/estoreapi/EstoreApiApplicationTests.java
+/Users/hritish/Documents/UG/S3/SWEN-261/team-project-2221-swen-261-600-e-calorify/estore-api/src/test/java/com/estore/api/estoreapi/persistence/UserFileDAOTest.java
+/Users/hritish/Documents/UG/S3/SWEN-261/team-project-2221-swen-261-600-e-calorify/estore-api/src/test/java/com/estore/api/estoreapi/controller/LoginControllerTest.java
+/Users/hritish/Documents/UG/S3/SWEN-261/team-project-2221-swen-261-600-e-calorify/estore-api/src/test/java/com/estore/api/estoreapi/controller/InventoryControllerTest.java
+/Users/hritish/Documents/UG/S3/SWEN-261/team-project-2221-swen-261-600-e-calorify/estore-api/src/test/java/com/estore/api/estoreapi/persistence/RoleFileDAOTest.java
+/Users/hritish/Documents/UG/S3/SWEN-261/team-project-2221-swen-261-600-e-calorify/estore-api/src/test/java/com/estore/api/estoreapi/controller/ShoppingCartControllerTest.java
+/Users/hritish/Documents/UG/S3/SWEN-261/team-project-2221-swen-261-600-e-calorify/estore-api/src/test/java/com/estore/api/estoreapi/model/CustomerTest.java
+/Users/hritish/Documents/UG/S3/SWEN-261/team-project-2221-swen-261-600-e-calorify/estore-api/src/test/java/com/estore/api/estoreapi/model/UserTest.java
+/Users/hritish/Documents/UG/S3/SWEN-261/team-project-2221-swen-261-600-e-calorify/estore-api/src/test/java/com/estore/api/estoreapi/model/ShoppingCartTest.java
+/Users/hritish/Documents/UG/S3/SWEN-261/team-project-2221-swen-261-600-e-calorify/estore-api/src/test/java/com/estore/api/estoreapi/model/ProductTest.java
+/Users/hritish/Documents/UG/S3/SWEN-261/team-project-2221-swen-261-600-e-calorify/estore-api/src/test/java/com/estore/api/estoreapi/model/RoleTest.java
+/Users/hritish/Documents/UG/S3/SWEN-261/team-project-2221-swen-261-600-e-calorify/estore-api/src/test/java/com/estore/api/estoreapi/persistence/InventoryFileDAOTest.java
+/Users/hritish/Documents/UG/S3/SWEN-261/team-project-2221-swen-261-600-e-calorify/estore-api/src/test/java/com/estore/api/estoreapi/controller/RoleControllerTest.java
+/Users/hritish/Documents/UG/S3/SWEN-261/team-project-2221-swen-261-600-e-calorify/estore-api/src/test/java/com/estore/api/estoreapi/controller/UserControllerTest.java
+/Users/hritish/Documents/UG/S3/SWEN-261/team-project-2221-swen-261-600-e-calorify/estore-api/src/test/java/com/estore/api/estoreapi/persistence/ShoppingCartFileDAOTest.java

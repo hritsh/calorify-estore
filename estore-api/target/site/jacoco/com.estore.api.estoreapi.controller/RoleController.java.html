@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RoleController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">estore-api</a> &gt; <a href="index.source.html" class="el_package">com.estore.api.estoreapi.controller</a> &gt; <span class="el_source">RoleController.java</span></div><h1>RoleController.java</h1><pre class="source lang-java linenums">package com.estore.api.estoreapi.controller;
+
+import java.io.IOException;
+import java.util.logging.Logger;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import java.util.logging.Level;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.estore.api.estoreapi.model.Role;
+import com.estore.api.estoreapi.persistence.RoleDAO;
+
+/**
+ * Handles the REST API requests for CRUD operations related to Role model
+ * resource
+ * &lt;p&gt;
+ * {@literal @}RestController Spring annotation identifies this class as a REST
+ * API
+ * method handler to the Spring framework
+ * 
+ * @author Team-E
+ */
+@RestController
+@RequestMapping(&quot;roles&quot;)
+public class RoleController {
+<span class="fc" id="L34">    private static final Logger LOG = Logger.getLogger(InventoryController.class.getName());</span>
+    private RoleDAO roleDao;
+
+    /**
+     * Creates a REST API controller to respond to requests
+     * 
+     * @param roleDao The {@link RoleDAO Role Data Access Object} to be used in
+     *                operations relating to RoleFileDAO and roles.json
+     *                &lt;br&gt;
+     *                This dependency is injected by the Spring Framework
+     */
+<span class="fc" id="L45">    public RoleController(RoleDAO roleDao) {</span>
+<span class="fc" id="L46">        this.roleDao = roleDao;</span>
+<span class="fc" id="L47">    }</span>
+
+    /**
+     * Responds to the GET request for all {@linkplain Role roles}
+     * 
+     * @return ResponseEntity with array of {@link Role roles} objects (may be
+     *         empty)
+     *         and
+     *         HTTP status of OK&lt;br&gt;
+     *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     */
+    @GetMapping(&quot;&quot;)
+    public ResponseEntity&lt;Role[]&gt; getRoles() {
+<span class="fc" id="L60">        LOG.info(&quot;GET /roles&quot;);</span>
+        try {
+<span class="fc" id="L62">            Role[] roles = roleDao.getRoles();</span>
+<span class="fc" id="L63">            return new ResponseEntity&lt;Role[]&gt;(roles, HttpStatus.OK);</span>
+<span class="fc" id="L64">        } catch (IOException e) {</span>
+<span class="fc" id="L65">            LOG.log(Level.SEVERE, e.getLocalizedMessage());</span>
+<span class="fc" id="L66">            return new ResponseEntity&lt;&gt;(HttpStatus.INTERNAL_SERVER_ERROR);</span>
+        }
+    }
+
+    /**
+     * Creates a {@linkplain Role role} with the provided Role object
+     * 
+     * @param role - The {@link Role role} to create
+     * 
+     * @return ResponseEntity with created {@link Role role} object and HTTP
+     *         status
+     *         of CREATED&lt;br&gt;
+     *         ResponseEntity with HTTP status of CONFLICT if {@link Role
+     *         role}
+     *         object already exists&lt;br&gt;
+     *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     */
+    @PostMapping({ &quot;/&quot; })
+    public ResponseEntity&lt;Role&gt; createNewRole(@RequestBody Role role) {
+<span class="fc" id="L85">        LOG.info(&quot;POST /roles &quot; + role.getRoleName());</span>
+        try {
+<span class="fc" id="L87">            Role newRole = roleDao.createRole(role);</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">            if (newRole != null)</span>
+<span class="fc" id="L89">                return new ResponseEntity&lt;Role&gt;(newRole, HttpStatus.CREATED);</span>
+            else
+<span class="fc" id="L91">                return new ResponseEntity&lt;&gt;(HttpStatus.CONFLICT);</span>
+<span class="fc" id="L92">        } catch (IOException e) {</span>
+<span class="fc" id="L93">            return new ResponseEntity&lt;&gt;(HttpStatus.INTERNAL_SERVER_ERROR);</span>
+        }
+
+    }
+
+    /**
+     * Deletes a {@linkplain Role role} with the given id
+     * 
+     * @param id The id of the {@link Role role} to deleted
+     * 
+     * @return ResponseEntity HTTP status of OK if deleted&lt;br&gt;
+     *         ResponseEntity with HTTP status of NOT_FOUND if not found&lt;br&gt;
+     *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     */
+    @DeleteMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;Role&gt; deleteRole(@PathVariable int id) {
+<span class="fc" id="L109">        LOG.info(&quot;DELETE /roles/&quot; + id);</span>
+        try {
+<span class="fc" id="L111">            boolean role = roleDao.deleteRole(id);</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">            if (role != false)</span>
+<span class="fc" id="L113">                return new ResponseEntity&lt;&gt;(HttpStatus.OK);</span>
+            else
+<span class="fc" id="L115">                return new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND);</span>
+<span class="fc" id="L116">        } catch (IOException e) {</span>
+<span class="fc" id="L117">            LOG.log(Level.SEVERE, e.getLocalizedMessage());</span>
+<span class="fc" id="L118">            return new ResponseEntity&lt;&gt;(HttpStatus.INTERNAL_SERVER_ERROR);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

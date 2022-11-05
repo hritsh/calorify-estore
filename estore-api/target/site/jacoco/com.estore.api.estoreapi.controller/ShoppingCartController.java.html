@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ShoppingCartController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">estore-api</a> &gt; <a href="index.source.html" class="el_package">com.estore.api.estoreapi.controller</a> &gt; <span class="el_source">ShoppingCartController.java</span></div><h1>ShoppingCartController.java</h1><pre class="source lang-java linenums">package com.estore.api.estoreapi.controller;
+
+import java.io.IOException;
+import java.util.logging.Logger;
+
+import com.estore.api.estoreapi.model.Product;
+import com.estore.api.estoreapi.persistence.ShoppingCartDAO;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ * Handles the REST API requests for the Shopping Cart resource
+ * &lt;p&gt;
+ * {@literal @}RestController Spring annotation identifies this class as a REST
+ * API
+ * method handler to the Spring framework
+ * 
+ * @author Team-E
+ */
+
+@RestController
+@RequestMapping(&quot;shoppingCart&quot;)
+public class ShoppingCartController {
+<span class="fc" id="L33">    private static final Logger LOG = Logger.getLogger(ShoppingCartController.class.getName());</span>
+    private ShoppingCartDAO shoppingCartDao;
+
+    /**
+     * Creates a REST API controller to responds to requests
+     * 
+     * @param shoppingCartDAO The {@link ShoppingCartDAO Shopping Cart Data Access Object}
+     *                        to
+     *                        perform CRUD operations
+     *                        &lt;br&gt;
+     *                        This dependency is injected by the Spring Framework
+     */
+<span class="fc" id="L45">    public ShoppingCartController(ShoppingCartDAO shoppingCartDAO) {</span>
+<span class="fc" id="L46">        this.shoppingCartDao = shoppingCartDAO;</span>
+<span class="fc" id="L47">    }</span>
+
+    /**
+     * Gets a {@linkplain Product product} array which holds the items inside of a
+     * {@link Customer customer's}
+     * {@link ShoppingCart cart}
+     * 
+     * @param username the username of the {@link Customer customer}
+     * 
+     * @return A ResonseEntity with the {@link Product product} that was obtained
+     *         from the id
+     *         and a HTTP status code OK
+     *         A ResponseEntity with HTTP status of NOT_FOUND if no {@link Product
+     *         product} was
+     *         found
+     *         A ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     */
+    @GetMapping(&quot;/{username}&quot;)
+    @PreAuthorize(&quot;#username == authentication.name&quot;)
+    public ResponseEntity&lt;Product[]&gt; getCart(@PathVariable(&quot;username&quot;) String username) {
+<span class="fc" id="L67">        LOG.info(&quot;GET /shoppingcart/customer=&quot; + username);</span>
+        try {
+<span class="fc" id="L69">            Product[] cartFound = shoppingCartDao.getShoppingCart(username);</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">            if (cartFound == null) {</span>
+<span class="fc" id="L71">                return new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND);</span>
+            } else {
+<span class="fc" id="L73">                return new ResponseEntity&lt;Product[]&gt;(cartFound, HttpStatus.OK);</span>
+            }
+<span class="fc" id="L75">        } catch (IOException e) {</span>
+<span class="fc" id="L76">            return new ResponseEntity&lt;&gt;(HttpStatus.INTERNAL_SERVER_ERROR);</span>
+        }
+    }
+
+    /**
+     * Deletes a {@linkplain Product product} with the given id from the Shopping Cart
+     * 
+     * @param username the username of the {@link Customer customer} who initiaited
+     *                 this action
+     * @param id       The id of the {@linkplain Product product}to deleted
+     * 
+     * @return ResponseEntity HTTP status of OK if deleted&lt;br&gt;
+     *         ResponseEntity with HTTP status of NOT_FOUND if not found&lt;br&gt;
+     *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     */
+    @DeleteMapping(&quot;/{username}/{id}&quot;)
+    @PreAuthorize(&quot;#username == authentication.name&quot;)
+    public ResponseEntity&lt;Product&gt; deleteProduct(@PathVariable(&quot;username&quot;) String username, @PathVariable int id) {
+<span class="fc" id="L94">        LOG.info(&quot;DELETE /cart/customer=&quot; + username + &quot;/product/id=&quot; + id);</span>
+        try {
+<span class="fc" id="L96">            boolean deleted = shoppingCartDao.deleteProduct(username, id);</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">            if (deleted) {</span>
+<span class="fc" id="L98">                return new ResponseEntity&lt;Product&gt;(HttpStatus.OK);</span>
+            } else {
+<span class="fc" id="L100">                return new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND);</span>
+            }
+<span class="fc" id="L102">        } catch (IOException e) {</span>
+<span class="fc" id="L103">            return new ResponseEntity&lt;&gt;(HttpStatus.INTERNAL_SERVER_ERROR);</span>
+        }
+    }
+
+    /**
+     * Clears the cart of the {@linkplain Customer customer} who initiated the
+     * method
+     * 
+     * @param username the username of the {@link Customer customer}
+     * 
+     * @return a boolean indicating of the success of the action as well as a
+     *         200 (OK) indicating that the action was successful
+     *         404 (NOT_FOUND) if the action failed
+     *         500 (INTERNAL_SERVER_ERROR) if an issue arouse
+     */
+    @DeleteMapping(&quot;/{username}&quot;)
+    @PreAuthorize(&quot;#username == authentication.name&quot;)
+    public ResponseEntity&lt;Boolean&gt; clearCart(@PathVariable(&quot;username&quot;) String username) {
+<span class="fc" id="L121">        LOG.info(&quot;DELETE /cart/customer=&quot; + username);</span>
+        try {
+<span class="fc" id="L123">            boolean deleted = shoppingCartDao.clearShoppingCart(username);</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">            if (deleted) {</span>
+<span class="fc" id="L125">                return new ResponseEntity&lt;Boolean&gt;(deleted, HttpStatus.OK);</span>
+            } else {
+<span class="fc" id="L127">                return new ResponseEntity&lt;Boolean&gt;(deleted, HttpStatus.NOT_FOUND);</span>
+            }
+<span class="fc" id="L129">        } catch (IOException e) {</span>
+<span class="fc" id="L130">            return new ResponseEntity&lt;&gt;(HttpStatus.INTERNAL_SERVER_ERROR);</span>
+        }
+    }
+
+    /**
+     * A checkout execution for the {@linkplain Customer customer}
+     * 
+     * @param username the username of the {@linkplain Customer customer} who wishes
+     *                 to checkout
+     * 
+     * @return A boolean indicating the success of the action as well as a
+     *         201 (CREATED) indicating that the action was successful
+     *         409 (CONFLICT) if the action failed
+     *         500 (INTERNAL_SERVER_ERROR) if an issue arouse
+     */
+    @PostMapping(&quot;/{username}&quot;)
+    @PreAuthorize(&quot;#username == authentication.name&quot;)
+    public ResponseEntity&lt;Boolean&gt; checkout(@PathVariable(&quot;username&quot;) String username) {
+<span class="fc" id="L148">        LOG.info(&quot;POST /shoppingcart/customer=&quot; + username);</span>
+        try {
+<span class="fc" id="L150">            boolean result = shoppingCartDao.checkout(username);</span>
+<span class="fc bfc" id="L151" title="All 2 branches covered.">            if (result) {</span>
+<span class="fc" id="L152">                return new ResponseEntity&lt;Boolean&gt;(result, HttpStatus.OK);</span>
+            } else {
+<span class="fc" id="L154">                return new ResponseEntity&lt;Boolean&gt;(result, HttpStatus.CONFLICT);</span>
+            }
+<span class="fc" id="L156">        } catch (IOException e) {</span>
+<span class="fc" id="L157">            return new ResponseEntity&lt;&gt;(HttpStatus.INTERNAL_SERVER_ERROR);</span>
+        }
+    }
+
+    /**
+     * Lets the {@linkplain Customer customer} add a {@link Product product} to
+     * their {@link ShoppingCart cart}
+     * 
+     * @param username the {@link Customer customer} username who initiated the
+     *                 action
+     * @param quantity the number of items the {@linke Customer customer} is
+     *                 attempting to add
+     * @param id       the id of the specific {@link Product product} the
+     *                 {@link Customer customer} is trying to add
+     * 
+     * @return the id of the {@link Product product} that was added as well as a
+     *         201 (CREATED) indicating that the action was successful
+     *         409 (CONFLICT) if the action failed
+     *         500 (INTERNAL_SERVER_ERROR) if an issue arouse
+     */
+    @PutMapping(&quot;/{username}/{quantity}/{id}&quot;)
+    @PreAuthorize(&quot;#username == authentication.name&quot;)
+    public ResponseEntity&lt;Integer&gt; addProduct(@PathVariable(&quot;username&quot;) String username, @PathVariable Integer quantity,
+            @PathVariable Integer id) {
+<span class="fc" id="L181">        LOG.info(&quot;PUT /shoppingcart/customer=&quot; + username + &quot;/productID=&quot; + id + &quot;/quantity=&quot; + quantity);</span>
+        try {
+<span class="fc" id="L183">            Product result = shoppingCartDao.addProduct(username, id, quantity);</span>
+<span class="fc bfc" id="L184" title="All 2 branches covered.">            if (result != null) {</span>
+<span class="fc" id="L185">                return new ResponseEntity&lt;&gt;(HttpStatus.CREATED);</span>
+            } else {
+<span class="fc" id="L187">                return new ResponseEntity&lt;Integer&gt;(id, HttpStatus.CONFLICT);</span>
+            }
+<span class="fc" id="L189">        } catch (IOException e) {</span>
+<span class="fc" id="L190">            return new ResponseEntity&lt;&gt;(HttpStatus.INTERNAL_SERVER_ERROR);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

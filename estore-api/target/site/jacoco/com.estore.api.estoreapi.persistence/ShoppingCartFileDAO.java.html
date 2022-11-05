@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ShoppingCartFileDAO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">estore-api</a> &gt; <a href="index.source.html" class="el_package">com.estore.api.estoreapi.persistence</a> &gt; <span class="el_source">ShoppingCartFileDAO.java</span></div><h1>ShoppingCartFileDAO.java</h1><pre class="source lang-java linenums">package com.estore.api.estoreapi.persistence;
+
+import java.io.IOException;
+
+import com.estore.api.estoreapi.model.Product;
+import com.estore.api.estoreapi.model.ShoppingCart;
+import com.estore.api.estoreapi.model.Customer;
+
+import org.springframework.stereotype.Component;
+
+/**
+ * The file that manipulates the {@link ShoppingCart shopping cart} of
+ * individual {@link Customer customer}. This class
+ * manipulates the saved data that corresponds to each user.
+ * 
+ * {@Literal @Component} is a spring annotation that indicates that this class
+ * is to be instantiated
+ * and inserted into any class that needs it upon starting.
+ * 
+ * @author Team-E
+ */
+@Component
+public class ShoppingCartFileDAO implements ShoppingCartDAO {
+
+    UserDAO userDAO; // the userDAO that corresponds with this DAO
+    InventoryDAO inventoryDAO;
+
+    /**
+     * Constructor for the shopping cart DAO class
+     * 
+     * @param userDAO the userDAO, we pass this in so that the shoppingCartDAO is
+     *                able to save the state of the users
+     *                since this class modifies the {@link ShoppingCart shopping
+     *                cart} which the {@link Customer customers} hold
+     * @param inventoryDAO the inventoryDAO, used for checkout
+     */
+<span class="fc" id="L37">    public ShoppingCartFileDAO(UserDAO userDAO, InventoryDAO inventoryDAO) {</span>
+<span class="fc" id="L38">        this.userDAO = userDAO;</span>
+<span class="fc" id="L39">        this.inventoryDAO = inventoryDAO;</span>
+<span class="fc" id="L40">    }</span>
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public synchronized Product addProduct(String username, int id, int quantity) throws IOException {
+<span class="fc" id="L47">        Customer targetCustomer = (Customer) userDAO.getUser(username);</span>
+<span class="fc" id="L48">        Product newProduct = this.inventoryDAO.createClone(id, quantity);</span>
+<span class="fc" id="L49">        Product addedProduct = targetCustomer.addProduct(newProduct);</span>
+<span class="fc" id="L50">        userDAO.saveUsers();</span>
+<span class="fc" id="L51">        return addedProduct;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public synchronized Boolean deleteProduct(String username, Integer id) throws IOException {
+<span class="fc" id="L59">        Customer targetCustomer = (Customer) userDAO.getUser(username);</span>
+<span class="fc" id="L60">        Product removedProduct = targetCustomer.removeProduct(id);</span>
+<span class="fc" id="L61">        userDAO.saveUsers();</span>
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">        return removedProduct != null;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @throws IOException
+     */
+    @Override
+    public synchronized Product[] getShoppingCart(String username) throws IOException {
+<span class="fc" id="L72">        Customer targetCustomer = (Customer) userDAO.getUser(username);</span>
+<span class="fc" id="L73">        return targetCustomer.getCart();</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public synchronized boolean clearShoppingCart(String username) throws IOException {
+<span class="fc" id="L81">        Customer targetCustomer = (Customer) userDAO.getUser(username);</span>
+<span class="fc" id="L82">        boolean status = targetCustomer.clearCart();</span>
+<span class="fc" id="L83">        userDAO.saveUsers();</span>
+<span class="fc" id="L84">        return status;</span>
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public synchronized Boolean checkout(String username) throws IOException {
+<span class="fc" id="L92">        Product[] product_array = this.getShoppingCart(username);</span>
+<span class="fc" id="L93">        boolean status = inventoryDAO.checkOut(product_array);</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">        if (status) {</span>
+<span class="fc" id="L95">            this.clearShoppingCart(username);</span>
+        }
+<span class="fc" id="L97">        return status;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -19,12 +19,22 @@ public class UserTest {
     public void testCtor() {
         // Setup
         Set<Role> roleSet = new HashSet<>();
+        Set<Role> roleSet2 = new HashSet<>();
         Role r = new Role(1, "admin");
+        Role r2 = new Role(2, "user");
         roleSet.add(r);
+        roleSet2.add(r2);
+
         // Invoke
         User user = new User("christin", "christin", roleSet);
-        ;
+        User user2 = new User("christin", "christin", roleSet);
+        User user3 = new User("basit", "basit", roleSet2);
+        user2.setPassword("password");
+        user2.setRole(roleSet);
+
         // Analyze
+        assertEquals(user.equals(user), true);
+        assertEquals(user.equals(user3), false);
         assertEquals("christin", user.getUsername());
         assertEquals("christin", user.getPassword());
         assertEquals(roleSet, user.getRole());
