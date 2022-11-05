@@ -353,3 +353,7 @@ According to this principle, responsibilities are assigned in the form of method
 
 Low coupling is the principle which aims to reduce the impact of any change in the system. If a change needs to be made somewhere, there shouldn’t be any unnecessary coupling such that you may have to make many changes in different classes.
 For example, To make the Product class to work, an InventoryController class, an InventoryDAO interface, and the InventoryFileDAO class which implements it, are required, which are all connected together. There should be minimal number of connections for any class.
+
+### High Cohesion
+
+High cohesion is the principle which aims to move closely related items together. The classes which are closely related to each other should be placed together. For example, the Product class and the Inventory class can be placed together in the same package, because they are closely related to each other.
