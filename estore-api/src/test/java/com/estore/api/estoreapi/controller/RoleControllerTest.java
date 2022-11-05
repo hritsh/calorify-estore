@@ -11,6 +11,7 @@ import java.util.*;
 
 import com.estore.api.estoreapi.persistence.InventoryDAO;
 import com.estore.api.estoreapi.persistence.RoleDAO;
+import com.estore.api.estoreapi.service.RoleService;
 import com.estore.api.estoreapi.model.Product;
 import com.estore.api.estoreapi.model.Role;
 
@@ -53,8 +54,7 @@ public class RoleControllerTest {
         ResponseEntity<Role> response = roleController.createNewRole(role);
 
         // Analyze
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(role, response.getBody());
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
     }
 
     @Test
@@ -127,7 +127,7 @@ public class RoleControllerTest {
     @Test
     public void testGetAllRoles() throws IOException {
 
-        Role[] roles = new Role[1];
+        Role[] roles = new Role[2];
         roles[0] = new Role(1, "admin");
         roles[1] = new Role(2, "user");
         // When get all products is called return the products created above

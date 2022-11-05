@@ -259,7 +259,6 @@ public class UserControllerTest {
 
     @Test
     public void testGetAllUsersHandleException() throws IOException {
-        // Setup
         // When getAllProducts is called on the Mock Product DAO, throw an IOException
         doThrow(new IOException()).when(mockUserDAO).getUsers();
 
