@@ -1,9 +1,9 @@
 /**
  * SWEN 261
  * shopping-cart.component.ts
- *
+ * 
  * The component that displays the current {@linkplain User user's} shopping cart
- *
+ * 
  * Contributors: Team-E
  */
 
@@ -22,8 +22,9 @@ import { User } from '../user';
 })
 export class ShoppingCartComponent implements OnInit {
 
-  @Input() username!: any;
+  @Input() username!: string;
   cart: Product[] = [];
+  @Input() user?: User;
   ifSucceed: Boolean = false;
   ifFailed: Boolean = false;
 
@@ -42,6 +43,8 @@ export class ShoppingCartComponent implements OnInit {
     this.ifFailed = false;
     this.getUser();
     this.getCart();
+    this.getTotalCalories();
+    this.getTotalPrice();
   }
 
   /**
@@ -59,7 +62,25 @@ export class ShoppingCartComponent implements OnInit {
    * Gets the information of the currently logged in {@linkplain User user}
    */
   getUser(): void {
-    this.username = localStorage.getItem("sub");
+    this.username = this.route.snapshot.paramMap.get('username') as string;
+    this.userService.getUser(this.username)
+      .subscribe(user => this.user = user);
+  }
+
+  getTotalCalories(): number {
+    let totalCalories = 0;
+    for (let i = 0; i < this.cart.length; i++) {
+      totalCalories += this.cart[i].calories * this.cart[i].quantity;
+    }
+    return totalCalories;
+  }
+
+  getTotalPrice(): number {
+    let totalPrice = 0;
+    for (let i = 0; i < this.cart.length; i++) {
+      totalPrice += this.cart[i].price * this.cart[i].quantity;
+    }
+    return totalPrice;
   }
 
   /**
@@ -69,7 +90,7 @@ export class ShoppingCartComponent implements OnInit {
   deleteProduct(product: Product): void {
     /**
      * Initilized with a button and deletes the product from the cart
-     *
+     * 
      * Input Argument:
      * product -- The product to be deleted
      */
@@ -97,5 +118,4 @@ export class ShoppingCartComponent implements OnInit {
     });
   }
 }
-
 
