@@ -1,1 +1,4 @@
 .vscode/settings.json
+.history
+.idea
+.DS_Store
