@@ -16,6 +16,7 @@
 		<java.version>11</java.version>
 		<jacoco.version>0.8.7</jacoco.version>
 		<exec.maven.version>3.0.0</exec.maven.version>
+		<sonar.exclusions>**/jwtUtils/**,**estoreapi/*.java,**service/*,**JsonUtilities*,**UserFileDAO*,**LoginController*</sonar.exclusions>
 	</properties>
 	<dependencies>
 		<dependency>
