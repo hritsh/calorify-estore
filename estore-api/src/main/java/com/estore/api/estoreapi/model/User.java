@@ -121,6 +121,14 @@ public class User {
      * {@inheritDoc}
      */
     @Override
+    public int hashCode() {
+        return this.username.hashCode();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public String toString() {
         return String.format(STRING_FORMAT, username);
     }
