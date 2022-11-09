@@ -63,7 +63,7 @@ public class UserController {
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
     @GetMapping("/{username:[a-zA-Z &+-]*}")
-    //makes sure logged in user cannot access other users details
+    // makes sure logged in user cannot access other users details
     @PreAuthorize("#username == authentication.name")
     public ResponseEntity<User> getUser(@PathVariable("username") String username) {
         LOG.info("POST /users/" + username);
@@ -103,7 +103,7 @@ public class UserController {
      */
     @PostMapping("")
     public ResponseEntity<User> addUser(@RequestBody User user) {
-        LOG.info("POST /users"+user.getUsername());
+        LOG.info("POST /users" + user.getUsername());
         try {
             User result = userService.registerNewUser(user);
             if (result != null) {
@@ -115,13 +115,16 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     /**
-     * Updates the {@linkplain User user} in users.json with the provided {@linkplain Customer customer}
+     * Updates the {@linkplain User user} in users.json with the provided
+     * {@linkplain Customer customer}
      * object and its details, if it exists
      * 
      * @param customer The {@link Customer customer} to update
      * 
-     * @return ResponseEntity with updated {@link Customer customer} object and HTTP status
+     * @return ResponseEntity with updated {@link Customer customer} object and HTTP
+     *         status
      *         of OK if updated<br>
      *         ResponseEntity with HTTP status of NOT_FOUND if not found<br>
      *         ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
@@ -129,17 +132,40 @@ public class UserController {
     @PutMapping("")
     @PreAuthorize("#customer.getUsername() == authentication.name")
     public ResponseEntity<Customer> updateUser(@RequestBody Customer customer) {
-        LOG.info("PUT /users"+customer.getUsername());
+        LOG.info("PUT /users" + customer.getUsername());
 
         try {
             Customer updatedCustomer = userDao.updateUserDetails(customer);
-            if(updatedCustomer != null)
-                return new ResponseEntity<Customer>(customer, HttpStatus.OK);    
+            if (updatedCustomer != null)
+                return new ResponseEntity<Customer>(customer, HttpStatus.OK);
             else
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            
-        } catch(IOException e) {
+
+        } catch (IOException e) {
             LOG.log(Level.SEVERE, e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/{username}/salad/{salad}")
+    public ResponseEntity<String> setSalad(@PathVariable("username") String username,
+            @PathVariable("salad") String salad) {
+        LOG.info("PUT /user=" + username + "/salad=" + salad);
+        try {
+            userDao.setSalad(username, salad);
+            return new ResponseEntity<String>(HttpStatus.OK);
+        } catch (IOException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/{username}/salad")
+    public ResponseEntity<String> getSalad(@PathVariable("username") String username) {
+        LOG.info("GET /user=" + username + "/salad");
+        try {
+            String salad = userDao.getSalad(username);
+            return new ResponseEntity<String>(salad, HttpStatus.OK);
+        } catch (IOException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
