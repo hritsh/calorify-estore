@@ -34,6 +34,7 @@ export class SaladMakerComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getUserSalad();
   }
 
   onChange(name: string, i: number, event: any) {
@@ -63,6 +64,21 @@ export class SaladMakerComponent implements OnInit {
   }
 
   /**
+   * Gets the information of the currently logged in {@linkplain User user}
+   */
+  getUserSalad(): void {
+    this.username = (localStorage.getItem('sub')!);
+    this.userService.getSalad(this.username).subscribe(salad => {
+      this.salad = salad.toString();
+      console.log(this.salad);
+      var saladArray = this.salad.split("-");
+      this.ingredientString = saladArray[0];
+      this.price = Number(saladArray[1]);
+      this.calories = Number(saladArray[2]);
+    });
+  }
+
+  /**
    * Handles the action of adding a product to a customer's shopping cart
    * @param product The {@linkplain Product product} to add
    * @param quantity The quantity to add to their cart
@@ -73,6 +89,7 @@ export class SaladMakerComponent implements OnInit {
      */
     var username = (localStorage.getItem('sub')!);
     this.salad = this.ingredientString + "-" + this.price + "-" + this.calories;
+    this.userService.setSalad(username, this.salad.toString()).subscribe(() => console.log(this.salad));
   }
 
 }
