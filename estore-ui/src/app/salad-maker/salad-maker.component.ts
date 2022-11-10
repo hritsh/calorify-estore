@@ -12,9 +12,6 @@ import { UserService } from '../user.service';
   styleUrls: ['./salad-maker.component.css']
 })
 export class SaladMakerComponent implements OnInit {
-  addToCart() {
-    throw new Error('Method not implemented.');
-  }
   @Input() username!: any;
   public message: string;
   salad: String = "0000000000000-0-0";
@@ -63,6 +60,19 @@ export class SaladMakerComponent implements OnInit {
     */
   backButton(): void {
     this.location.back();
+  }
+
+  /**
+   * Handles the action of adding a product to a customer's shopping cart
+   * @param product The {@linkplain Product product} to add
+   * @param quantity The quantity to add to their cart
+   */
+  addToCart(): void {
+    /**
+     * Takes in a product to add to the user's cart
+     */
+    var username = (localStorage.getItem('sub')!);
+    this.salad = this.ingredientString + "-" + this.price + "-" + this.calories;
   }
 
 }
