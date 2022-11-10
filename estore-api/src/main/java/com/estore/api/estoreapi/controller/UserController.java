@@ -66,7 +66,7 @@ public class UserController {
     //makes sure logged in user cannot access other users details
     @PreAuthorize("#username == authentication.name")
     public ResponseEntity<User> getUser(@PathVariable("username") String username) {
-        LOG.info("POST /users/" + username);
+        LOG.info("GET /users/" + username);
         try {
             User user = userDao.getUser(username);
             if (user != null)
