@@ -1,0 +1,21 @@
+<div>
+    <h1>Salad Maker</h1>
+    <div>
+        <h2>Ingredients</h2>
+        <div *ngFor="let ingredient of Object.keys(ingredientsDict); let i = index;">
+            <input type="checkbox" [id]=i [name]=ingredient [value]=ingredient
+                (change)="onChange(ingredient, i, $event)" />
+            <label [for]=ingredient>{{ ingredient }}</label>
+        </div>
+
+        <br />
+        <label [textContent]="this.message"></label>
+        <div class="salad">
+            <label id="salad">Salad: </label> <br />
+            <label id="price">Price: </label> <br />
+            <label id="calories">Calories: </label>
+        </div>
+        <button type="button" (click)="backButton()">Go Back</button>
+        <button type="button" (click)="addToCart()">AddToCart</button>
+    </div>
+</div>
