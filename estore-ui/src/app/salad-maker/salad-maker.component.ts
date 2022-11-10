@@ -40,6 +40,16 @@ export class SaladMakerComponent implements OnInit {
   }
 
   onChange(name: string, i: number, event: any) {
+    if (event.target.checked) {
+      this.ingredientString = this.ingredientString.substring(0, i) + "1" + this.ingredientString.substring(i + 1);
+      this.price += this.ingredientsDict[name][0];
+      this.calories += this.ingredientsDict[name][1];
+    }
+    else {
+      this.ingredientString = this.ingredientString.substring(0, i) + "0" + this.ingredientString.substring(i + 1);
+      this.price -= this.ingredientsDict[name][0];
+      this.calories -= this.ingredientsDict[name][1];
+    }
     console.log(this.ingredientString);
     console.log(this.price);
     console.log(this.calories);
