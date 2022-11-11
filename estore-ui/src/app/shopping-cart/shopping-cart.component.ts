@@ -27,6 +27,15 @@ export class ShoppingCartComponent implements OnInit {
   @Input() user?: User;
   ifSucceed: Boolean = false;
   ifFailed: Boolean = false;
+  ingredientsArray: any = ["Lettuce", "Tomato", "Cucumber", "Carrot", "Celery", "Pepper", "Broccoli", "Spinach", "Cabbage", "Olives", "Mushroom", "Garlic", "Chicken"];
+  ingredientsDict: any = {
+    "Lettuce": [0.5, 5], "Tomato": [0.5, 5], "Cucumber": [0.5, 5], "Carrot": [0.5, 5], "Celery": [0.5, 5], "Pepper": [0.5, 5], "Broccoli": [0.5, 5], "Spinach": [0.5, 5], "Cabbage": [0.5, 5], "Olives": [0.5, 5], "Mushroom": [0.5, 5], "Garlic": [0.5, 5], "Chicken": [0.5, 5]
+  }
+  salad: String = "0000000000000-0-0";
+  price: number = 0;
+  calories: number = 0;
+  ingredientString: string = "0000000000000";
+  ingredients: string[] = [];
 
   constructor(
     private shoppingCartService: ShoppingCartService,
@@ -45,6 +54,7 @@ export class ShoppingCartComponent implements OnInit {
     this.getCart();
     this.getTotalCalories();
     this.getTotalPrice();
+    this.getUserSalad();
   }
 
   /**
@@ -116,6 +126,32 @@ export class ShoppingCartComponent implements OnInit {
         this.cart = [];
       } else { this.ifFailed = true; }
     });
+  }
+
+  /**
+   * Gets the information of the currently logged in {@linkplain User user}
+   */
+  getUserSalad(): void {
+    this.userService.getSalad(this.username).subscribe(salad => {
+      this.salad = salad.toString();
+      console.log(this.salad);
+      var saladArray = this.salad.split("-");
+      this.ingredientString = saladArray[0];
+      this.price = Number(saladArray[1]);
+      this.calories = Number(saladArray[2]);
+      for (let i = 0; i < this.ingredientString.length; i++) {
+        if (this.ingredientString.charAt(i) == "1") {
+          this.ingredients.push(this.ingredientsArray[i]);
+        }
+      }
+    });
+  }
+
+  deleteSalad(): void {
+    this.userService.setSalad(this.username, "0000000000000-0-0").subscribe(() => this.salad = "0000000000000-0-0");
+    this.ingredientString = "0000000000000";
+    this.price = 0;
+    this.calories = 0;
   }
 }
 
