@@ -14,15 +14,27 @@ import { UserService } from '../user.service';
 export class SaladMakerComponent implements OnInit {
   @Input() username!: any;
   public message: string;
-  salad: String = "0000000000000-0-0";
+  salad: String = "0-0000000000000-0000000-000000-0-0-0-0";
+  base: string = "0";
+  vegetables: string = "0000000000000";
+  fruits: string = "0000000";
+  proteins: string = "000000";
+  cheese: string = "0";
+  dressing: string = "0";
   price: number = 0;
   calories: number = 0;
-  ingredientString: string = "0000000000000";
 
   Object = Object;
+  baseArray: string[] = ["None", "Iceberg Lettuce", "Kale", "Spinach", "Salata Mix", "Romaine Lettuce", "Arugula", "Acardian Mix"];
+  vegetableArray: string[] = ["Tomato", "Cucumber", "Carrot", "Jalapeno", "Bell Peppers", "Broccoli", "Edamame", "Cabbage", "Green Olives", "Black Olives", "Mushroom", "Red Onion", "Red Beans"];
+  fruitsArray: string[] = ["Apple", "Grapes", "Mandarin Orange", "Pineapple", "Strawberry", "Raisins", "Dried Cranberries"];
+  proteinsArray: string[] = ["Grilled Chicken", "Falafel", "Quinoa", "Steak", "Salmon", "Turkey"];
+  cheeseArray: string[] = ["None", "Blue Cheese", "Feta Cheese", "Mixed Cheese", "Parmesan Cheese"];
+  dressingArray: string[] = ["None", "Classic Caesar", "Buttermilk Ranch", "Olive Oil", "Honey Mustard", "Oil & Vinegar", "Balsamic Vinegar", "Jalapeno Avacado"];
+
   ingredientsDict: any = {
-    "Lettuce": [0.5, 5], "Tomato": [0.5, 5], "Cucumber": [0.5, 5], "Carrot": [0.5, 5], "Celery": [0.5, 5], "Pepper": [0.5, 5], "Broccoli": [0.5, 5], "Spinach": [0.5, 5], "Cabbage": [0.5, 5], "Olives": [0.5, 5], "Mushroom": [0.5, 5], "Garlic": [0.5, 5], "Chicken": [0.5, 5]
-  }
+    "None": [0, 0], "Iceberg Lettuce": [0.5, 35], "Kale": ["0.5", 30], "Spinach": [0.5, 20], "Salata Mix": [0.5, 40], "Romaine Lettuce": [0.5, 30], "Arugula": [0.5, 15], "Acardian Mix": [0.5, 20], "Tomato": [0.5, 10], "Cucumber": [0.5, 5], "Carrot": [0.5, 5], "Jalapeno": [0.5, 5], "Bell Peppers": [0.5, 5], "Broccoli": [0.5, 5], "Edamame": [0.5, 25], "Cabbage": [0.5, 5], "Green Olives": [0.5, 40], "Black Olives": [0.5, 35], "Mushroom": [0.5, 5], "Red Onion": [0.5, 10], "Red Beans": [0.5, 20], "Apple": [0.5, 15], "Grapes": [0.5, 20], "Mandarin Orange": [0.5, 20], "Pineapple": [0.5, 15], "Strawberry": [0.5, 10], "Raisins": [0.5, 100], "Dried Cranberries": [0.5, 70], "Grilled Chicken": [0.5, 190], "Falafel": [0.5, 130], "Quinoa": [0.5, 100], "Steak": [0.5, 190], "Salmon": [0.5, 190], "Turkey": [0.5, 90], "Blue Cheese": [0.5, 60], "Feta Cheese": [0.5, 45], "Mixed Cheese": [0.5, 40], "Parmesan Cheese": [0.5, 50], "Classic Caesar": [0.5, 290], "Buttermilk Ranch": [0.5, 230], "Olive Oil": [0.5, 130], "Honey Mustard": [0.5, 270], "Oil & Vinegar": [0.5, 280], "Balsamic Vinegar": [0.5, 20], "Jalapeno Avacado": [0.5, 164]
+  };
 
   constructor(
     private productService: ProductService,
@@ -38,23 +50,34 @@ export class SaladMakerComponent implements OnInit {
     this.initCheckboxes();
   }
 
-  onChange(name: string, i: number, event: any) {
+  vegetableChange(name: string, i: number, event: any) {
     if (event.target.checked) {
-      this.ingredientString = this.ingredientString.substring(0, i) + "1" + this.ingredientString.substring(i + 1);
-      this.price += this.ingredientsDict[name][0];
-      this.calories += this.ingredientsDict[name][1];
+      this.vegetables = this.vegetables.substring(0, i) + "1" + this.vegetables.substring(i + 1);
     }
     else {
-      this.ingredientString = this.ingredientString.substring(0, i) + "0" + this.ingredientString.substring(i + 1);
-      this.price -= this.ingredientsDict[name][0];
-      this.calories -= this.ingredientsDict[name][1];
+      this.vegetables = this.vegetables.substring(0, i) + "0" + this.vegetables.substring(i + 1);
     }
-    console.log(this.ingredientString);
-    console.log(this.price);
-    console.log(this.calories);
-    document.getElementById("salad")!.innerHTML = "Salad: " + this.salad.toString() + "<br>" + this.ingredientString;
-    document.getElementById("price")!.innerHTML = "Total Price: $" + this.price;
-    document.getElementById("calories")!.innerHTML = "Total Calories: " + this.calories;
+    this.calculate();
+  }
+
+  fruitChange(name: string, i: number, event: any) {
+    if (event.target.checked) {
+      this.fruits = this.fruits.substring(0, i) + "1" + this.fruits.substring(i + 1);
+    }
+    else {
+      this.fruits = this.fruits.substring(0, i) + "0" + this.fruits.substring(i + 1);
+    }
+    this.calculate();
+  }
+
+  proteinChange(name: string, i: number, event: any) {
+    if (event.target.checked) {
+      this.proteins = this.proteins.substring(0, i) + "1" + this.proteins.substring(i + 1);
+    }
+    else {
+      this.proteins = this.proteins.substring(0, i) + "0" + this.proteins.substring(i + 1);
+    }
+    this.calculate();
   }
 
   /**
@@ -73,9 +96,14 @@ export class SaladMakerComponent implements OnInit {
       this.salad = salad.toString();
       console.log(this.salad);
       var saladArray = this.salad.split("-");
-      this.ingredientString = saladArray[0];
-      this.price = Number(saladArray[1]);
-      this.calories = Number(saladArray[2]);
+      this.base = saladArray[0];
+      this.vegetables = saladArray[1];
+      this.fruits = saladArray[2];
+      this.proteins = saladArray[3];
+      this.cheese = saladArray[4];
+      this.dressing = saladArray[5];
+      this.price = Number(saladArray[6]);
+      this.calories = Number(saladArray[7]);
     });
   }
 
@@ -89,7 +117,7 @@ export class SaladMakerComponent implements OnInit {
      * Takes in a product to add to the user's cart
      */
     var username = (localStorage.getItem('sub')!);
-    this.salad = this.ingredientString + "-" + this.price + "-" + this.calories;
+    this.salad = this.base + "-" + this.vegetables + "-" + this.fruits + "-" + this.proteins + "-" + this.cheese + "-" + this.dressing + "-" + this.price + "-" + this.calories;
     this.userService.setSalad(username, this.salad.toString()).subscribe(() => console.log(this.salad));
   }
 
@@ -99,30 +127,119 @@ export class SaladMakerComponent implements OnInit {
       this.salad = salad.toString();
       console.log(this.salad);
       var saladArray = this.salad.split("-");
-      this.ingredientString = saladArray[0];
-      this.price = Number(saladArray[1]);
-      this.calories = Number(saladArray[2]);
+      this.base = saladArray[0];
+      this.vegetables = saladArray[1];
+      this.fruits = saladArray[2];
+      this.proteins = saladArray[3];
+      this.cheese = saladArray[4];
+      this.dressing = saladArray[5];
+      this.price = Number(saladArray[6]);
+      this.calories = Number(saladArray[7]);
+
+      const select = document.getElementById('baseSelect') as HTMLSelectElement | null;
+      if (select != null) {
+        select.selectedIndex = Number(this.base);
+      }
+
       for (var i = 0; i < 13; i++) {
-        if (this.ingredientString.charAt(i) == "1") {
+        if (this.vegetables.charAt(i) == "1") {
           document.getElementById(i.toString())!.setAttribute("checked", "true");
-          document.getElementById("salad")!.innerHTML = "Salad: " + this.salad.toString() + "<br>" + this.ingredientString;
-          document.getElementById("price")!.innerHTML = "Total Price: $" + this.price;
-          document.getElementById("calories")!.innerHTML = "Total Calories: " + this.calories;
+        }
+      }
+      for (var i = 0; i < 7; i++) {
+        if (this.fruits.charAt(i) == "1") {
+          document.getElementById((i + 13).toString())!.setAttribute("checked", "true");
+        }
+      }
+      for (var i = 0; i < 6; i++) {
+        if (this.proteins.charAt(i) == "1") {
+          document.getElementById((i + 20).toString())!.setAttribute("checked", "true");
         }
       }
 
+      const select2 = document.getElementById('cheeseSelect') as HTMLSelectElement | null;
+      if (select2 != null) {
+        select2.selectedIndex = Number(this.cheese);
+      }
+
+      const select3 = document.getElementById('dressingSelect') as HTMLSelectElement | null;
+      if (select3 != null) {
+        select3.selectedIndex = Number(this.dressing);
+      }
+
+      document.getElementById("salad")!.innerHTML = "Salad: " + this.base + "-" + this.vegetables + "-" + this.fruits + "-" + this.proteins + "-" + this.cheese + "-" + this.dressing;
+      document.getElementById("price")!.innerHTML = "Total Price: $" + this.price;
+      document.getElementById("calories")!.innerHTML = "Total Calories: " + this.calories;
     });
   }
 
   clearSalad() {
-    this.salad = "0000000000000-0-0";
-    this.ingredientString = "0000000000000";
+    this.salad = "0-0000000000000-0000000-000000-0-0-0-0";
+    this.base = "0";
+    this.vegetables = "0000000000000";
+    this.fruits = "0000000";
+    this.proteins = "000000";
+    this.cheese = "0";
+    this.dressing = "0";
     this.price = 0;
     this.calories = 0;
-    for (var i = 0; i < 13; i++) {
+
+    const select = document.getElementById('baseSelect') as HTMLSelectElement | null;
+    if (select != null) {
+      select.selectedIndex = 0;
+    }
+
+    for (var i = 0; i < 26; i++) {
       document.getElementById(i.toString())!.removeAttribute("checked");
     }
-    document.getElementById("salad")!.innerHTML = "Salad: " + this.salad.toString() + "<br>" + this.ingredientString;
+
+    const select2 = document.getElementById('cheeseSelect') as HTMLSelectElement | null;
+    if (select2 != null) {
+      select2.selectedIndex = 0;
+    }
+
+    const select3 = document.getElementById('dressingSelect') as HTMLSelectElement | null;
+    if (select3 != null) {
+      select3.selectedIndex = 0;
+    }
+
+    this.calculate();
+  }
+
+  calculate() {
+    this.price = 0;
+    this.calories = 0;
+
+    this.price += this.ingredientsDict[this.baseArray[Number(this.base)]][0];
+    this.calories += this.ingredientsDict[this.baseArray[Number(this.base)]][1];
+
+    for (var i = 0; i < 13; i++) {
+      if (this.vegetables.charAt(i) == "1") {
+        this.price += this.ingredientsDict[this.vegetableArray[i]][0];
+        this.calories += this.ingredientsDict[this.vegetableArray[i]][1];
+      }
+    }
+    for (var i = 0; i < 7; i++) {
+      if (this.fruits.charAt(i) == "1") {
+        this.price += this.ingredientsDict[this.fruitsArray[i]][0];
+        this.calories += this.ingredientsDict[this.fruitsArray[i]][1];
+      }
+    }
+    for (var i = 0; i < 6; i++) {
+      if (this.proteins.charAt(i) == "1") {
+        this.price += this.ingredientsDict[this.proteinsArray[i]][0];
+        this.calories += this.ingredientsDict[this.proteinsArray[i]][1];
+      }
+    }
+
+    this.price += this.ingredientsDict[this.cheeseArray[Number(this.cheese)]][0];
+    this.calories += this.ingredientsDict[this.cheeseArray[Number(this.cheese)]][1];
+
+    this.price += this.ingredientsDict[this.dressingArray[Number(this.dressing)]][0];
+    this.calories += this.ingredientsDict[this.dressingArray[Number(this.dressing)]][1];
+
+    this.salad = this.base + "-" + this.vegetables + "-" + this.fruits + "-" + this.proteins + "-" + this.cheese + "-" + this.dressing + "-" + this.price + "-" + this.calories;
+    document.getElementById("salad")!.innerHTML = "Salad: " + this.base + "-" + this.vegetables + "-" + this.fruits + "-" + this.proteins + "-" + this.cheese + "-" + this.dressing + "-" + this.price + "-" + this.calories;
     document.getElementById("price")!.innerHTML = "Total Price: $" + this.price;
     document.getElementById("calories")!.innerHTML = "Total Calories: " + this.calories;
   }

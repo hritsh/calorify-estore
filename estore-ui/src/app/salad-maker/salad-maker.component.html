@@ -1,17 +1,47 @@
 <div>
     <h1>Salad Maker</h1>
     <div>
-        <h2>Ingredients</h2>
-        <div *ngFor="let ingredient of Object.keys(ingredientsDict); let i = index;">
+        <h2>Base</h2>
+        <select id="baseSelect" [(ngModel)]="base" (change)="calculate()" selected>
+            <option *ngFor="let base of baseArray; let i=index;" [ngValue]="i">{{ base }}</option>
+        </select>
+
+        <h2>Vegetables</h2>
+        <div *ngFor="let ingredient of vegetableArray; let i = index;">
             <input type="checkbox" [id]=i [name]=ingredient [value]=ingredient
-                (change)="onChange(ingredient, i, $event)" />
+                (change)="vegetableChange(ingredient, i, $event)" />
             <label [for]=ingredient>{{ ingredient }}</label>
         </div>
 
-        <br />
+        <h2>Fruits</h2>
+        <div *ngFor="let ingredient of fruitsArray; let i = index;">
+            <input type="checkbox" [id]=i+13 [name]=ingredient [value]=ingredient
+                (change)="fruitChange(ingredient, i, $event)" />
+            <label [for]=ingredient>{{ ingredient }}</label>
+        </div>
+
+        <h2>Proteins</h2>
+        <div *ngFor="let ingredient of proteinsArray; let i = index;">
+            <input type="checkbox" [id]=i+20 [name]=ingredient [value]=ingredient
+                (change)="proteinChange(ingredient, i, $event)" />
+            <label [for]=ingredient>{{ ingredient }}</label>
+        </div>
+
+        <h2>Cheese</h2>
+        <select id="cheeseSelect" [(ngModel)]="cheese" (change)="calculate()">
+            <option *ngFor="let cheese of cheeseArray; let i=index;" [ngValue]="i">{{ cheese }}</option>
+        </select>
+
+        <h2>Dressing</h2>
+        <select id="dressingSelect" [(ngModel)]="dressing" (change)="calculate()">
+            <option *ngFor="let dressing of dressingArray; let i=index;" [ngValue]="i">{{ dressing }}
+            </option>
+        </select>
+
+        <br /><br /><br />
         <label [textContent]="this.message"></label>
         <div class="salad">
-            <label id="salad">Salad: 0000000000000-0-0</label> <br />
+            <label id="salad">Salad: 0-0000000000000-0000000-000000-0-0-0-0</label> <br />
             <label id="price">Total Price: $0</label> <br />
             <label id="calories">Total Calories: 0</label>
         </div>

@@ -50,7 +50,7 @@ public class Customer extends User {
             @JsonProperty("role") Set<Role> role, @JsonProperty("cart") ShoppingCart cart) {
         super(username, password, role);
         this.cart = cart;
-        this.salad = "0000000000000-0-0";
+        this.salad = "0-0000000000000-0000000-000000-0-0-0-0";
     }
 
     /**
@@ -64,7 +64,7 @@ public class Customer extends User {
     public Customer(String username, String password, Set<Role> role) {
         super(username, password, role);
         this.cart = new ShoppingCart(null);
-        this.salad = "0000000000000-0-0";
+        this.salad = "0-0000000000000-0000000-000000-0-0-0-0";
     }
 
     /**
