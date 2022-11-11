@@ -82,6 +82,7 @@ export class ShoppingCartComponent implements OnInit {
     for (let i = 0; i < this.cart.length; i++) {
       totalCalories += this.cart[i].calories * this.cart[i].quantity;
     }
+    totalCalories += this.calories;
     return totalCalories;
   }
 
@@ -90,6 +91,7 @@ export class ShoppingCartComponent implements OnInit {
     for (let i = 0; i < this.cart.length; i++) {
       totalPrice += this.cart[i].price * this.cart[i].quantity;
     }
+    totalPrice += this.price;
     return totalPrice;
   }
 

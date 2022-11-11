@@ -35,6 +35,7 @@ export class SaladMakerComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUserSalad();
+    this.initCheckboxes();
   }
 
   onChange(name: string, i: number, event: any) {
@@ -51,7 +52,7 @@ export class SaladMakerComponent implements OnInit {
     console.log(this.ingredientString);
     console.log(this.price);
     console.log(this.calories);
-    document.getElementById("salad")!.innerHTML = this.salad.toString() + " " + this.ingredientString;
+    document.getElementById("salad")!.innerHTML = "Salad: " + this.salad.toString() + "<br>" + this.ingredientString;
     document.getElementById("price")!.innerHTML = "Total Price: $" + this.price;
     document.getElementById("calories")!.innerHTML = "Total Calories: " + this.calories;
   }
@@ -90,6 +91,26 @@ export class SaladMakerComponent implements OnInit {
     var username = (localStorage.getItem('sub')!);
     this.salad = this.ingredientString + "-" + this.price + "-" + this.calories;
     this.userService.setSalad(username, this.salad.toString()).subscribe(() => console.log(this.salad));
+  }
+
+  initCheckboxes() {
+    this.username = (localStorage.getItem('sub')!);
+    this.userService.getSalad(this.username).subscribe(salad => {
+      this.salad = salad.toString();
+      console.log(this.salad);
+      var saladArray = this.salad.split("-");
+      this.ingredientString = saladArray[0];
+      this.price = Number(saladArray[1]);
+      this.calories = Number(saladArray[2]);
+      for (var i = 0; i < 13; i++) {
+        if (this.ingredientString.charAt(i) == "1") {
+          document.getElementById(i.toString())!.setAttribute("checked", "true");
+          document.getElementById("salad")!.innerHTML = "Salad: " + this.salad.toString() + "<br>" + this.ingredientString;
+          document.getElementById("price")!.innerHTML = "Total Price: $" + this.price;
+          document.getElementById("calories")!.innerHTML = "Total Calories: " + this.calories;
+        }
+      }
+    });
   }
 
 }
