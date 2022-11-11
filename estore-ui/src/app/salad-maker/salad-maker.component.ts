@@ -110,7 +110,20 @@ export class SaladMakerComponent implements OnInit {
           document.getElementById("calories")!.innerHTML = "Total Calories: " + this.calories;
         }
       }
+
     });
   }
 
+  clearSalad() {
+    this.salad = "0000000000000-0-0";
+    this.ingredientString = "0000000000000";
+    this.price = 0;
+    this.calories = 0;
+    for (var i = 0; i < 13; i++) {
+      document.getElementById(i.toString())!.removeAttribute("checked");
+    }
+    document.getElementById("salad")!.innerHTML = "Salad: " + this.salad.toString() + "<br>" + this.ingredientString;
+    document.getElementById("price")!.innerHTML = "Total Price: $" + this.price;
+    document.getElementById("calories")!.innerHTML = "Total Calories: " + this.calories;
+  }
 }

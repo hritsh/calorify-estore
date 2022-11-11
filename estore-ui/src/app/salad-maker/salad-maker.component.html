@@ -11,11 +11,17 @@
         <br />
         <label [textContent]="this.message"></label>
         <div class="salad">
-            <label id="salad">Salad: </label> <br />
-            <label id="price">Total Price: </label> <br />
-            <label id="calories">Total Calories: </label>
+            <label id="salad">Salad: 0000000000000-0-0</label> <br />
+            <label id="price">Total Price: $0</label> <br />
+            <label id="calories">Total Calories: 0</label>
         </div>
         <button type="button" (click)="backButton()">Go Back</button>
-        <button type="button" (click)="addToCart()">AddToCart</button>
+        <button type="button" (click)="clearSalad()">Clear</button>
+        <button type="button" (click)="addToCart()">Save and Add to Cart</button>
     </div>
+    <h2 *ngIf="username != null">
+        <button class="cart" routerLink="/user-store/hritish/shopping-cart">
+            <span>Shopping Cart</span>
+        </button>
+    </h2>
 </div>
