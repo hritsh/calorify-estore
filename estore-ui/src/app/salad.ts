@@ -49,30 +49,7 @@ export class Salad {
             this.dressing = saladArray[5];
             this.price = Number(saladArray[6]);
             this.calories = Number(saladArray[7]);
-
-
-            this.ingredients.push(this.baseArray[Number(this.base)]);
-            for (let i = 0; i < this.vegetables.length; i++) {
-                if (this.vegetables.charAt(i) == "1") {
-                    this.ingredients.push(this.vegetableArray[i]);
-                }
-            }
-            for (let i = 0; i < this.fruits.length; i++) {
-                if (this.fruits.charAt(i) == "1") {
-                    this.ingredients.push(this.fruitsArray[i]);
-                }
-            }
-            for (let i = 0; i < this.proteins.length; i++) {
-                if (this.proteins.charAt(i) == "1") {
-                    this.ingredients.push(this.proteinsArray[i]);
-                }
-            }
-            this.ingredients.push(this.cheeseArray[Number(this.cheese)]);
-            this.ingredients.push(this.dressingArray[Number(this.dressing)]);
-            this.ingredients = this.ingredients.filter(function (el) {
-                return el != "None";
-            }
-            );
+            this.getIngredients();
         });
     }
 
@@ -136,9 +113,6 @@ export class Salad {
             if (select3 != null) {
                 select3.selectedIndex = Number(this.dressing);
             }
-
-            document.getElementById("price")!.innerHTML = "Total Price: $" + this.price;
-            document.getElementById("calories")!.innerHTML = "Total Calories: " + this.calories;
         });
     }
 
@@ -152,6 +126,7 @@ export class Salad {
         this.dressing = "0";
         this.price = 0;
         this.calories = 0;
+        this.ingredients = [];
 
         const select = document.getElementById('baseSelect') as HTMLSelectElement | null;
         if (select != null) {
@@ -207,9 +182,9 @@ export class Salad {
         this.price += this.ingredientsDict[this.dressingArray[Number(this.dressing)]][0];
         this.calories += this.ingredientsDict[this.dressingArray[Number(this.dressing)]][1];
 
+        this.getIngredients();
+
         this.salad = this.base + "-" + this.vegetables + "-" + this.fruits + "-" + this.proteins + "-" + this.cheese + "-" + this.dressing + "-" + this.price + "-" + this.calories;
-        document.getElementById("price")!.innerHTML = "Total Price: $" + this.price;
-        document.getElementById("calories")!.innerHTML = "Total Calories: " + this.calories;
     }
 
     vegetableChange(name: string, i: number, event: any) {
@@ -252,5 +227,31 @@ export class Salad {
         this.dressing = "0";
         this.price = 0;
         this.calories = 0;
+    }
+
+    getIngredients(): void {
+        this.ingredients = [];
+        this.ingredients.push(this.baseArray[Number(this.base)]);
+        for (let i = 0; i < this.vegetables.length; i++) {
+            if (this.vegetables.charAt(i) == "1") {
+                this.ingredients.push(this.vegetableArray[i]);
+            }
+        }
+        for (let i = 0; i < this.fruits.length; i++) {
+            if (this.fruits.charAt(i) == "1") {
+                this.ingredients.push(this.fruitsArray[i]);
+            }
+        }
+        for (let i = 0; i < this.proteins.length; i++) {
+            if (this.proteins.charAt(i) == "1") {
+                this.ingredients.push(this.proteinsArray[i]);
+            }
+        }
+        this.ingredients.push(this.cheeseArray[Number(this.cheese)]);
+        this.ingredients.push(this.dressingArray[Number(this.dressing)]);
+        this.ingredients = this.ingredients.filter(function (el) {
+            return el != "None";
+        }
+        );
     }
 }

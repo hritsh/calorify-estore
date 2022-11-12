@@ -3,47 +3,54 @@
     <div>
         <h2>Base</h2>
         <select id="baseSelect" [(ngModel)]="s.base" (change)="s.calculate()" selected>
-            <option *ngFor="let base of s.baseArray; let i=index;" [ngValue]="i">{{ base }}</option>
+            <option *ngFor="let base of s.baseArray; let i=index;" [ngValue]="i">{{ base }}{{ i!=0 ? " [" +
+                s.ingredientsDict[base][1] + " cal] [$" + s.ingredientsDict[base][0] + "]" : "" }}</option>
         </select>
 
         <h2>Vegetables</h2>
-        <div *ngFor="let ingredient of s.vegetableArray; let i = index;">
+        <div class="multiselect" *ngFor="let ingredient of s.vegetableArray; let i = index;">
             <input type="checkbox" [id]=i [name]=ingredient [value]=ingredient
                 (change)="s.vegetableChange(ingredient, i, $event)" />
             <label [for]=ingredient>{{ ingredient }}</label>
+            <span>{{ " [" + s.ingredientsDict[ingredient][1] + " cal]" }}</span>
+            <span>{{ " [$" + s.ingredientsDict[ingredient][0] + "]"}}</span>
         </div>
 
         <h2>Fruits</h2>
-        <div *ngFor="let ingredient of s.fruitsArray; let i = index;">
+        <div class="multiselect" *ngFor="let ingredient of s.fruitsArray; let i = index;">
             <input type="checkbox" [id]=i+13 [name]=ingredient [value]=ingredient
                 (change)="s.fruitChange(ingredient, i, $event)" />
             <label [for]=ingredient>{{ ingredient }}</label>
+            <span>{{ " [" + s.ingredientsDict[ingredient][1] + " cal]"}}</span>
+            <span>{{ " [$" + s.ingredientsDict[ingredient][0] + "]"}}</span>
         </div>
 
         <h2>Proteins</h2>
-        <div *ngFor="let ingredient of s.proteinsArray; let i = index;">
+        <div class="multiselect" *ngFor="let ingredient of s.proteinsArray; let i = index;">
             <input type="checkbox" [id]=i+20 [name]=ingredient [value]=ingredient
                 (change)="s.proteinChange(ingredient, i, $event)" />
             <label [for]=ingredient>{{ ingredient }}</label>
+            <span>{{ " [" + s.ingredientsDict[ingredient][1] + " cal]" }}</span>
+            <span>{{ " [$" + s.ingredientsDict[ingredient][0] + "]"}}</span>
         </div>
 
         <h2>Cheese</h2>
         <select id="cheeseSelect" [(ngModel)]="s.cheese" (change)="s.calculate()">
-            <option *ngFor="let cheese of s.cheeseArray; let i=index;" [ngValue]="i">{{ cheese }}
-            </option>
+            <option *ngFor="let cheese of s.cheeseArray; let i=index;" [ngValue]="i">{{ cheese }}{{ i!=0 ? " [" +
+                s.ingredientsDict[cheese][1] + " cal] [$" + s.ingredientsDict[cheese][0] + "]" : "" }}</option>
         </select>
 
         <h2>Dressing</h2>
         <select id="dressingSelect" [(ngModel)]="s.dressing" (change)="s.calculate()">
-            <option *ngFor="let dressing of s.dressingArray; let i=index;" [ngValue]="i">{{ dressing }}
-            </option>
+            <option *ngFor="let dressing of s.dressingArray; let i=index;" [ngValue]="i">{{ dressing }}{{ i!=0 ? " [" +
+                s.ingredientsDict[dressing][1] + " cal] [$" + s.ingredientsDict[dressing][0] + "]" : "" }}</option>
         </select>
 
         <br /><br /><br />
         <div class="salad">
             <label id="ingredients">Ingredients Selected: <span>{{ s.ingredients.join(", ") }}</span></label> <br />
-            <label id="price">Total Price: $0</label> <br />
-            <label id="calories">Total Calories: 0</label>
+            <label id="price">Total Price: <span>${{ s.price }}</span></label> <br />
+            <label id="calories">Total Calories: <span>{{ s.calories }}</span></label>
         </div>
         <br>
         <button type="button" (click)="backButton()">Go Back</button>
