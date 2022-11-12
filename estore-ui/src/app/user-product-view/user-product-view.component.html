@@ -1,7 +1,7 @@
 <body>
     <div *ngIf="product != null">
       <h1>{{ product.name }} Details</h1>
-      <div><img src="{{ product.image }}" /></div>
+      <div><img alt=" Product Image" src="{{ product.image }}" /></div>
       <br />
       <div><span>ID: </span>{{ product.id }}</div>
       <div><span>Calories: </span>{{ product.calories }}</div>
@@ -32,5 +32,5 @@
       <label [textContent]="this.message"></label>
     </div>
   </body>
-  
-  
+
+

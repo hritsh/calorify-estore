@@ -10,7 +10,7 @@
         <label class="calories">Calories: {{ product.calories }}</label>
         <label class="price">Price: ${{ product.price }}</label>
         <label class="quantity">Quantity: {{ product.quantity }}</label>
-        <label class="image"><img src="{{ product.image }}" /></label>
+        <label class="image"><img alt="Product Image" src="{{ product.image }}" /></label>
       </button>
       <button type="button" class="delete" title="Delete Product" (click)="deleteProduct(product)">
         <span>REMOVE</span>
