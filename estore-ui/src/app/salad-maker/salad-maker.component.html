@@ -1,7 +1,7 @@
 <div>
     <h1>Salad Maker</h1>
     <div>
-        <h2>Base</h2>
+        <h2>Leaves</h2>
         <select id="baseSelect" [(ngModel)]="s.base" (change)="s.calculate()" selected>
             <option *ngFor="let base of s.baseArray; let i=index;" [ngValue]="i">{{ base }}{{ i!=0 ? " [" +
                 s.ingredientsDict[base][1] + " cal] [$" + s.ingredientsDict[base][0] + "]" : "" }}</option>

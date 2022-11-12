@@ -116,6 +116,8 @@ export class ShoppingCartComponent implements OnInit {
    * Initiates the action of checking out for the {@linkplain User user}
    */
   checkout(): void {
+    this.s.deleteSalad();
+    this.s.calculate();
     this.shoppingCartService.checkout(this.username).subscribe(output => {
       if (output) {
         this.ifSucceed = true;

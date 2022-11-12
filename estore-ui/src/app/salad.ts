@@ -147,6 +147,7 @@ export class Salad {
             select3.selectedIndex = 0;
         }
 
+        this.deleteSalad();
         this.calculate();
     }
 
