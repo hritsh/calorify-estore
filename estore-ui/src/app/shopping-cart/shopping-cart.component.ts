@@ -14,6 +14,7 @@ import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../user.service';
 import { User } from '../user';
+import { Salad } from '../salad';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -27,15 +28,8 @@ export class ShoppingCartComponent implements OnInit {
   @Input() user?: User;
   ifSucceed: Boolean = false;
   ifFailed: Boolean = false;
-  ingredientsArray: any = ["Lettuce", "Tomato", "Cucumber", "Carrot", "Celery", "Pepper", "Broccoli", "Spinach", "Cabbage", "Olives", "Mushroom", "Garlic", "Chicken"];
-  vegetableDict: any = {
-    "Lettuce": [0.5, 5], "Tomato": [0.5, 5], "Cucumber": [0.5, 5], "Carrot": [0.5, 5], "Celery": [0.5, 5], "Pepper": [0.5, 5], "Broccoli": [0.5, 5], "Spinach": [0.5, 5], "Cabbage": [0.5, 5], "Olives": [0.5, 5], "Mushroom": [0.5, 5], "Garlic": [0.5, 5], "Chicken": [0.5, 5]
-  }
-  salad: String = "0-0000000000000-0000000-000000-0-0-0-0";
-  price: number = 0;
-  calories: number = 0;
-  vegetables: string = "0000000000000";
-  ingredients: string[] = [];
+  s: Salad = new Salad(this.userService);
+
 
   constructor(
     private shoppingCartService: ShoppingCartService,
@@ -54,7 +48,7 @@ export class ShoppingCartComponent implements OnInit {
     this.getCart();
     this.getTotalCalories();
     this.getTotalPrice();
-    this.getUserSalad();
+    this.s.getUserSalad();
   }
 
   /**
@@ -82,7 +76,7 @@ export class ShoppingCartComponent implements OnInit {
     for (let i = 0; i < this.cart.length; i++) {
       totalCalories += this.cart[i].calories * this.cart[i].quantity;
     }
-    totalCalories += this.calories;
+    totalCalories += this.s.calories;
     return totalCalories;
   }
 
@@ -91,7 +85,7 @@ export class ShoppingCartComponent implements OnInit {
     for (let i = 0; i < this.cart.length; i++) {
       totalPrice += this.cart[i].price * this.cart[i].quantity;
     }
-    totalPrice += this.price;
+    totalPrice += this.s.price;
     return totalPrice;
   }
 
@@ -128,32 +122,6 @@ export class ShoppingCartComponent implements OnInit {
         this.cart = [];
       } else { this.ifFailed = true; }
     });
-  }
-
-  /**
-   * Gets the information of the currently logged in {@linkplain User user}
-   */
-  getUserSalad(): void {
-    this.userService.getSalad(this.username).subscribe(salad => {
-      this.salad = salad.toString();
-      console.log(this.salad);
-      var saladArray = this.salad.split("-");
-      this.vegetables = saladArray[0];
-      this.price = Number(saladArray[1]);
-      this.calories = Number(saladArray[2]);
-      for (let i = 0; i < this.vegetables.length; i++) {
-        if (this.vegetables.charAt(i) == "1") {
-          this.ingredients.push(this.ingredientsArray[i]);
-        }
-      }
-    });
-  }
-
-  deleteSalad(): void {
-    this.userService.setSalad(this.username, "0-0000000000000-0000000-000000-0-0-0-0").subscribe(() => this.salad = "0-0000000000000-0000000-000000-0-0-0-0");
-    this.vegetables = "0000000000000";
-    this.price = 0;
-    this.calories = 0;
   }
 }
 
