@@ -71,11 +71,15 @@
       * Takes in a product to add to the user's cart
       */
      var username = (localStorage.getItem('sub')!);
-     this.shoppingCartService.addToCart(product, quantity, username).subscribe(product => {
-       product.push(product);
-     });
-     this.message = "Item Added To Cart Successfully!";
-
+     var token = (localStorage.getItem('token'));
+     if(username!=null && token != null) {
+      this.shoppingCartService.addToCart(product, quantity, username).subscribe(product => {
+        product.push(product);
+      });
+      this.message = "Item Added To Cart Successfully!";
+     } else {
+      this.message = "Please login or create an account";
+     }
    }
 
    /**

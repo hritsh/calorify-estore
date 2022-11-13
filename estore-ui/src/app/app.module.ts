@@ -14,7 +14,7 @@ import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule,FormsModule } from '@angular/forms';
 import { RegistrationPageComponent } from './registration-page/registration-page.component'; // <-- NgModel lives here
 import { InventoryComponent } from './inventory/inventory.component';
 import { ProductSearchComponent } from './product-search/product-search.component';
@@ -42,6 +42,7 @@ import { LogoutComponent } from './logout/logout.component';
   imports: [
     HttpClientModule,
     BrowserModule,
+    ReactiveFormsModule,
     FormsModule,
     AppRoutingModule,
   ],
