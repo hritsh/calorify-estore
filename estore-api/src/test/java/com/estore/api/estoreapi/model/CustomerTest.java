@@ -23,7 +23,6 @@ public class CustomerTest {
         roleSet.add(r);
         // Invoke
         Customer customer = new Customer("christin", "christin", roleSet);
-        boolean loggedIn = customer.getLoggedIn();
         int height = customer.getHeight();
         int weight = customer.getWeight();
         String gender = customer.getGender();

@@ -29,8 +29,6 @@ public class Customer extends User {
     private int weight;
     @JsonProperty("age")
     private int age;
-    @JsonProperty("loggedIn")
-    private boolean loggedIn;
 
     @JsonProperty("cart")
     private ShoppingCart cart;
@@ -104,24 +102,6 @@ public class Customer extends User {
     @JsonIgnore
     public Product[] getCart() {
         return this.cart.getItems();
-    }
-
-    /**
-     * Retrieves the id of the product
-     * 
-     * @return The id of the product
-     */
-    public boolean getLoggedIn() {
-        return loggedIn;
-    }
-
-    /**
-     * Sets the log in status of the User
-     * 
-     * @param loggedIn The log in status of the User
-     */
-    public void setLoggedIn(boolean loggedIn) {
-        this.loggedIn = loggedIn;
     }
 
     /**
