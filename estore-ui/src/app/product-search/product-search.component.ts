@@ -17,6 +17,8 @@
  import { Product } from '../product';
  import { ProductService } from '../product.service';
  import { User } from '../user';
+import { Router } from '@angular/router';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
  @Component({
    selector: 'app-product-search',
@@ -24,13 +26,17 @@
    styleUrls: ['./product-search.component.css']
  })
  export class ProductSearchComponent implements OnInit {
-   products$!: Observable<Product[]>
+   products$!: Observable<Product[]>;
+   searchCalories!:FormGroup
    private searchTerms = new Subject<string>();
    @Input() username!: any;
    @Input() inventory!:Product[];
    @Output() inventoryChange = new EventEmitter();
+   currAmount!: number;
+   updatedInventory: Product[] = [];
+   error!: number;
 
-   constructor(private productService: ProductService, private localStorage: LocalStorageService) { }
+   constructor(private productService: ProductService, private localStorage: LocalStorageService, public router: Router, public formBuilder: FormBuilder) { }
 
    /**
     * Method that handles input from the serach bar
@@ -47,6 +53,10 @@
     * Upon initialization this method gets the {@linkplain Product products} that matches this component's search string
     */
    ngOnInit(): void {
+    this.searchCalories = this.formBuilder.group({
+      startingCal: [''],
+      endingCal: ['']
+    })
      this.username = localStorage.getItem('sub');
      this.products$ = this.searchTerms.pipe(
        // wait 300ms after each keystroke before considering the term
@@ -58,6 +68,9 @@
        // switch to new search observable each time the term changes
        switchMap((term: string) => this.productService.searchProducts(term)),
      );
+   }
+   getHighestCalorie(): number {
+    return Math.max(...this.inventory.map(function(product: Product) { return product.calories;}))
    }
    descendingPrice(): void {
     this.inventory.sort((prod1, prod2) => (prod1.price > prod2.price ? -1 : 1));
@@ -75,4 +88,16 @@
     this.inventory.sort((prod1, prod2) => (prod1.calories < prod2.calories ? -1 : 1));
     this.inventoryChange.emit(this.inventory);
    }
+   amountInput(value: string): void {
+    this.currAmount = +value;
+  }
+  searchCalorieLessThanOrEqual(value: string): void {
+    const number = +value;
+    this.productService.searchProductsByCalories(number)
+       .subscribe(inventory => {
+        this.updatedInventory = inventory;
+        this.inventoryChange.emit(this.updatedInventory);
+      });
+
+  }
  }

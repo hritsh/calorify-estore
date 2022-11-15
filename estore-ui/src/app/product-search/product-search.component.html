@@ -18,4 +18,19 @@
     <option (click)="ascendingCalories()">Lowest to Highest</option>
     <option (click)="descendingCalories()">Highest to Lowest</option>
   </select>
+  <div class="caloricRange">
+    <span>Input Caloric Range: </span>
+    <input
+      type="range"
+      min="1"
+      max="{{ getHighestCalorie() }}"
+      value="1"
+      class="slider"
+      id="myRange"
+      #amountSelect
+      (input)="amountInput(amountSelect.value)"
+    />
+    {{ currAmount }}
+  </div>
+  <button (click)="searchCalorieLessThanOrEqual(amountSelect.value)">Calorie Search</button>
 </div>
