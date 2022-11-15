@@ -8,4 +8,14 @@
       </a>
     </li>
   </ul>
+  <label>Sort Prices</label>
+  <select name="Sort Prices">
+    <option (click)="ascendingPrice()">Lowest to Highest</option>
+    <option (click)="descendingPrice()">Highest to Lowest</option>
+  </select>
+  <label>Sort Calories</label>
+  <select name="Sort Calories">
+    <option (click)="ascendingCalories()">Lowest to Highest</option>
+    <option (click)="descendingCalories()">Highest to Lowest</option>
+  </select>
 </div>

@@ -7,7 +7,7 @@
  * Contributors: Team-E
  */
 
- import { Component, Input, OnInit } from '@angular/core';
+ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
  import { Observable, Subject } from 'rxjs';
  import { LocalStorageService } from '../local-storage.service';
 
@@ -27,6 +27,8 @@
    products$!: Observable<Product[]>
    private searchTerms = new Subject<string>();
    @Input() username!: any;
+   @Input() inventory!:Product[];
+   @Output() inventoryChange = new EventEmitter();
 
    constructor(private productService: ProductService, private localStorage: LocalStorageService) { }
 
@@ -56,5 +58,21 @@
        // switch to new search observable each time the term changes
        switchMap((term: string) => this.productService.searchProducts(term)),
      );
+   }
+   descendingPrice(): void {
+    this.inventory.sort((prod1, prod2) => (prod1.price > prod2.price ? -1 : 1));
+    this.inventoryChange.emit(this.inventory);
+   }
+   ascendingPrice(): void {
+    this.inventory.sort((prod1, prod2) => (prod1.price < prod2.price ? -1 : 1));
+    this.inventoryChange.emit(this.inventory);
+   }
+   descendingCalories(): void {
+    this.inventory.sort((prod1, prod2) => (prod1.calories > prod2.calories ? -1 : 1));
+    this.inventoryChange.emit(this.inventory);
+   }
+   ascendingCalories(): void {
+    this.inventory.sort((prod1, prod2) => (prod1.calories < prod2.calories ? -1 : 1));
+    this.inventoryChange.emit(this.inventory);
    }
  }
