@@ -98,6 +98,18 @@ import { FormBuilder, FormGroup } from '@angular/forms';
         this.updatedInventory = inventory;
         this.inventoryChange.emit(this.updatedInventory);
       });
-
+  }
+  submit(): void {
+    const details = this.searchCalories.getRawValue();
+    const startingCal = details.startingCal;
+    const endingCal = details.endingCal;
+    this.updatedInventory = this.inventory;
+    console.log(details)
+    if(startingCal > endingCal) {
+      this.error = 1;
+    } else {
+      this.updatedInventory = this.updatedInventory.filter(product => product.calories >= startingCal && product.calories <=endingCal);
+      this.inventoryChange.emit(this.updatedInventory);
+    }
   }
  }
