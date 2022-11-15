@@ -13,6 +13,10 @@
   <!-- partial:index.partial.html -->
   <h1>Login</h1>
   <form [formGroup]="form" class="login-form" (ngSubmit)="login()" novalidate>
+    <div class="alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+      Login is successful
+    </div>
     <div class="form-group" >
       <input class="form-control" type="text" id="username-box" [formControlName]="'username'" placeholder="username" name="username" autocomplete="off" required
       [ngClass]="{ 'is-invalid': f['username'].errors }"/>
