@@ -19,3 +19,11 @@ button {
   margin: 8px 0;
   cursor: pointer;
 }
+/* The alert message box */
+.alert {
+  padding: 20px;
+  background-color: #008000; /* Green */
+  color: white;
+  margin-bottom: 15px;
+}
+
