@@ -18,7 +18,7 @@
  import { ProductService } from '../product.service';
  import { User } from '../user';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, AbstractControl, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 
  @Component({
    selector: 'app-product-search',
@@ -55,7 +55,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
    ngOnInit(): void {
     this.searchCalories = this.formBuilder.group({
       startingCal: [''],
-      endingCal: ['']
+      endingCal: ['', this.calValidator()]
     })
      this.username = localStorage.getItem('sub');
      this.products$ = this.searchTerms.pipe(
@@ -69,6 +69,17 @@ import { FormBuilder, FormGroup } from '@angular/forms';
        switchMap((term: string) => this.productService.searchProducts(term)),
      );
    }
+   calValidator(): ValidatorFn {
+    return (control: AbstractControl) : ValidationErrors | null => {
+        const startingCal = control.root.get('startingCal')?.value;
+        const endingCal = control.value;
+        if(endingCal>=startingCal) {
+          return null;
+        } else {
+          return {rangeNotValid:true}
+        }
+    }
+  }
    getHighestCalorie(): number {
     return Math.max(...this.inventory.map(function(product: Product) { return product.calories;}))
    }
@@ -104,12 +115,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
     const startingCal = details.startingCal;
     const endingCal = details.endingCal;
     this.updatedInventory = this.inventory;
-    console.log(details)
-    if(startingCal > endingCal) {
-      this.error = 1;
-    } else {
-      this.updatedInventory = this.updatedInventory.filter(product => product.calories >= startingCal && product.calories <=endingCal);
-      this.inventoryChange.emit(this.updatedInventory);
-    }
+    this.updatedInventory = this.updatedInventory.filter(product => product.calories >= startingCal && product.calories <=endingCal);
+    this.inventoryChange.emit(this.updatedInventory);
   }
  }
