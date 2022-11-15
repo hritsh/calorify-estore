@@ -43,7 +43,7 @@ export class UserLoginComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       username: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(20)]],
-      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(40)]]
+      password: ['', [Validators.required]]
     });
   }
 

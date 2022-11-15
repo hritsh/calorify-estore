@@ -25,6 +25,9 @@ import { UserProductViewComponent } from './user-product-view/user-product-view.
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AuthInterceptor } from './auth-interceptor';
 import { LogoutComponent } from './logout/logout.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { ViewUserProfileComponent } from './view-user-profile/view-user-profile.component';
+import { EditUserProfileComponent } from './edit-user-profile/edit-user-profile.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,7 +40,10 @@ import { LogoutComponent } from './logout/logout.component';
     UserStoreComponent,
     UserProductViewComponent,
     PageNotFoundComponent,
-    LogoutComponent
+    LogoutComponent,
+    UserProfileComponent,
+    ViewUserProfileComponent,
+    EditUserProfileComponent
   ],
   imports: [
     HttpClientModule,

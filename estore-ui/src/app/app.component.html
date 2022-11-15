@@ -11,6 +11,7 @@
       <button class="button" routerLink="/register"><span>Register</span></button>
     </div>
     <app-logout *ngIf="isLoggedIn()"></app-logout>
+    <app-user-profile *ngIf="isLoggedIn()"></app-user-profile>
   </nav>
   <router-outlet></router-outlet>
 </body>
