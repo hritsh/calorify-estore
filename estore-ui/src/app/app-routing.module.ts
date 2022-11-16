@@ -16,6 +16,7 @@ import { InventoryComponent } from './inventory/inventory.component';
 import { UserProductViewComponent } from './user-product-view/user-product-view.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AuthGuard } from './auth-guard';
+import { CheckoutComponent } from './checkout/checkout.component';
 
 const routes: Routes = [
   { path: 'login', component: UserLoginComponent },
@@ -26,6 +27,7 @@ const routes: Routes = [
   { path: 'user-store/:username/shopping-cart', component: ShoppingCartComponent, canActivate: [AuthGuard] },
   { path: 'user-product-view/:username/:id', component: UserProductViewComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'checkout', component: CheckoutComponent },
   {path: '**', component: PageNotFoundComponent}
 ]
 
