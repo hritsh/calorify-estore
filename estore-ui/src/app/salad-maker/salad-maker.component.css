@@ -1,0 +1,12 @@
+.salad {
+    color: red;
+}
+.salad span {
+    color: black;
+}
+
+.multiselect {
+    display: grid;
+    grid-template-columns: 2em 15em 5em 5em;
+    justify-content: left;
+}

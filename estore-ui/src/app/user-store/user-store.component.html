@@ -2,7 +2,6 @@
   <title></title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
-<title></title>
 <body>
   <app-product-search></app-product-search>
 
@@ -25,8 +24,13 @@
         <label class="calories">Calories: {{ product.calories }}</label>
         <label class="price">Price: ${{ product.price }}</label>
         <label class="quantity">Stock: {{ product.quantity }}</label>
-        <label class="image"><img alt = "Product Details" src="{{ product.image }}" /></label>
+        <label class="image"
+          ><img alt="Product Details" src="{{ product.image }}"
+        /></label>
       </button>
     </div>
   </ul>
+  <button class="btn-group" routerLink="/salad-maker/{{ user?.username }}">
+    <strong>Salad Maker</strong>
+  </button>
 </body>

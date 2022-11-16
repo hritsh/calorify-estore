@@ -14,6 +14,7 @@ import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../user.service';
 import { User } from '../user';
+import { Salad } from '../salad';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -27,6 +28,8 @@ export class ShoppingCartComponent implements OnInit {
   @Input() user?: User;
   ifSucceed: Boolean = false;
   ifFailed: Boolean = false;
+  s: Salad = new Salad(this.userService);
+
 
   constructor(
     private shoppingCartService: ShoppingCartService,
@@ -45,6 +48,7 @@ export class ShoppingCartComponent implements OnInit {
     this.getCart();
     this.getTotalCalories();
     this.getTotalPrice();
+    this.s.getUserSalad();
   }
 
   /**
@@ -72,6 +76,7 @@ export class ShoppingCartComponent implements OnInit {
     for (let i = 0; i < this.cart.length; i++) {
       totalCalories += this.cart[i].calories * this.cart[i].quantity;
     }
+    totalCalories += this.s.calories;
     return totalCalories;
   }
 
@@ -80,6 +85,7 @@ export class ShoppingCartComponent implements OnInit {
     for (let i = 0; i < this.cart.length; i++) {
       totalPrice += this.cart[i].price * this.cart[i].quantity;
     }
+    totalPrice += this.s.price;
     return totalPrice;
   }
 
@@ -110,6 +116,8 @@ export class ShoppingCartComponent implements OnInit {
    * Initiates the action of checking out for the {@linkplain User user}
    */
   checkout(): void {
+    this.s.deleteSalad();
+    this.s.calculate();
     this.shoppingCartService.checkout(this.username).subscribe(output => {
       if (output) {
         this.ifSucceed = true;
