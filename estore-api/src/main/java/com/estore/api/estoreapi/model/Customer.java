@@ -15,6 +15,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class Customer extends User {
 
+    static final String STRING_FORMAT = "Customer [firstName=%s, lastName=%s, gender=%s, height=%d, weight=%d, age=%d]";
+
     @JsonProperty("firstName")
     private String firstName;
     @JsonProperty("lastName")
@@ -251,5 +253,13 @@ public class Customer extends User {
      */
     public String getlastName() {
         return lastName;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return String.format(STRING_FORMAT, firstName, lastName, gender, height, weight, age);
     }
 }
