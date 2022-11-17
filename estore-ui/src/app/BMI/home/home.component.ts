@@ -14,3 +14,17 @@ export class HomeComponent implements OnInit {
   weight = 60;
 
   constructor(private router: Router) { }
+  ngOnInit(): void {
+  }
+
+  changeHeight(event: any) {
+    this.height = event.target.value;
+  }
+
+  male() {
+    this.sex = "Male"
+  }
+
+  female() {
+    this.sex = "Female"
+  }
