@@ -28,3 +28,8 @@ export class HomeComponent implements OnInit {
   female() {
     this.sex = "Female"
   }
+  calculateBMI() {
+    const BMI = this.weight / Math.pow(this.height / 100, 2);
+    this.router.navigate(['/result', BMI.toFixed(1)])
+  }
+}
