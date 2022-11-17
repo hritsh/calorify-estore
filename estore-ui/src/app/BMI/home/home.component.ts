@@ -1,0 +1,16 @@
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss']
+})
+export class HomeComponent implements OnInit {
+
+  age = 25;
+  height = 135;
+  sex = "Male";
+  weight = 60;
+
+  constructor(private router: Router) { }
