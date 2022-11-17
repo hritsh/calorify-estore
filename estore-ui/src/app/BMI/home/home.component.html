@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="col-lg-4 offset-lg-4">
+      <h2 class="title">BMI Calculator</h2>
+      <div class="row">
+          <div class="col-lg-6">
+              <div class="backgroundItem" [ngClass]="{'inactiveSex': sex === 'Female'}">
+                  <div class="container" style="cursor: pointer;" (click)="male()">
+                      <i class="fas fa-mars sex"></i>
+                      <p><b>Male</b></p>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-6">
+              <div class="backgroundItem" [ngClass]="{'inactiveSex': sex === 'Male'}">
+                  <div class="container" style="cursor: pointer;" (click)="female()">
+                      <i class="fas fa-venus sex"></i>
+                      <p><b>Female</b></p>
+                  </div>
+              </div>
+          </div>
+      </div
