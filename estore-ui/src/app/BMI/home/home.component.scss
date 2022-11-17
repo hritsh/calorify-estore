@@ -20,3 +20,18 @@
   font-weight: 400;
   margin-left: 0px;
 }
+input[type="range"]::-webkit-slider-thumb {
+  background: #95f900;
+}
+
+.addSub {
+  border-radius: 15px;
+  cursor: pointer;
+  background-color: #ffaa00;
+  margin-left: 3px;
+  padding: 7px;
+}
+
+.inactiveSex {
+  background-color: #110000;
+}
