@@ -31,3 +31,16 @@
             </div>
         </div>
     </div>
+    <div class="row">
+      <div class="col-lg-6">
+          <div class="backgroundItem">
+              <div class="container">
+                  <p>Weight</p>
+                  <div class="numberStyle">{{weight}}</div>
+                  <div>
+                      <i class="fas fa-minus addSub" (click)="weight = weight - 1"></i>
+                      <i class="fas fa-plus addSub" (click)="weight = weight + 1"></i>
+                  </div>
+              </div>
+          </div>
+      </div>
