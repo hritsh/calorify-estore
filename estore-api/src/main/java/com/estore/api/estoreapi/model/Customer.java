@@ -32,6 +32,8 @@ public class Customer extends User {
 
     @JsonProperty("cart")
     private ShoppingCart cart;
+    @JsonProperty("salad")
+    private String salad;
 
     /**
      * Json constructor to initialize a {@linkplain Customer customer} from a json
@@ -44,9 +46,11 @@ public class Customer extends User {
      *                 {@link Customer customer}
      */
     @JsonCreator
-    public Customer(@JsonProperty("username") String username, @JsonProperty("password") String password, @JsonProperty("role") Set<Role> role, @JsonProperty("cart") ShoppingCart cart) {
+    public Customer(@JsonProperty("username") String username, @JsonProperty("password") String password,
+            @JsonProperty("role") Set<Role> role, @JsonProperty("cart") ShoppingCart cart) {
         super(username, password, role);
         this.cart = cart;
+        this.salad = "0-0000000000000-0000000-000000-0-0-0-0";
     }
 
     /**
@@ -60,6 +64,7 @@ public class Customer extends User {
     public Customer(String username, String password, Set<Role> role) {
         super(username, password, role);
         this.cart = new ShoppingCart(null);
+        this.salad = "0-0000000000000-0000000-000000-0-0-0-0";
     }
 
     /**
@@ -102,6 +107,24 @@ public class Customer extends User {
     @JsonIgnore
     public Product[] getCart() {
         return this.cart.getItems();
+    }
+
+    /**
+     * Returns the user's {@linkplain String salad}
+     * 
+     * @return the {@linkplain String salad}
+     */
+    public String getSalad() {
+        return this.salad;
+    }
+
+    /**
+     * Sets the user's {@linkplain String salad}
+     * 
+     * @param salad the {@linkplain String salad}
+     */
+    public void setSalad(String salad) {
+        this.salad = salad;
     }
 
     /**

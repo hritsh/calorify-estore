@@ -35,25 +35,28 @@ public class UserFileDAO implements UserDAO {
     private RoleDAO roleDAO;
     // to object
     private String filename; // the file to read and write to
-    private JsonUtilities jsonUtilities; 
+    private JsonUtilities jsonUtilities;
 
     /**
      * Creates an Inventory File Data Access Object
      * 
-     * @param filename     filename to read from and write to
+     * @param filename      filename to read from and write to
      * @param jsonUtilities provides conversion between JSON files to object
-     * @param roleDAO      used for role operations while creating user
+     * @param roleDAO       used for role operations while creating user
      * 
      * @throws IOException when file cannot be accessed or read from
      */
-    public UserFileDAO(@Value("${users.file}") String filename, RoleDAO roleDAO, JsonUtilities jsonUtilities) throws IOException {
+    public UserFileDAO(@Value("${users.file}") String filename, RoleDAO roleDAO, JsonUtilities jsonUtilities)
+            throws IOException {
         this.filename = filename;
         this.roleDAO = roleDAO;
         this.jsonUtilities = jsonUtilities;
         load(); // load the users from the file
     }
+
     /**
-     * Loads all {@linkplain Customer customers } that were in the file that was passed in
+     * Loads all {@linkplain Customer customers } that were in the file that was
+     * passed in
      * Deserialize all JSON products and saves it into a local storage for easy
      * access
      * 
@@ -109,12 +112,12 @@ public class UserFileDAO implements UserDAO {
     public Customer[] getUsers() {
         // init
         ArrayList<Customer> userList = new ArrayList<>();
-        //userList.add(new Customer(User.ADMIN));
+        // userList.add(new Customer(User.ADMIN));
 
         // get all users saved in a local list
         for (Customer user : customers.values()) {
-            //setting password from retrieved JSON to null for security purposes
-            //user.setPassword("NULL");
+            // setting password from retrieved JSON to null for security purposes
+            // user.setPassword("NULL");
             userList.add(user);
         }
 
@@ -124,18 +127,21 @@ public class UserFileDAO implements UserDAO {
         return result;
 
     }
-    //to check if admin exists in users.json already if so, return true , else false
+
+    // to check if admin exists in users.json already if so, return true , else
+    // false
     private boolean checkIfAdminExists() {
         boolean adminExists = false;
         for (Customer user : customers.values()) {
-            for(Role r: user.getRole()) {
-                if(r.getRoleName().equals("admin")) {
+            for (Role r : user.getRole()) {
+                if (r.getRoleName().equals("admin")) {
                     adminExists = true;
                 }
             }
         }
         return adminExists;
     }
+
     /**
      * {@inheritDoc}
      */
@@ -143,20 +149,20 @@ public class UserFileDAO implements UserDAO {
     public User addUser(User user) throws IOException {
         int roleDoesNotExist = 0;
         Role role;
-        for(Role r: user.getRole()){
+        for (Role r : user.getRole()) {
             role = roleDAO.getRole(r.getRoleId());
             if (role == null) {
                 roleDoesNotExist += 1;
             }
-            //to make unique admin
-            if(r.getRoleName().equals("admin") == true && checkIfAdminExists() == true) {
+            // to make unique admin
+            if (r.getRoleName().equals("admin") == true && checkIfAdminExists() == true) {
                 return new User("ERROR: Admin already exists", null, null);
             }
         }
         synchronized (customers) {
             String username = user.getUsername();
-            if(roleDoesNotExist > 0) {
-                //return null if even one of the roles does not exist in roles.json
+            if (roleDoesNotExist > 0) {
+                // return null if even one of the roles does not exist in roles.json
                 return new User("ERROR: Role does not exist", null, null);
             }
             for (User p : customers.values()) {
@@ -165,20 +171,22 @@ public class UserFileDAO implements UserDAO {
                     return null;
                 }
             }
-            //need to add check for whether user with same username is being called
+            // need to add check for whether user with same username is being called
             Customer newUser = new Customer(user.getUsername(), user.getPassword(), user.getRole());
             customers.put(username, newUser);
             save();
+            // newUser.setPassword("NULL");
             return newUser;
         }
     }
+
     /**
-    ** {@inheritDoc}
+     ** {@inheritDoc}
      */
     @Override
     public Customer updateUserDetails(Customer customer) throws IOException {
-        synchronized(customers) {
-            if(customers.containsKey(customer.getUsername()) == false)
+        synchronized (customers) {
+            if (customers.containsKey(customer.getUsername()) == false)
                 return null;
             Customer updatedCustomer = customers.get(customer.getUsername());
             updatedCustomer.setfirstName(customer.getfirstName());
@@ -192,6 +200,7 @@ public class UserFileDAO implements UserDAO {
             return customer;
         }
     }
+
     /**
      * {@inheritDoc}
      */
@@ -231,4 +240,23 @@ public class UserFileDAO implements UserDAO {
         return this.save();
     }
 
+    @Override
+    public void setSalad(String username, String salad) throws IOException {
+        synchronized (customers) {
+            if (customers.containsKey(username)) {
+                customers.get(username).setSalad(salad);
+                save();
+            }
+        }
+    }
+
+    @Override
+    public String getSalad(String username) throws IOException {
+        synchronized (customers) {
+            if (customers.containsKey(username)) {
+                return customers.get(username).getSalad();
+            }
+        }
+        return "";
+    }
 }
