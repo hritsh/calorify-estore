@@ -29,6 +29,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { ViewUserProfileComponent } from './view-user-profile/view-user-profile.component';
 import { EditUserProfileComponent } from './edit-user-profile/edit-user-profile.component';
 import { SaladMakerComponent } from './salad-maker/salad-maker.component';
+
 @NgModule({
   declarations: [
     AppComponent,

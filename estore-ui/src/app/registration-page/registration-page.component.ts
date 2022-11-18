@@ -15,6 +15,7 @@ export class RegistrationPageComponent implements OnInit {
   roleParam: Set<Role> = new Set;
   sentUser!:User;
   userForm!:FormGroup;
+  isSubmit!: boolean;
 
   constructor(public formBuilder: FormBuilder, private userService: UserService, private roleService: RoleService, public router: Router) { }
   ngOnInit(): void {
@@ -37,6 +38,7 @@ export class RegistrationPageComponent implements OnInit {
     });
   }
   submit():void {
+    this.isSubmit=true
     if(this.userForm.valid) {
       const credentials = this.userForm.getRawValue();
       const username = credentials.username;

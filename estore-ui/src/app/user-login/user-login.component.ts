@@ -64,17 +64,17 @@ export class UserLoginComponent implements OnInit {
    * To the admin page or the customer's page
    */
   login(): void {
-    if(this.form.valid) {
+    if (this.form.valid) {
       const credentials = this.form.getRawValue();
       const username = credentials.username;
       const password = credentials.password;
-      if(username && password) {
+      if (username && password) {
         const sentLoginRequest = new jwtRequest(username, password);
         this.loginService.login(sentLoginRequest).subscribe(response => {
           this.jwtToken = jwt_decode(response.jwtToken);
           this.loginService.setSession(this.jwtToken, response.jwtToken);
           this.user = response.user;
-          if(this.user.username == "admin") {
+          if (this.user.username == "admin") {
             this.router.navigateByUrl("/admin-store");
           } else {
             this.router.navigateByUrl("/user-store");
