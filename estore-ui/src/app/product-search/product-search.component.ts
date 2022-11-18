@@ -27,7 +27,8 @@ import { FormBuilder, FormGroup, AbstractControl, ValidationErrors, ValidatorFn,
  })
  export class ProductSearchComponent implements OnInit {
    products$!: Observable<Product[]>;
-   searchCalories!:FormGroup
+   searchCalories!:FormGroup;
+   searchPrice!:FormGroup;
    private searchTerms = new Subject<string>();
    @Input() username!: any;
    @Input() inventory!:Product[];
@@ -57,6 +58,10 @@ import { FormBuilder, FormGroup, AbstractControl, ValidationErrors, ValidatorFn,
       startingCal: [''],
       endingCal: ['', this.calValidator()]
     })
+    this.searchPrice = this.formBuilder.group({
+      startingPrice: [''],
+      endingPrice: ['', this.priceValidator()]
+    })
      this.username = localStorage.getItem('sub');
      this.products$ = this.searchTerms.pipe(
        // wait 300ms after each keystroke before considering the term
@@ -69,6 +74,17 @@ import { FormBuilder, FormGroup, AbstractControl, ValidationErrors, ValidatorFn,
        switchMap((term: string) => this.productService.searchProducts(term)),
      );
    }
+   priceValidator(): ValidatorFn {
+    return (control: AbstractControl) : ValidationErrors | null => {
+        const startingPrice = control.root.get('startingPrice')?.value;
+        const endingPrice = control.value;
+        if(endingPrice>=startingPrice) {
+          return null;
+        } else {
+          return {rangeNotValid:true}
+        }
+    }
+  }
    calValidator(): ValidatorFn {
     return (control: AbstractControl) : ValidationErrors | null => {
         const startingCal = control.root.get('startingCal')?.value;
