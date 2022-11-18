@@ -39,7 +39,6 @@ public class CustomerTest {
         roleSet.add(r);
         // Invoke
         Customer customer = new Customer("christin", "christin", roleSet);
-        ;
         // Analyze
         assertEquals(customer.getUsername(), customer.getUsername());
     }
@@ -52,7 +51,6 @@ public class CustomerTest {
         roleSet.add(r);
         // Invoke
         Customer customer = new Customer("christin", "christin", roleSet);
-        ;
         // Analyze
         assertEquals(customer.getUsername(), customer.getUsername());
     }
@@ -71,6 +69,7 @@ public class CustomerTest {
         customer.setGender("Male");
         customer.setHeight(180);
         customer.setWeight(2);
+        customer.setSalad("2-0100010100-0010000-1010010-3-5-23-98");
         // Analyze
         assertEquals("Hritish", customer.getfirstName());
         assertEquals("Balls", customer.getlastName());
@@ -78,6 +77,7 @@ public class CustomerTest {
         assertEquals("Male", customer.getGender());
         assertEquals(180, customer.getHeight());
         assertEquals(2, customer.getWeight());
+        assertEquals("2-0100010100-0010000-1010010-3-5-23-98", customer.getSalad());
     }
 
 }
