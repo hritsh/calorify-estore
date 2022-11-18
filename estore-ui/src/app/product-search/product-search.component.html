@@ -43,7 +43,8 @@
       <input class="form-control" type="number" id="endingCal" [formControlName]="'endingCal'" placeholder="ending calorie" name="endingCal">
     </div>
     <div class="form-group">
-      
+      <button type="submit" class="btn btn-primary" [disabled]="!searchCalories.valid">Search Calorie</button>
+    
     </div>
   </form>
 </div>
