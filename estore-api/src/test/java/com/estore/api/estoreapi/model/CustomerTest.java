@@ -23,11 +23,6 @@ public class CustomerTest {
         roleSet.add(r);
         // Invoke
         Customer customer = new Customer("christin", "christin", roleSet);
-        int height = customer.getHeight();
-        int weight = customer.getWeight();
-        String gender = customer.getGender();
-        int age = customer.getAge();
-        String name = customer.getfirstName() + " " + customer.getlastName();
 
         // Analyze
         assertEquals("christin", customer.getUsername());
@@ -61,4 +56,28 @@ public class CustomerTest {
         // Analyze
         assertEquals(customer.getUsername(), customer.getUsername());
     }
+
+    @Test
+    public void testSetDetails() {
+        // Setup
+        Set<Role> roleSet = new HashSet<>();
+        Role r = new Role(1, "admin");
+        roleSet.add(r);
+        // Invoke
+        Customer customer = new Customer("hritish", "hritish", roleSet);
+        customer.setfirstName("Hritish");
+        customer.setlastName("Balls");
+        customer.setAge(300);
+        customer.setGender("Male");
+        customer.setHeight(180);
+        customer.setWeight(2);
+        // Analyze
+        assertEquals("Hritish", customer.getfirstName());
+        assertEquals("Balls", customer.getlastName());
+        assertEquals(300, customer.getAge());
+        assertEquals("Male", customer.getGender());
+        assertEquals(180, customer.getHeight());
+        assertEquals(2, customer.getWeight());
+    }
+
 }
