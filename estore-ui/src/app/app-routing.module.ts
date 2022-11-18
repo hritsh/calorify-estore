@@ -17,6 +17,8 @@ import { UserProductViewComponent } from './user-product-view/user-product-view.
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AuthGuard } from './auth-guard';
 import { SaladMakerComponent } from './salad-maker/salad-maker.component';
+import { BMIHomeComponent } from './bmi-home/bmi-home.component';
+import { BMIResultComponent } from './bmi-result/bmi-result.component';
 
 const routes: Routes = [
   { path: 'login', component: UserLoginComponent },
@@ -27,8 +29,11 @@ const routes: Routes = [
   { path: 'user-store/:username/shopping-cart', component: ShoppingCartComponent, canActivate: [AuthGuard] },
   { path: 'user-product-view/:username/:id', component: UserProductViewComponent },
   { path: 'salad-maker/:username', component: SaladMakerComponent },
+  {path: 'bmi', component: BMIHomeComponent},
+  {path: 'bmi/result/:value',component: BMIResultComponent},
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
+
 ]
 
 @NgModule({

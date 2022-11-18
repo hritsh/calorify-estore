@@ -26,6 +26,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { AuthInterceptor } from './auth-interceptor';
 import { LogoutComponent } from './logout/logout.component';
 import { SaladMakerComponent } from './salad-maker/salad-maker.component';
+import { BmiHomeComponent } from './bmi-home/bmi-home.component';
+import { BmiResultComponent } from './bmi-result/bmi-result.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,7 +41,9 @@ import { SaladMakerComponent } from './salad-maker/salad-maker.component';
     UserProductViewComponent,
     PageNotFoundComponent,
     LogoutComponent,
-    SaladMakerComponent
+    SaladMakerComponent,
+    BmiHomeComponent,
+    BmiResultComponent
   ],
   imports: [
     HttpClientModule,

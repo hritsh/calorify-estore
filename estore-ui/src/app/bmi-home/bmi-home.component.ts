@@ -3,10 +3,10 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  templateUrl: './bmi-home.component.html',
+  styleUrls: ['./bmi-home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class BMIHomeComponent implements OnInit {
 
   age = 25;
   height = 135;
@@ -30,6 +30,6 @@ export class HomeComponent implements OnInit {
   }
   calculateBMI() {
     const BMI = this.weight / Math.pow(this.height / 100, 2);
-    this.router.navigate(['/result', BMI.toFixed(1)])
+    this.router.navigate(['/bmi/result', BMI.toFixed(1)])
   }
 }

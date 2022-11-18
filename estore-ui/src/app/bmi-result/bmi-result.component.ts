@@ -3,10 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-result',
-  templateUrl: './result.component.html',
-  styleUrls: ['./result.component.scss']
+  templateUrl: './bmi-result.component.html',
+  styleUrls: ['./bmi-result.component.scss']
 })
-export class ResultComponent implements OnInit {
+export class BMIResultComponent implements OnInit {
 
   bmi: number;
   result: string;
