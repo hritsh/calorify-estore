@@ -14,7 +14,7 @@ import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
-import { ReactiveFormsModule,FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RegistrationPageComponent } from './registration-page/registration-page.component'; // <-- NgModel lives here
 import { InventoryComponent } from './inventory/inventory.component';
 import { ProductSearchComponent } from './product-search/product-search.component';
@@ -25,7 +25,11 @@ import { UserProductViewComponent } from './user-product-view/user-product-view.
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AuthInterceptor } from './auth-interceptor';
 import { LogoutComponent } from './logout/logout.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { ViewUserProfileComponent } from './view-user-profile/view-user-profile.component';
+import { EditUserProfileComponent } from './edit-user-profile/edit-user-profile.component';
 import { SaladMakerComponent } from './salad-maker/salad-maker.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,6 +43,9 @@ import { SaladMakerComponent } from './salad-maker/salad-maker.component';
     UserProductViewComponent,
     PageNotFoundComponent,
     LogoutComponent,
+    UserProfileComponent,
+    ViewUserProfileComponent,
+    EditUserProfileComponent,
     SaladMakerComponent
   ],
   imports: [

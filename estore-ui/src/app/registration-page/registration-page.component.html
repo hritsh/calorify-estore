@@ -6,6 +6,7 @@
         <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
         Registration is successful. Proceed to login
       </div>
+      
       <label for="username">Username:</label>
       <input class="form-control" type="text" id="username" [formControlName]="'username'" placeholder="username" name="username" [ngClass]="{ 'is-invalid': f['username'].errors }" required>
       <div *ngIf="f['username'].errors" class="invalid-feedback">
