@@ -19,6 +19,9 @@ import { AuthGuard } from './auth-guard';
 import { SaladMakerComponent } from './salad-maker/salad-maker.component';
 import { BMIHomeComponent } from './bmi-home/bmi-home.component';
 import { BMIResultComponent } from './bmi-result/bmi-result.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { ViewUserProfileComponent } from './view-user-profile/view-user-profile.component';
+import { EditUserProfileComponent } from './edit-user-profile/edit-user-profile.component';
 
 const routes: Routes = [
   { path: 'login', component: UserLoginComponent },
@@ -31,8 +34,10 @@ const routes: Routes = [
   { path: 'user-store/:username/shopping-cart', component: ShoppingCartComponent, canActivate: [AuthGuard] },
   { path: 'user-product-view/:username/:id', component: UserProductViewComponent },
   { path: 'salad-maker/:username', component: SaladMakerComponent },
-  {path: 'bmi', component: BMIHomeComponent},
-  {path: 'bmi/result/:value',component: BMIResultComponent},
+  { path: 'bmi', component: BMIHomeComponent },
+  { path: 'user-profile', component: ViewUserProfileComponent },
+  { path: 'edit-user-profile', component: EditUserProfileComponent },
+  { path: 'bmi/result/:value',component: BMIResultComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
 
