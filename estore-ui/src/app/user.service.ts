@@ -6,6 +6,7 @@
  */
 import { Injectable } from '@angular/core';
 import { User } from './user';
+import { UserDetails } from './userDetails';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, catchError, tap, of } from 'rxjs';
 import { Role } from './role';
@@ -43,7 +44,18 @@ export class UserService {
   userExists(username: string): Observable<boolean> {
     const url = `${this.usersURL}/${username}`;
     return this.http.get<boolean>(url);
-    //return USERS.some(user => (user.username === username));
+  }
+  updateUserDetails(userDetails: UserDetails): Observable<UserDetails> {
+    const url = `${this.usersURL}`
+    return this.http.put<UserDetails>(url, {
+      "username": userDetails.username,
+      "firstName": userDetails.firstName,
+      "lastName": userDetails.lastName,
+      "gender": userDetails.gender,
+      "height": userDetails.height,
+      "weight": userDetails.weight,
+      "age": userDetails.age
+    });
   }
   /**
   * Retrieves a {@linkplain User user} by sending a string to the backend
@@ -53,6 +65,10 @@ export class UserService {
   getUser(username: string): Observable<User> {
     const url = `${this.usersURL}/${username}`;
     return this.http.get<User>(url);
+  }
+  getUserDetails(username: string): Observable<UserDetails> {
+    const url = `${this.usersURL}/${username}`;
+    return this.http.get<UserDetails>(url);
   }
 
   /**

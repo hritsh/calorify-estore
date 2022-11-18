@@ -95,4 +95,8 @@ export class ProductService {
     const url = `${this.productsURL}/?name=${name}`;
     return this.http.get<Product[]>(url);
   }
+  searchProductsByCalories(calories: number): Observable<Product[]> {
+    const url = `${this.productsURL}/?calories=${calories}`;
+    return this.http.get<Product[]>(url);
+  }
 }
