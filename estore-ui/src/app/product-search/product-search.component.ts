@@ -134,4 +134,12 @@ import { FormBuilder, FormGroup, AbstractControl, ValidationErrors, ValidatorFn,
     this.updatedInventory = this.updatedInventory.filter(product => product.calories >= startingCal && product.calories <=endingCal);
     this.inventoryChange.emit(this.updatedInventory);
   }
+  submitPrice(): void {
+    const details = this.searchPrice.getRawValue();
+    const startingPrice = details.startingPrice;
+    const endingPrice = details.endingPrice;
+    this.updatedInventory = this.inventory;
+    this.updatedInventory = this.updatedInventory.filter(product => product.price >= startingPrice & product.price <= endingPrice);
+    this.inventoryChange.emit(this.updatedInventory);
+  }
  }
