@@ -29,6 +29,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { ViewUserProfileComponent } from './view-user-profile/view-user-profile.component';
 import { EditUserProfileComponent } from './edit-user-profile/edit-user-profile.component';
 import { SaladMakerComponent } from './salad-maker/salad-maker.component';
+import { BMIHomeComponent } from './bmi-home/bmi-home.component';
+import { BMIResultComponent } from './bmi-result/bmi-result.component';
 
 @NgModule({
   declarations: [
@@ -43,10 +45,12 @@ import { SaladMakerComponent } from './salad-maker/salad-maker.component';
     UserProductViewComponent,
     PageNotFoundComponent,
     LogoutComponent,
+    SaladMakerComponent,
+    BMIHomeComponent,
+    BMIResultComponent,
     UserProfileComponent,
     ViewUserProfileComponent,
     EditUserProfileComponent,
-    SaladMakerComponent
   ],
   imports: [
     HttpClientModule,
