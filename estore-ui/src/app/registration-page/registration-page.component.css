@@ -1,3 +1,12 @@
+h2 {
+  text-align: center;
+  color: #5dd25e;
+}
+
+html {
+  background-color: #333;
+}
+
 /* The alert message box */
 .alert {
     padding: 20px;

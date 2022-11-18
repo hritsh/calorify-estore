@@ -31,6 +31,7 @@ import { EditUserProfileComponent } from './edit-user-profile/edit-user-profile.
 import { SaladMakerComponent } from './salad-maker/salad-maker.component';
 import { BMIHomeComponent } from './bmi-home/bmi-home.component';
 import { BMIResultComponent } from './bmi-result/bmi-result.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { BMIResultComponent } from './bmi-result/bmi-result.component';
     ReactiveFormsModule,
     FormsModule,
     AppRoutingModule,
+    NgbModule,
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

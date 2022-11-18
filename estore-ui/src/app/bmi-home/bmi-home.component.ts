@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-home',
   templateUrl: './bmi-home.component.html',
-  styleUrls: ['./bmi-home.component.scss']
+  styleUrls: ['./bmi-home.component.css']
 })
 export class BMIHomeComponent implements OnInit {
 

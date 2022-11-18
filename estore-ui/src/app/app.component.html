@@ -3,19 +3,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
 <body>
-  <h1>{{title}}</h1>
-  <nav>
-    <div>
-      <button class="button" routerLink="/login"><span>Login</span></button>
-    </div>
-    <div>
-      <button class="button" routerLink="/register"><span>Register</span></button>
-    </div>
-    <div>
-      <button class="button" routerLink="/bmi"><span>BMI Calculator</span></button>
-    </div>
-    <app-logout *ngIf="isLoggedIn()"></app-logout>
-    <app-user-profile *ngIf="isLoggedIn()"></app-user-profile>
-  </nav>
+  <ul>
+    <li>
+      <a class="anchor" routerLink="/login"><span>Login</span></a>
+    </li>
+    <li>
+      <a class="anchor" routerLink="/register"><span>Register</span></a>
+    </li>
+    <li>
+      <a class="anchor" routerLink="/bmi"><span>BMI Calculator</span></a>
+    </li>
+    <li>
+      <h1 routerLink="/user-store">{{title}}</h1>
+    </li>
+    <li>
+      <app-logout *ngIf="isLoggedIn()"></app-logout>
+    </li>
+    <li>
+      <app-user-profile *ngIf="isLoggedIn()"></app-user-profile>
+    </li>
+  </ul>
   <router-outlet></router-outlet>
 </body>

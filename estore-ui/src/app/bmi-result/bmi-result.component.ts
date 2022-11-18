@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-result',
   templateUrl: './bmi-result.component.html',
-  styleUrls: ['./bmi-result.component.scss']
+  styleUrls: ['./bmi-result.component.css']
 })
 export class BMIResultComponent implements OnInit {
 
