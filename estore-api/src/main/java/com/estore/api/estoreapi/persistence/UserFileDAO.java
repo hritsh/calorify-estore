@@ -165,7 +165,13 @@ public class UserFileDAO implements UserDAO {
                 // return null if even one of the roles does not exist in roles.json
                 return new User("ERROR: Role does not exist", null, null);
             }
-            //need to add check for whether user with same username is being called
+            for (User p : customers.values()) {
+                if (p.getUsername().equals(user.getUsername())) {
+                    save();
+                    return null;
+                }
+            }
+            // need to add check for whether user with same username is being called
             Customer newUser = new Customer(user.getUsername(), user.getPassword(), user.getRole());
             customers.put(username, newUser);
             save();
@@ -189,7 +195,6 @@ public class UserFileDAO implements UserDAO {
             updatedCustomer.setHeight(customer.getHeight());
             updatedCustomer.setWeight(customer.getWeight());
             updatedCustomer.setAge(customer.getAge());
-            updatedCustomer.setLoggedIn(customer.getLoggedIn());
             customers.put(customer.getUsername(), updatedCustomer);
             save();
             return customer;

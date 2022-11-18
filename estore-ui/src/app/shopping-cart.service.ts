@@ -1,7 +1,7 @@
 /**
  * SWEN 261
  * Services the shopping-cart class of the Calorify store.
- * 
+ *
  * Contributors: Team-E
  */
 
@@ -25,9 +25,9 @@ export class ShoppingCartService {
 
   /**
    * Retrieves the shopping cart of the customer from the backend
-   * 
-   * @param username the username of the {@link User user} 
-   * 
+   *
+   * @param username the username of the {@link User user}
+   *
    * @returns an array of {@link Product products} that are in the shopping cart
    */
   getCart(username: string): Observable<Product[]> {
@@ -37,11 +37,11 @@ export class ShoppingCartService {
 
   /**
    * Adds a {@linkplain Product product} to the customer's shopping cart
-   * 
+   *
    * @param product the {@link Product product} to be added
    * @param quantity the quantity to set the added {@link Product product} to
    * @param username the username of the {@link User user} that initiated the action
-   * 
+   *
    * @returns an observable that is created from observing the return state of the put request
    */
   addToCart(product: Product, quantity: number, username: string): Observable<any> {
@@ -51,10 +51,10 @@ export class ShoppingCartService {
 
   /**
    * deletes a {@linkplain Product product} from the customer's shopping cart
-   * 
+   *
    * @param product the {@link Product product} that is to be deleted
    * @param username the username associated with the customer
-   * 
+   *
    * @returns an observable that is created from observing the return state of the delete request
    */
   deleteProduct(product: Product, username: string): Observable<any> {
@@ -64,15 +64,19 @@ export class ShoppingCartService {
 
   /**
    * Initiates the checkout action for the customer by sending
-   * the requested customer's username back to the backend 
-   * 
+   * the requested customer's username back to the backend
+   *
    * @param username the username of the customer
-   * 
+   *
    * @returns an observable that is created from observing the return state of the post request
    */
   checkout(username: string): Observable<any> {
     const url = `${this.shoppingCartURL}/${username}`;
     return this.http.post(url, this.http).pipe(tap(), catchError(err => { return this.checkoutErrorCatch(err) }));
+  }
+  clearCart(username: string): Observable<any> {
+    const url = `${this.shoppingCartURL}/${username}`;
+    return this.http.delete(url);
   }
 
   checkoutErrorCatch(error: HttpErrorResponse) {

@@ -1,9 +1,9 @@
 /**
  * SWEN 261
  * shopping-cart.component.ts
- * 
+ *
  * The component that displays the current {@linkplain User user's} shopping cart
- * 
+ *
  * Contributors: Team-E
  */
 
@@ -28,6 +28,8 @@ export class ShoppingCartComponent implements OnInit {
   @Input() user?: User;
   ifSucceed: Boolean = false;
   ifFailed: Boolean = false;
+  ifDeleteSucceed: Boolean = false;
+  ifDeleteFailed: Boolean = false;
   s: Salad = new Salad(this.userService);
 
 
@@ -44,6 +46,8 @@ export class ShoppingCartComponent implements OnInit {
   ngOnInit(): void {
     this.ifSucceed = false;
     this.ifFailed = false;
+    this.ifDeleteSucceed = false;
+    this.ifDeleteFailed = false;
     this.getUser();
     this.getCart();
     this.getTotalCalories();
@@ -66,7 +70,7 @@ export class ShoppingCartComponent implements OnInit {
    * Gets the information of the currently logged in {@linkplain User user}
    */
   getUser(): void {
-    this.username = this.route.snapshot.paramMap.get('username') as string;
+    this.username = localStorage.getItem("sub") as string;
     this.userService.getUser(this.username)
       .subscribe(user => this.user = user);
   }
@@ -96,7 +100,7 @@ export class ShoppingCartComponent implements OnInit {
   deleteProduct(product: Product): void {
     /**
      * Initilized with a button and deletes the product from the cart
-     * 
+     *
      * Input Argument:
      * product -- The product to be deleted
      */
@@ -123,6 +127,14 @@ export class ShoppingCartComponent implements OnInit {
         this.ifSucceed = true;
         this.cart = [];
       } else { this.ifFailed = true; }
+    });
+  }
+  clear(): void {
+    this.shoppingCartService.clearCart(this.username).subscribe(output => {
+      if (output) {
+        this.ifDeleteSucceed = true;
+        this.cart = [];
+      } else { this.ifDeleteFailed = true; }
     });
   }
 }

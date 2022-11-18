@@ -1,7 +1,7 @@
 <body>
   <div *ngIf="ifSucceed">Checkout Successful!</div>
-
-  <div *ngIf="ifFailed">Checkout Failed!</div>
+  <div *ngIf="ifDeleteSucceed">Shopping Cart Cleared!</div>
+  <div *ngIf="ifDeleteFailed">Shopping Cart Not Cleared Error!</div>
 
   <ul class="wrapper">
     <div *ngFor="let product of cart">
@@ -59,4 +59,5 @@
 
   <button type="button" (click)="backButton()">Go Back</button>
   <button type="button" (click)="checkout()">Check out!</button>
+  <button type="button" (click)="clear()">Clear Cart</button>
 </body>

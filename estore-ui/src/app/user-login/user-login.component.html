@@ -13,15 +13,35 @@
 <body>
   <!-- partial:index.partial.html -->
   <h1>Login</h1>
-  <div class="login-form">
-    <div class="input-field">
-      <input type="text" id="username-box" placeholder="username" name="username" autocomplete="off" required #username/>
+  <form [formGroup]="form" class="login-form" (ngSubmit)="login()" novalidate>
+    <div class="form-group" >
+      <input class="form-control" type="text" id="username-box" [formControlName]="'username'" placeholder="username" name="username" autocomplete="off" required
+      [ngClass]="{ 'is-invalid': f['username'].errors }"/>
+      <div *ngIf="f['username'].errors" class="invalid-feedback">
+        <div *ngIf="f['username'].errors['required']">Username is required</div>
+        <div *ngIf="f['username'].errors['minlength']">
+          Username must be at least 5 characters
+        </div>
+        <div *ngIf="f['username'].errors['maxlength']">
+          Username must not exceed 20 characters
+        </div>
+      </div>
     </div>
-    <div class="input-field">
-      <input type="password" id="password-box" placeholder="password" name="password" autocomplete="current-password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,24}$" required #password/>
+    <div class="form-group">
+      <input class="form-control" type="password" id="password-box" [formControlName]="'password'" placeholder="password" name="password" autocomplete="current-password" required
+      [ngClass]="{ 'is-invalid': f['password'].errors }"/>
+      <div *ngIf="f['password'].errors" class="invalid-feedback">
+        <div *ngIf="f['password'].errors['required']">Password is required</div>
+        <div *ngIf="f['password'].errors['minlength']">
+          Password must be at least 6 characters
+        </div>
+        <div *ngIf="f['password'].errors['maxlength']">
+          Password must not exceed 40 characters
+        </div>
+      </div>
     </div>
-    <div class="action">
-      <button type="button" (click)="login(username.value, password.value)">Sign in</button>
+    <div class="form-group" class="action">
+      <button class="btn btn-primary" type="submit" [disabled]="!form.valid">Sign in</button>
     </div>
-  </div>
+  </form>
 </body>

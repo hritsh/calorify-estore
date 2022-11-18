@@ -21,9 +21,11 @@ import { SaladMakerComponent } from './salad-maker/salad-maker.component';
 const routes: Routes = [
   { path: 'login', component: UserLoginComponent },
   { path: 'register', component: RegistrationPageComponent },
-  { path: 'user-store/:username', component: UserStoreComponent },
+  { path: 'user-store', component: UserStoreComponent },
   { path: 'admin-store', component: InventoryComponent, canActivate: [AuthGuard] },
   { path: 'product-details/:id', component: ProductDetailsComponent, canActivate: [AuthGuard] },
+  { path: 'user-store/shopping-cart', component: ShoppingCartComponent, canActivate: [AuthGuard] },
+  { path: 'user-product-view/:id', component: UserProductViewComponent },
   { path: 'user-store/:username/shopping-cart', component: ShoppingCartComponent, canActivate: [AuthGuard] },
   { path: 'user-product-view/:username/:id', component: UserProductViewComponent },
   { path: 'salad-maker/:username', component: SaladMakerComponent },

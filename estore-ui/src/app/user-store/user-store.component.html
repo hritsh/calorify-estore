@@ -18,7 +18,7 @@
     <div *ngFor="let product of inventory">
       <button
         class="btn-group"
-        routerLink="/user-product-view/{{ user?.username }}/{{ product.id }}"
+        routerLink="/user-product-view/{{ product.id }}"
       >
         <strong>{{ product.name }}</strong>
         <label class="calories">Calories: {{ product.calories }}</label>

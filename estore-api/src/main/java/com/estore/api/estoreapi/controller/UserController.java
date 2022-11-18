@@ -109,7 +109,7 @@ public class UserController {
             if (result != null) {
                 return new ResponseEntity<User>(result, HttpStatus.OK);
             } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(HttpStatus.CONFLICT);
             }
         } catch (IOException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
