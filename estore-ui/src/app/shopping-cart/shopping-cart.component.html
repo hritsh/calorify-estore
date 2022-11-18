@@ -5,14 +5,47 @@
 
   <ul class="wrapper">
     <div *ngFor="let product of cart">
-      <button class="btn-group" routerLink="/user-product-view/{{ user?.username }}/{{ product.id }}">
+      <button
+        class="btn-group"
+        routerLink="/user-product-view/{{ user?.username }}/{{ product.id }}"
+      >
         <strong>{{ product.name }}</strong>
         <label class="calories">Calories: {{ product.calories }}</label>
-        <label class="price">Price: ${{ product.price }}</label>
         <label class="quantity">Quantity: {{ product.quantity }}</label>
-        <label class="image"><img src="{{ product.image }}" /></label>
+        <label class="price"
+          >Total Price: ${{ product.price * product.quantity }}</label
+        >
+        <label class="image"
+          ><img alt="Product Image" src="{{ product.image }}"
+        /></label>
       </button>
-      <button type="button" class="delete" title="Delete Product" (click)="deleteProduct(product)">
+      <button
+        type="button"
+        class="delete"
+        title="Delete Product"
+        (click)="deleteProduct(product)"
+      >
+        <span>REMOVE</span>
+      </button>
+    </div>
+    <div *ngIf="this.s.salad != '0-0000000000000-0000000-000000-0-0-0-0'">
+      <button
+        class="btn-group salad"
+        routerLink="/salad-maker/{{ user?.username }}"
+      >
+        <strong>Custom Salad</strong>
+        <label class="calories">Calories: {{ s.calories }}</label>
+        <label class="price">Price: ${{ s.price }}</label>
+        <div class="ingredients">
+          <span>{{ s.ingredients.join(", ") }}</span>
+        </div>
+      </button>
+      <button
+        type="button"
+        class="delete"
+        title="Delete Product"
+        (click)="s.deleteSalad()"
+      >
         <span>REMOVE</span>
       </button>
     </div>

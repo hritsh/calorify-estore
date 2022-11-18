@@ -16,8 +16,7 @@ import { InventoryComponent } from './inventory/inventory.component';
 import { UserProductViewComponent } from './user-product-view/user-product-view.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AuthGuard } from './auth-guard';
-import { ViewUserProfileComponent } from './view-user-profile/view-user-profile.component';
-import { EditUserProfileComponent } from './edit-user-profile/edit-user-profile.component';
+import { SaladMakerComponent } from './salad-maker/salad-maker.component';
 
 const routes: Routes = [
   { path: 'login', component: UserLoginComponent },
@@ -27,10 +26,11 @@ const routes: Routes = [
   { path: 'product-details/:id', component: ProductDetailsComponent, canActivate: [AuthGuard] },
   { path: 'user-store/shopping-cart', component: ShoppingCartComponent, canActivate: [AuthGuard] },
   { path: 'user-product-view/:id', component: UserProductViewComponent },
-  { path: 'user-profile', component: ViewUserProfileComponent, canActivate: [AuthGuard]},
-  { path: 'edit-user-profile', component:EditUserProfileComponent, canActivate: [AuthGuard]},
-  { path: '', redirectTo: '/user-store', pathMatch: 'full' },
-  { path: '**', component: PageNotFoundComponent}
+  { path: 'user-store/:username/shopping-cart', component: ShoppingCartComponent, canActivate: [AuthGuard] },
+  { path: 'user-product-view/:username/:id', component: UserProductViewComponent },
+  { path: 'salad-maker/:username', component: SaladMakerComponent },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '**', component: PageNotFoundComponent }
 ]
 
 @NgModule({
