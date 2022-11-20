@@ -21,19 +21,18 @@ h1 {
 
 .link {
   flex: 1 1 0;
-  display: block;
   color: white;
   text-align: center;
-  float: right;
   border-radius: 4px;
   background-color: #5dd25e;
   border: 5px solid black;
   color: #fff;
   text-align: center;
-  font-size: 28px;
+  font-size: 24px;
   padding: 0.5em 0.2em;
   cursor: pointer;
   margin: 5px;
+  height: 4.5em;
 }
 
 .link a {

@@ -34,10 +34,11 @@ const routes: Routes = [
   { path: 'user-store/:username/shopping-cart', component: ShoppingCartComponent, canActivate: [AuthGuard] },
   { path: 'user-product-view/:username/:id', component: UserProductViewComponent },
   { path: 'salad-maker/:username', component: SaladMakerComponent },
+  { path: 'salad-maker', component: SaladMakerComponent },
   { path: 'bmi', component: BMIHomeComponent },
   { path: 'user-profile', component: ViewUserProfileComponent },
   { path: 'edit-user-profile', component: EditUserProfileComponent },
-  { path: 'bmi/result/:value',component: BMIResultComponent },
+  { path: 'bmi/result/:value', component: BMIResultComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
 

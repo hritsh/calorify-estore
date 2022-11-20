@@ -8,9 +8,10 @@ import { LoginService } from './login.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Calorify';
-  constructor(public loginService: LoginService) {}
+  title = 'Calorify E-Store';
+  constructor(public loginService: LoginService) { }
   isLoggedIn(): boolean {
     return this.loginService.isLoggedIn();
   }
+  username = localStorage.getItem('sub')!;
 }
