@@ -40,6 +40,7 @@
 
   <div class="buttons">
     <button type="button" class="btn btn-primary" (click)="backButton()">Go Back</button>
-    <button type="button" class="btn btn-primary" routerLink="/checkout">Go to Checkout</button>
+    <button type="button" class="btn btn-primary" *ngIf="getTotalCalories()!=0" routerLink="/checkout">Go to
+      Checkout</button>
   </div>
 </body>

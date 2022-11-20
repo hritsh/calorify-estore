@@ -71,7 +71,8 @@ body {
 .cvv-input input,
 .month select,
 .year select {
-    color: #86939e;
+    color: black;
+    font-weight: 300;
 }
 
 /* Card Number */
