@@ -88,12 +88,12 @@ export class CheckoutComponent implements OnInit {
     this.shoppingCartService.checkout(this.username).subscribe(output => {
       if (output) {
         this.ifSucceed = true;
+        setTimeout(() => {
+          this.location.back();
+        }, 1000);
         this.cart = [];
       } else { this.ifFailed = true; }
     });
-    setTimeout(() => {
-      this.location.back();
-    }, 500);
 
   }
 

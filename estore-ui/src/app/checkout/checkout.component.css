@@ -165,5 +165,9 @@ body {
 .message {
     text-align: center;
     color: #5dd25e;
+    margin-top: 2em;
 }
 
+.address {
+    height: 200px;
+}
