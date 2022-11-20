@@ -11,6 +11,7 @@ import java.util.*;
 
 import com.estore.api.estoreapi.persistence.InventoryDAO;
 import com.estore.api.estoreapi.persistence.UserDAO;
+import com.estore.api.estoreapi.service.UserService;
 import com.estore.api.estoreapi.model.Customer;
 import com.estore.api.estoreapi.model.Product;
 import com.estore.api.estoreapi.model.Role;
@@ -99,6 +100,7 @@ public class UserControllerTest {
         // When the same id is passed in, our mock product DAO will return the product
         // object
         when(mockUserDAO.addUser(user)).thenReturn(user);
+        // userController.addUser(user);
 
         // Invoke
         ResponseEntity<User> response = userController.getUser("christin");
@@ -151,8 +153,8 @@ public class UserControllerTest {
         Role r = new Role(1, "admin");
         roleSet.add(r);
         Customer customer = new Customer("christin", "christin", roleSet);
+        Customer customer2 = new Customer("christin1", "christin1", roleSet);
 
-        customer.setSalad("0");
         // when updateProduct is called, return true simulating successful
         // update and save
         when(mockUserDAO.updateUserDetails(customer)).thenReturn(customer);
@@ -165,7 +167,6 @@ public class UserControllerTest {
         // Analyze
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(customer, response.getBody());
-        assertEquals("0", customer.getSalad());
     }
 
     @Test
@@ -249,16 +250,20 @@ public class UserControllerTest {
         Customer user = new Customer("christin", "christin", roleSet);
         User[] userList;
         // add user to userList
-        mockUserDAO.addUser(user);
+        // mockUserDAO.addUser(user);
+        // userController.setSalad("christin1", "0");
         userList = mockUserDAO.getUsers();
         // when getAllProducts is called, return the list of products
 
         // Invoke
         ResponseEntity<User[]> response = userController.getUsers();
+        ResponseEntity<String> response2 = userController.setSalad("christin1", "0");
+        ResponseEntity<String> response3 = userController.getSalad("christin1");
 
         // Analyze
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(userList, response.getBody());
+        assertEquals(response2, response3);
     }
 
     @Test
