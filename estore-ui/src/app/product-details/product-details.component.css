@@ -28,6 +28,8 @@ h1 {
 
 img {
   width: 100%;
+  border: 5px solid #5dd25e;
+  border-radius: 4px;
 }
 
 #product-id {
