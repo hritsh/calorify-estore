@@ -1,4 +1,4 @@
-<div>
+<div class="salad-maker">
     <h1>Salad Maker</h1>
     <div>
         <h2>Leaves</h2>
@@ -53,13 +53,16 @@
             <label id="calories">Total Calories: <span>{{ s.calories }}</span></label>
         </div>
         <br>
-        <button type="button" (click)="backButton()">Go Back</button>
-        <button type="button" (click)="s.clearSalad()">Clear</button>
-        <button type="button" (click)="s.addToCart()">Save and Add to Cart</button>
+        <div class="buttons">
+            <button type="button" class="btn btn-primary" (click)="backButton()">Go Back</button>
+            <button type="button" class="btn btn-primary" (click)="s.clearSalad()">Clear</button>
+            <button type="button" class="btn btn-primary" (click)="s.addToCart()">Save and Add to Cart</button>
+        </div>
     </div>
     <br>
     <label [textContent]="s.message"></label>
     <h2>
-        <button class="cart" routerLink="/user-store/{{ s.username }}/shopping-cart">Shopping Cart</button>
+        <button class="cart btn btn-primary" routerLink="/user-store/{{ s.username }}/shopping-cart">Shopping
+            Cart</button>
     </h2>
 </div>

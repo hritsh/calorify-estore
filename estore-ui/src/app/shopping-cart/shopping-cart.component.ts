@@ -130,6 +130,7 @@ export class ShoppingCartComponent implements OnInit {
     });
   }
   clear(): void {
+    this.s.deleteSalad();
     this.shoppingCartService.clearCart(this.username).subscribe(output => {
       if (output) {
         this.ifDeleteSucceed = true;
