@@ -23,6 +23,7 @@ import { UserLoginComponent } from './user-login/user-login.component';
 import { UserStoreComponent } from './user-store/user-store.component';
 import { UserProductViewComponent } from './user-product-view/user-product-view.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { CheckoutComponent } from './checkout/checkout.component';
 import { AuthInterceptor } from './auth-interceptor';
 import { LogoutComponent } from './logout/logout.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
@@ -46,6 +47,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     UserProductViewComponent,
     PageNotFoundComponent,
     LogoutComponent,
+    CheckoutComponent
     SaladMakerComponent,
     BMIHomeComponent,
     BMIResultComponent,

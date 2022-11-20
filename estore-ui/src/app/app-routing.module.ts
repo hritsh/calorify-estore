@@ -16,6 +16,7 @@ import { InventoryComponent } from './inventory/inventory.component';
 import { UserProductViewComponent } from './user-product-view/user-product-view.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AuthGuard } from './auth-guard';
+import { CheckoutComponent } from './checkout/checkout.component';
 import { SaladMakerComponent } from './salad-maker/salad-maker.component';
 import { BMIHomeComponent } from './bmi-home/bmi-home.component';
 import { BMIResultComponent } from './bmi-result/bmi-result.component';
@@ -40,8 +41,8 @@ const routes: Routes = [
   { path: 'edit-user-profile', component: EditUserProfileComponent },
   { path: 'bmi/result/:value', component: BMIResultComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'checkout', component: CheckoutComponent },
   { path: '**', component: PageNotFoundComponent }
-
 ]
 
 @NgModule({
