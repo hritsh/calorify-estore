@@ -142,4 +142,12 @@ import { FormBuilder, FormGroup, AbstractControl, ValidationErrors, ValidatorFn,
     this.updatedInventory = this.updatedInventory.filter(product => product.price >= startingPrice && product.price <= endingPrice);
     this.inventoryChange.emit(this.updatedInventory);
   }
+  reload(): void {
+    this.productService.getProducts()
+       .subscribe(inventory => {
+        this.updatedInventory = inventory;
+        this.inventoryChange.emit(this.updatedInventory);
+       });
+  }
+
  }
