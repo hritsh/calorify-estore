@@ -258,15 +258,12 @@ The product details page shows the details of a particular product.
 
 ### Static Code Analysis/Design Improvements
 
+![SonarQube Scanner Results](sonar.jpg)
 > _Discuss design improvements that you would make if the project were
 > to continue. These improvement should be based on your direct
 > analysis of where there are problems in the code base which could be
 > addressed with design changes, and describe those suggested design
 > improvements._
-> _With the results from the Static Code Analysis exercise,
-> discuss the resulting issues/metrics measurements along with your analysis
-> and recommendations for further improvements. Where relevant, include
-> screenshots from the tool and/or corresponding source code that was flagged._
 
 ## Testing
 
