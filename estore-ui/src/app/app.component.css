@@ -5,26 +5,25 @@ body {
 h1 {
   text-align: center;
   color: #5dd25e;
+  cursor: pointer;
 }
 
-ul {
-  list-style-type: none;
+.links {
   margin: 0;
   padding: 0;
   overflow: hidden;
   background-color: #333;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
 }
 
-li {
-  float: left;
-}
-
-li a {
+.link {
+  flex: 1 1 0;
   display: block;
   color: white;
   text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
   float: right;
   border-radius: 4px;
   background-color: #5dd25e;
@@ -33,18 +32,22 @@ li a {
   text-align: center;
   font-size: 28px;
   padding: 0.5em 0.2em;
-  width: 200px;
   cursor: pointer;
   margin: 5px;
 }
 
-li a span {
+.link a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.link a span {
   cursor: pointer;
   display: inline-block;
   position: relative;
 }
 
-li a:hover {
+.link:hover {
   color: #ffffff;
   background-color: #060;
 }
