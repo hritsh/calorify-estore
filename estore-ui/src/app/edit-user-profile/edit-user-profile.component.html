@@ -3,11 +3,13 @@
   <form [formGroup]="editUserForm" (ngSubmit)="submit()" novalidate>
     <div class="form-group">
       <label for="firstName">firstName:</label>
-      <input class="form-control" type="text" id="firstName" [formControlName]="'firstName'" placeholder="first name" name="firstName">
+      <input class="form-control" type="text" id="firstName" [formControlName]="'firstName'" placeholder="first name"
+        name="firstName">
     </div>
     <div class="form-group">
       <label for="lastName">lastName:</label>
-      <input class="form-control" type="text" id="lastName" [formControlName]="'lastName'" placeholder="last name" name="lastName">
+      <input class="form-control" type="text" id="lastName" [formControlName]="'lastName'" placeholder="last name"
+        name="lastName">
     </div>
     <div class="form-group">
       <label for="gender">gender:</label>
@@ -19,16 +21,19 @@
     </div>
     <div class="form-group">
       <label for="height">height:</label>
-      <input class="form-control" type="number" id="height" [formControlName]="'height'" placeholder="height" name="height">
+      <input class="form-control" type="number" id="height" [formControlName]="'height'" placeholder="height"
+        name="height">
     </div>
     <div class="form-group">
       <label for="weight">weight:</label>
-      <input class="form-control" type="number" id="weight" [formControlName]="'weight'" placeholder="weight" name="weight">
+      <input class="form-control" type="number" id="weight" [formControlName]="'weight'" placeholder="weight"
+        name="weight">
     </div>
     <div class="form-group">
       <label for="age">age:</label>
       <input class="form-control" type="number" id="age" [formControlName]="'age'" placeholder="age" name="age">
     </div>
+    <br>
     <div class="form-group">
       <button type="submit" class="btn btn-primary">Save</button>
     </div>

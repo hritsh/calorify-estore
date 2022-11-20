@@ -1,8 +1,12 @@
+h1, h2, label, span {
+    color: #fff;
+}
+
 .salad {
-    color: red;
+    color: #5dd25e;
 }
 .salad span {
-    color: black;
+    color: #fff;
 }
 
 .multiselect {
