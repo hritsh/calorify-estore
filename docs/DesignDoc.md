@@ -337,10 +337,11 @@ We could add tests that take into account when containsCalories == null and cont
 
 This is our analysis of a poorly-tested component.
 
-![estorePT](Picture1.png)
+![estorePT](https://user-images.githubusercontent.com/65954042/202919562-9a887c7f-e980-462a-9bf3-4c8160172699.png)
+
 
 Analysis
-In getProductArray element, it only covers 60% code and covers 35% branches and createProduct element, it only covers 88% code. We will work on this poorly tested component as soon as possible. 
+In RoleFileDAO element, it only covers 85% code and covers 71% branches and createRole element, it only covers 56% code. We will work on this poorly tested component as soon as possible. 
 
 
 ## Object Oriented Principle Adherence
