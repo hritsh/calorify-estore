@@ -4,7 +4,7 @@ label {
   font-size: 1.2rem;
   margin-top: 1rem;
   margin-bottom: 0.5rem;
-  color: #ff0000;
+  color: #5dd25e;
 }
 input {
   padding: 0.5rem;
@@ -15,32 +15,66 @@ input {
 }
 
 input:focus {
-  outline: #e4e4e4 auto 1px;
+  outline: #5dd25e auto 1px;
 }
 
 li {
   list-style-type: none;
 }
 .search-result li a {
-  border-bottom: 1px solid gray;
-  border-left: 1px solid gray;
-  border-right: 1px solid gray;
+  border-bottom: 1px solid #1a1a1a;
+  border-left: 1px solid #1a1a1a;
+  border-right: 1px solid #1a1a1a;
   display: inline-block;
   width: 100%;
   max-width: 600px;
   padding: 0.5rem;
   box-sizing: border-box;
   text-decoration: none;
-  background-color: white;
-  color: #ff0000;
+  background-color: #1a1a1a;
+  color: #fff;
 }
 
 .search-result li a:hover {
-  background-color: #435a60;
-  color: white;
+  color: #5dd25e;
 }
 
 ul.search-result {
   margin-top: 0;
   padding-left: 0;
+}
+
+#search-component label {
+  margin-top: 0;
+}
+
+#search-component > div {
+  padding: 1em;
+  border-radius: 5px;
+  margin-bottom: 1em;
+  background-color: #333;
+}
+
+#search-component > .pricefilter {
+  margin-bottom: 0;
+}
+
+.caloricRange {
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-control {
+  background-color: #1a1a1a;
+  color: #fff;
+  border-color: #1a1a1a;
+}
+
+.sort > select {
+  background-color: #1a1a1a;
+  color: #fff;
+  border-color: #1a1a1a;
+  width: 100%;
 }

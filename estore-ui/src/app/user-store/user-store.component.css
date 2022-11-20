@@ -26,14 +26,14 @@ h1 {
   text-align: center;
   background-color: #1a1a1a;
   color: #fff;
-  border: 5px solid #fff;
+  border: 5px solid #1a1a1a;
   border-radius: 4px;
   margin-bottom: 1px;
 }
 
   .btn-group:hover {
     border-color: #5dd25e;
-    background-color: #333333;
+    /* background-color: #333333; */
     cursor: pointer;
   }
 
@@ -77,4 +77,9 @@ img {
   padding: 2em;
   background-color: #333333;
   border-radius: 5px;
+}
+
+.search {
+  padding: 0;
+  background-color: #1a1a1a;
 }
