@@ -54,10 +54,11 @@
     */
    getUser(): User {
      const username = localStorage.getItem('sub')!;
-
-     this.userService.getUser(username)
-       .subscribe(user => this.user = user)
-
+     var token = (localStorage.getItem('token'));
+    if(username !=null && token!=null) {
+      this.userService.getUser(username)
+      .subscribe(user => this.user = user)
+    }
      return this.user!;
    }
 

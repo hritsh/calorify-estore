@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InventoryComponent } from './inventory.component';
+import { BMIHomeComponent } from './bmi-home.component';
 
-describe('InventoryComponent', () => {
-  let component: InventoryComponent;
-  let fixture: ComponentFixture<InventoryComponent>;
+describe('BMIHomeComponent', () => {
+  let component: BMIHomeComponent;
+  let fixture: ComponentFixture<BMIHomeComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ InventoryComponent ]
+      declarations: [ BMIHomeComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(InventoryComponent);
+    fixture = TestBed.createComponent(BMIHomeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

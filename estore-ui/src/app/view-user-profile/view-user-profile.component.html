@@ -1,0 +1,15 @@
+<body>
+  <h1>{{userDetails.username}}'s Profile</h1>
+  <ul class="wrapper">
+    <div>
+      <label class="firstName">firstName: {{ userDetails.firstName }}</label> <br>
+      <label class="lastName">lastName: {{ userDetails.lastName }}</label> <br>
+      <label class="gender">gender: {{ userDetails.gender }}</label> <br>
+      <label class="height">height: {{ userDetails.height }}</label> <br>
+      <label class="weight">weight: {{ userDetails.weight }}</label> <br>
+      <label class="age">age: {{ userDetails.age }}</label> <br>
+    </div>
+    <br>
+    <button class="btn btn-primary" (click)="goToEditUserProfile()">Edit User Profile</button>
+  </ul>
+</body>

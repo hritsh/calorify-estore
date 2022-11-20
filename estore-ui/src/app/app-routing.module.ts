@@ -17,18 +17,32 @@ import { UserProductViewComponent } from './user-product-view/user-product-view.
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AuthGuard } from './auth-guard';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { SaladMakerComponent } from './salad-maker/salad-maker.component';
+import { BMIHomeComponent } from './bmi-home/bmi-home.component';
+import { BMIResultComponent } from './bmi-result/bmi-result.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { ViewUserProfileComponent } from './view-user-profile/view-user-profile.component';
+import { EditUserProfileComponent } from './edit-user-profile/edit-user-profile.component';
 
 const routes: Routes = [
   { path: 'login', component: UserLoginComponent },
   { path: 'register', component: RegistrationPageComponent },
-  { path: 'user-store/:username', component: UserStoreComponent },
+  { path: 'user-store', component: UserStoreComponent },
   { path: 'admin-store', component: InventoryComponent, canActivate: [AuthGuard] },
   { path: 'product-details/:id', component: ProductDetailsComponent, canActivate: [AuthGuard] },
+  { path: 'user-store/shopping-cart', component: ShoppingCartComponent, canActivate: [AuthGuard] },
+  { path: 'user-product-view/:id', component: UserProductViewComponent },
   { path: 'user-store/:username/shopping-cart', component: ShoppingCartComponent, canActivate: [AuthGuard] },
   { path: 'user-product-view/:username/:id', component: UserProductViewComponent },
+  { path: 'salad-maker/:username', component: SaladMakerComponent },
+  { path: 'salad-maker', component: SaladMakerComponent },
+  { path: 'bmi', component: BMIHomeComponent },
+  { path: 'user-profile', component: ViewUserProfileComponent },
+  { path: 'edit-user-profile', component: EditUserProfileComponent },
+  { path: 'bmi/result/:value', component: BMIResultComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'checkout', component: CheckoutComponent },
-  {path: '**', component: PageNotFoundComponent}
+  { path: '**', component: PageNotFoundComponent }
 ]
 
 @NgModule({

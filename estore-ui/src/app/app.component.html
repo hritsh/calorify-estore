@@ -1,16 +1,46 @@
 <head>
+  <title></title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
+
 <body>
-  <h1>{{title}}</h1>
-  <nav>
-    <div>
-      <button class="button" routerLink="/login"><span>Login</span></button>
+  <div class="links">
+    <div class="link" *ngIf="!isLoggedIn()" routerLink="/login">
+      <a class="anchor"><span>Login</span></a>
     </div>
-    <div>
-      <button class="button" routerLink="/register"><span>Register</span></button>
+    <div class="link" *ngIf="isLoggedIn() && username!='admin'" routerLink="user-store">
+      <a class="anchor"><span>Store</span></a>
     </div>
-    <app-logout *ngIf="isLoggedIn()"></app-logout>
-  </nav>
+    <div class="link" *ngIf="isLoggedIn() && username=='admin'" routerLink="admin-store">
+      <a class="anchor"><span>Edit Inventory</span></a>
+    </div>
+    <div class="link" *ngIf="isLoggedIn() && username!='admin'" routerLink="/bmi">
+      <a class="anchor"><span>BMI Calculator</span></a>
+    </div>
+    <div class="link" *ngIf="isLoggedIn() && username!='admin'" routerLink="/salad-maker">
+      <a class="anchor"><span>Salad Maker</span></a>
+    </div>
+    <div class="link" *ngIf="!isLoggedIn()" routerLink="/register">
+      <a class="anchor"><span>Register</span></a>
+    </div>
+    <div class="title">
+      <h1>{{title}}</h1>
+    </div>
+    <div class="link" *ngIf="!isLoggedIn()" routerLink="user-store">
+      <a class="anchor"><span>Browse Store</span></a>
+    </div>
+    <div class="link" *ngIf="!isLoggedIn()" routerLink="/bmi">
+      <a class="anchor"><span>BMI Calculator</span></a>
+    </div>
+    <div class="link" *ngIf="isLoggedIn() && username!='admin'" routerLink="user-store/shopping-cart">
+      <a class="anchor"><span>Shopping Cart</span></a>
+    </div>
+    <div class="link" *ngIf="isLoggedIn() && username!='admin'">
+      <app-user-profile></app-user-profile>
+    </div>
+    <div class="link" *ngIf="isLoggedIn()">
+      <app-logout></app-logout>
+    </div>
+  </div>
   <router-outlet></router-outlet>
 </body>

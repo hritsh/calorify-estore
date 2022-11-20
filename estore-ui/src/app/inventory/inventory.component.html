@@ -1,13 +1,9 @@
 <body>
-  <div>
+  <div class="add">
     <label for="new-product">Product name: </label>
     <input id="new-product" #productName />
 
-    <button
-      type="button"
-      class="add-button"
-      (click)="addProduct(productName.value); productName.value = ''"
-    >
+    <button type="button" class="add-button" (click)="addProduct(productName.value); productName.value = ''">
       Add product
     </button>
   </div>
@@ -19,14 +15,9 @@
         <label class="calories">Calories: {{ product.calories }}</label>
         <label class="price">Price: ${{ product.price }}</label>
         <label class="quantity">Stock: {{ product.quantity }}</label>
-        <label class="image"><img src="{{ product.image }}" /></label>
+        <label class="image"><img alt="Product Image" src="{{ product.image }}" /></label>
       </button>
-      <button
-        type="button"
-        class="delete"
-        title="Delete Product"
-        (click)="deleteProduct(product)"
-      >
+      <button type="button" class="delete" title="Delete Product" (click)="deleteProduct(product)">
         <span>REMOVE</span>
       </button>
     </div>

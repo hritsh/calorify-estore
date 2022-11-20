@@ -118,7 +118,7 @@ public class ShoppingCartController {
     @DeleteMapping("/{username}")
     @PreAuthorize("#username == authentication.name")
     public ResponseEntity<Boolean> clearCart(@PathVariable("username") String username) {
-        LOG.info("DELETE /cart/customer=" + username);
+        LOG.info("DELETE /shoppingcart/customer=" + username);
         try {
             boolean deleted = shoppingCartDao.clearShoppingCart(username);
             if (deleted) {

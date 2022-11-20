@@ -1,50 +1,44 @@
-<div *ngIf="product != null">
-  <h1>{{ product.name }} Details</h1>
-  <div><span>id: </span>{{ product.id }}</div>
+<div class="details" *ngIf="product != null">
+  <div>
+    <h1>{{ product.name }} Details</h1>
+  </div>
+
+  <div>
+    <img [src]="product.image" alt="Product Image">
+  </div>
+
+  <div>
+    <label for="product-id">Product id: </label>
+    <input id="product-id" [(ngModel)]="product.id" placeholder="Product ID" readonly />
+  </div>
+
   <div>
     <label for="product-name">Product name: </label>
-    <input
-      id="product-name"
-      [(ngModel)]="product.name"
-      placeholder="Product name"
-    />
+    <input id="product-name" [(ngModel)]="product.name" placeholder="Product name" />
+  </div>
 
-    <br />
-
+  <div>
     <label for="product-image">Product image: </label>
-    <input
-      id="product-image"
-      [(ngModel)]="product.image"
-      placeholder="Product image"
-    />
+    <input id="product-image" [(ngModel)]="product.image" placeholder="Product image" />
+  </div>
 
-    <br />
-
+  <div>
     <label for="product-calories">Product calories: </label>
-    <input
-      id="product-calories"
-      [(ngModel)]="product.calories"
-      placeholder="Product calories"
-    />
+    <input id="product-calories" [(ngModel)]="product.calories" placeholder="Product calories" />
+  </div>
 
-    <br />
-
+  <div>
     <label for="product-price">Product price: </label>
-    <input
-      id="product-price"
-      [(ngModel)]="product.price"
-      placeholder="Product price"
-    />
-    <br />
+    <input id="product-price" [(ngModel)]="product.price" placeholder="Product price" />
+  </div>
 
+  <div>
     <label for="product-stock">Product stock: </label>
-    <input
-      id="product-stock"
-      [(ngModel)]="product.quantity"
-      placeholder="Product stock"
-    />
+    <input id="product-stock" [(ngModel)]="product.quantity" placeholder="Product stock" />
+  </div>
+
+  <div class="buttons">
+    <button type="button" (click)="backButton()">Go Back</button>
+    <button type="button" (click)="saveButton()">Save</button>
   </div>
 </div>
-
-<button type="button" (click)="backButton()">Go Back</button>
-<button type="button" (click)="saveButton()">Save</button>

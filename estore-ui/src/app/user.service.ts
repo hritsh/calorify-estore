@@ -6,22 +6,23 @@
  */
 import { Injectable } from '@angular/core';
 import { User } from './user';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { UserDetails } from './userDetails';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { Observable, catchError, tap, of } from 'rxjs';
 import { Role } from './role';
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
   private usersURL = 'http://localhost:8080/users';
-  private roles:Role[] = [];
+  private roles: Role[] = [];
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  constructor(private http: HttpClient) {}
-  generateRoleArray(role:Set<Role>): Role[] {
-    for(let entry of role) {
+  constructor(private http: HttpClient) { }
+  generateRoleArray(role: Set<Role>): Role[] {
+    for (let entry of role) {
       this.roles.push(entry);
     }
     return this.roles;
@@ -43,7 +44,18 @@ export class UserService {
   userExists(username: string): Observable<boolean> {
     const url = `${this.usersURL}/${username}`;
     return this.http.get<boolean>(url);
-    //return USERS.some(user => (user.username === username));
+  }
+  updateUserDetails(userDetails: UserDetails): Observable<UserDetails> {
+    const url = `${this.usersURL}`
+    return this.http.put<UserDetails>(url, {
+      "username": userDetails.username,
+      "firstName": userDetails.firstName,
+      "lastName": userDetails.lastName,
+      "gender": userDetails.gender,
+      "height": userDetails.height,
+      "weight": userDetails.weight,
+      "age": userDetails.age
+    });
   }
   /**
   * Retrieves a {@linkplain User user} by sending a string to the backend
@@ -53,6 +65,30 @@ export class UserService {
   getUser(username: string): Observable<User> {
     const url = `${this.usersURL}/${username}`;
     return this.http.get<User>(url);
+  }
+  getUserDetails(username: string): Observable<UserDetails> {
+    const url = `${this.usersURL}/${username}`;
+    return this.http.get<UserDetails>(url);
+  }
+
+  /**
+  * Retrieves a {@linkplain String salad} by sending a string to the backend
+  * @param username the username to use to search for a {@link User user}
+  * @returns the retrieved {@link String salad}
+  */
+  getSalad(username: string): Observable<String> {
+    const url = `${this.usersURL}/${username}/salad`;
+    return this.http.get<String>(url)
+      .pipe(tap(), catchError(err => { return this.checkoutErrorCatch(err) }));
+  }
+
+  setSalad(username: string, salad: String): Observable<String> {
+    const url = `${this.usersURL}/${username}/salad/${salad}`;
+    return this.http.put<String>(url, this.httpOptions);
+  }
+
+  checkoutErrorCatch(error: HttpErrorResponse) {
+    return of(error.error.text);
   }
 
 }

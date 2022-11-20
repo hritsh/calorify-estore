@@ -15,6 +15,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class Customer extends User {
 
+    static final String STRING_FORMAT = "Customer [firstName=%s, lastName=%s, gender=%s, height=%d, weight=%d, age=%d]";
+
     @JsonProperty("firstName")
     private String firstName;
     @JsonProperty("lastName")
@@ -27,11 +29,11 @@ public class Customer extends User {
     private int weight;
     @JsonProperty("age")
     private int age;
-    @JsonProperty("loggedIn")
-    private boolean loggedIn;
 
     @JsonProperty("cart")
     private ShoppingCart cart;
+    @JsonProperty("salad")
+    private String salad;
 
     /**
      * Json constructor to initialize a {@linkplain Customer customer} from a json
@@ -44,9 +46,11 @@ public class Customer extends User {
      *                 {@link Customer customer}
      */
     @JsonCreator
-    public Customer(@JsonProperty("username") String username, @JsonProperty("password") String password, @JsonProperty("role") Set<Role> role, @JsonProperty("cart") ShoppingCart cart) {
+    public Customer(@JsonProperty("username") String username, @JsonProperty("password") String password,
+            @JsonProperty("role") Set<Role> role, @JsonProperty("cart") ShoppingCart cart) {
         super(username, password, role);
         this.cart = cart;
+        this.salad = "0-0000000000000-0000000-000000-0-0-0-0";
     }
 
     /**
@@ -60,6 +64,7 @@ public class Customer extends User {
     public Customer(String username, String password, Set<Role> role) {
         super(username, password, role);
         this.cart = new ShoppingCart(null);
+        this.salad = "0-0000000000000-0000000-000000-0-0-0-0";
     }
 
     /**
@@ -105,21 +110,21 @@ public class Customer extends User {
     }
 
     /**
-     * Retrieves the id of the product
+     * Returns the user's {@linkplain String salad}
      * 
-     * @return The id of the product
+     * @return the {@linkplain String salad}
      */
-    public boolean getLoggedIn() {
-        return loggedIn;
+    public String getSalad() {
+        return this.salad;
     }
 
     /**
-     * Sets the log in status of the User
+     * Sets the user's {@linkplain String salad}
      * 
-     * @param loggedIn The log in status of the User
+     * @param salad the {@linkplain String salad}
      */
-    public void setLoggedIn(boolean loggedIn) {
-        this.loggedIn = loggedIn;
+    public void setSalad(String salad) {
+        this.salad = salad;
     }
 
     /**
@@ -228,5 +233,13 @@ public class Customer extends User {
      */
     public String getlastName() {
         return lastName;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return String.format(STRING_FORMAT, firstName, lastName, gender, height, weight, age);
     }
 }

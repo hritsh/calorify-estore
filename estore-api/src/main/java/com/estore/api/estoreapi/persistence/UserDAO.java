@@ -17,10 +17,12 @@ public interface UserDAO {
      * frontend. Typically, with this program,
      * the getUser would be called first to check if the {@link User user}
      * exists, if not then we automatically create
-     * a new user with the given details such as their username. This all occurs from the
+     * a new user with the given details such as their username. This all occurs
+     * from the
      * register page.
      * 
-     * @param user The object containing all the details related to the new {@link User user}
+     * @param user The object containing all the details related to the new
+     *             {@link User user}
      * 
      * @return The newly created {@link User user} object
      * 
@@ -43,18 +45,20 @@ public interface UserDAO {
      * @throws IOException If an issue occured whilst accessing the json files
      */
     User getUser(String username) throws IOException;
+
     /**
-     * Updates and saves a {@linkplain Customer customer} which is an 
+     * Updates and saves a {@linkplain Customer customer} which is an
      * extension of User with selected details provided by user after authenticating
      * 
      * @param {@link Customer customer} object to be updated and saved
      * 
      * @return updated {@link Customer customer} if successful, null if
-     * {@link Customer customer} could not be found
+     *         {@link Customer customer} could not be found
      * 
      * @throws IOException if underlying storage cannot be accessed
      */
     Customer updateUserDetails(Customer customer) throws IOException;
+
     /**
      * Given a string, search and delete a {@linkplain User user} that correlates
      * with the given string.
@@ -89,4 +93,7 @@ public interface UserDAO {
      */
     public Customer[] getUsers();
 
+    void setSalad(String username, String salad) throws IOException;
+
+    String getSalad(String username) throws IOException;
 }

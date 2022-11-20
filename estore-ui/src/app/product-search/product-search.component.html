@@ -1,11 +1,76 @@
 <div id="search-component">
-  <label for="search-box">Product Search </label>
-  <input #searchBox id="search-box" (input)="search(searchBox.value)" />
-  <ul class="search-result">
-    <li *ngFor="let product of products$ | async" >
-      <a routerLink="/user-product-view/{{username}}/{{product.id}}">
-        {{product.name}}
-      </a>
-    </li>
-  </ul>
+  <div class="search">
+    <label for="search-box">Product Search </label>
+    <input class="form-control" #searchBox id="search-box" (input)="search(searchBox.value)" />
+    <ul class="search-result">
+      <li *ngFor="let product of products$ | async">
+        <a routerLink="/user-product-view/{{username}}/{{product.id}}">
+          {{product.name}}
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="sort">
+    <label>Sort Prices</label>
+    <select name="Sort Prices">
+      <option (click)="ascendingPrice()">Lowest to Highest</option>
+      <option (click)="descendingPrice()">Highest to Lowest</option>
+    </select>
+    <br><br>
+    <label>Sort Calories</label>
+    <select name="Sort Calories">
+      <option (click)="ascendingCalories()">Lowest to Highest</option>
+      <option (click)="descendingCalories()">Highest to Lowest</option>
+    </select>
+  </div>
+
+  <div class="caloriefilter">
+    <label>Calorie Limit: </label>
+    <div class="caloricRange">
+      <input type="range" min="1" max="{{ getHighestCalorie() }}" value="1" class="slider" id="myRange" #amountSelect
+        (input)="amountInput(amountSelect.value)" />
+      {{ currAmount }}
+    </div>
+    <button type="submit" class="btn btn-primary" (click)="searchCalorieLessThanOrEqual(amountSelect.value)">Limit
+      Calories</button>
+    <br><br>
+    <form [formGroup]="searchCalories" (ngSubmit)="submit()" novalidate>
+      <div class="form-group">
+        <label for="startingCal">Starting Calorie:</label>
+        <input class="form-control" type="number" id="startingCal" [formControlName]="'startingCal'"
+          placeholder="starting calorie" name="startingCal">
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="endingCal">Ending Calorie:</label>
+        <input class="form-control" type="number" id="endingCal" [formControlName]="'endingCal'"
+          placeholder="ending calorie" name="endingCal">
+      </div>
+      <br>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary" [disabled]="!searchCalories.valid">Filter Calories</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="pricefilter">
+    <form [formGroup]="searchPrice" (ngSubmit)="submitPrice()" novalidate>
+      <div class="form-group">
+        <label for="startingPrice">Starting Price:</label>
+        <input class="form-control" type="number" id="startingPrice" [formControlName]="'startingPrice'"
+          placeholder="starting Price" name="startingPrice">
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="endingPrice">Ending Price:</label>
+        <input class="form-control" type="number" id="endingPrice" [formControlName]="'endingPrice'"
+          placeholder="ending Price" name="endingPrice">
+      </div>
+      <br>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary" [disabled]="!searchPrice.valid">Filter Price</button>
+      </div>
+    </form>
+  </div>
 </div>

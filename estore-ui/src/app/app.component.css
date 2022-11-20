@@ -1,29 +1,55 @@
-h1 {
-  text-align: center;
-  color: #ff0000;
+body {
+  background-color: #1a1a1a;
 }
 
-button {
-  border-radius: 4px;
-  background-color: #ffffff;
-  border: 5px solid #ff0000;
-  color: #ff0000;
+h1 {
   text-align: center;
-  font-size: 28px;
+  color: #5dd25e;
+  cursor: pointer;
+}
+
+.links {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.link {
+  flex: 1 0 0;
+  color: white;
+  text-align: center;
+  border-radius: 4px;
+  background-color: #5dd25e;
+  border: 5px solid black;
+  color: #fff;
+  text-align: center;
+  font-size: 24px;
   padding: 0.5em 0.2em;
-  width: 200px;
   cursor: pointer;
   margin: 5px;
 }
 
-button span {
+.link a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.link a span {
   cursor: pointer;
   display: inline-block;
   position: relative;
 }
 
-
-button:hover {
+.link:hover {
   color: #ffffff;
-  background-color: #ff0000;
+  background-color: #060;
+}
+
+.title {
+  padding: 0 3em;
 }

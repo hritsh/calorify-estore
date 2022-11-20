@@ -15,6 +15,7 @@ import { User } from '../user';
 import { LoginService } from '../login.service';
 import { jwtRequest } from '../jwtRequest';
 import jwt_decode from "jwt-decode";
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -25,7 +26,9 @@ import jwt_decode from "jwt-decode";
 export class UserLoginComponent implements OnInit {
   jwtToken!: any;
   user!: User;
+  form!: FormGroup;
   constructor(
+    private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private userService: UserService,
     private location: Location,
@@ -38,6 +41,15 @@ export class UserLoginComponent implements OnInit {
    * The initialization of this component
    */
   ngOnInit(): void {
+    localStorage.clear();
+    this.form = this.formBuilder.group({
+      username: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(20)]],
+      password: ['', [Validators.required]]
+    });
+  }
+
+  get f(): { [key: string]: AbstractControl } {
+    return this.form.controls;
   }
 
   /**
@@ -52,19 +64,26 @@ export class UserLoginComponent implements OnInit {
    * This methods gets the input in the login textbox and uses that to determine whether or not to proceed
    * To the admin page or the customer's page
    */
-  login(username: string, password:string): void {
-    if(username && password) {
-      const sentLoginRequest = new jwtRequest(username, password);
-      this.loginService.login(sentLoginRequest).subscribe(response => {
-        this.jwtToken = jwt_decode(response.jwtToken);
-        this.loginService.setSession(this.jwtToken, response.jwtToken);
-        this.user = response.user;
-        if(this.user.username == "admin") {
-          this.router.navigateByUrl("/admin-store");
-        } else {
-          this.router.navigateByUrl("/user-store/"+this.user.username);
-        }
-      });
+  login(): void {
+    if (this.form.valid) {
+      const credentials = this.form.getRawValue();
+      const username = credentials.username;
+      const password = credentials.password;
+      if (username && password) {
+        const sentLoginRequest = new jwtRequest(username, password);
+        this.loginService.login(sentLoginRequest).subscribe(response => {
+          this.jwtToken = jwt_decode(response.jwtToken);
+          this.loginService.setSession(this.jwtToken, response.jwtToken);
+          this.user = response.user;
+          if (this.user.username == "admin") {
+            this.router.navigateByUrl("/admin-store");
+          } else {
+            this.router.navigateByUrl("/user-store");
+          }
+        });
+      }
+    } else {
+      alert('Error');
     }
   }
 }
