@@ -151,6 +151,8 @@ public class UserControllerTest {
         Role r = new Role(1, "admin");
         roleSet.add(r);
         Customer customer = new Customer("christin", "christin", roleSet);
+
+        customer.setSalad("0");
         // when updateProduct is called, return true simulating successful
         // update and save
         when(mockUserDAO.updateUserDetails(customer)).thenReturn(customer);
@@ -163,6 +165,7 @@ public class UserControllerTest {
         // Analyze
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(customer, response.getBody());
+        assertEquals("0", customer.getSalad());
     }
 
     @Test
@@ -246,6 +249,7 @@ public class UserControllerTest {
         Customer user = new Customer("christin", "christin", roleSet);
         User[] userList;
         // add user to userList
+        mockUserDAO.addUser(user);
         userList = mockUserDAO.getUsers();
         // when getAllProducts is called, return the list of products
 

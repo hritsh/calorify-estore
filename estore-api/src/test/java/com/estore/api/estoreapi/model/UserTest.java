@@ -1,6 +1,8 @@
 package com.estore.api.estoreapi.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -31,6 +33,7 @@ public class UserTest {
         User user3 = new User("basit", "basit", roleSet2);
         user2.setPassword("password");
         user2.setRole(roleSet);
+        user3.hashCode();
 
         // Analyze
         assertEquals(user.equals(user), true);
@@ -38,7 +41,7 @@ public class UserTest {
         assertEquals("christin", user.getUsername());
         assertEquals("christin", user.getPassword());
         assertEquals(roleSet, user.getRole());
-
+        assertFalse(user2.equals(null));
     }
 
     @Test
