@@ -4,9 +4,48 @@ h1 {
   font-size: 1.2rem;
   margin-top: 1rem;
   margin-bottom: 0.5rem;
-  color: #ff0000;
+  color: #5dd25e;
 }
 
-div {
-  color: #ff0000;
+.details {
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  margin: 0 2em;
+}
+
+.details > div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0.2em 0;
+  width: 30em;
+}
+
+.details > div > input {
+  width: 20em;
+}
+
+img {
+  width: 100%;
+}
+
+#product-id {
+  border: none;
+  background-color: transparent;
+  color: #fff;
+}
+
+.buttons > button {
+  color: #fff;
+  background-color: #1a1a1a;
+  border: 2px solid #fff;
+  border-radius: 4px;
+  height: 30px;
+}
+
+.buttons > button:hover {
+  background-color: #333333;
+  border-color: #5dd25e;
+  cursor: pointer;
 }
