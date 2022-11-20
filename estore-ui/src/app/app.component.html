@@ -11,6 +11,9 @@
     <div class="link" *ngIf="isLoggedIn() && username!='admin'" routerLink="user-store">
       <a class="anchor"><span>Store</span></a>
     </div>
+    <div class="link" *ngIf="isLoggedIn() && username=='admin'" routerLink="admin-store">
+      <a class="anchor"><span>Edit Inventory</span></a>
+    </div>
     <div class="link" *ngIf="isLoggedIn() && username!='admin'" routerLink="/bmi">
       <a class="anchor"><span>BMI Calculator</span></a>
     </div>
