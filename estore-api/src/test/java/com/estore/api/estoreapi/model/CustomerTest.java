@@ -52,7 +52,8 @@ public class CustomerTest {
         // Invoke
         Customer customer = new Customer("christin", "christin", roleSet);
         // Analyze
-        assertEquals(customer.getUsername(), customer.getUsername());
+        assertEquals("Customer [firstName=null, lastName=null, gender=null, height=0, weight=0, age=0]",
+                customer.toString());
     }
 
     @Test
