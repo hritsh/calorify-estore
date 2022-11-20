@@ -275,11 +275,23 @@ The product details page shows the details of a particular product.
 
 ### Acceptance Testing
 
-> _Report on the number of user stories that have passed all their
-> acceptance criteria tests, the number that have some acceptance
-> criteria tests failing, and the number of user stories that
-> have not had any testing yet. Highlight the issues found during
-> acceptance testing and if there are any concerns._
+A total of 46 stories were tested and all of them are PASSING.
+None of the tested Stories are failing. 
+We have a minor exception handling bug that will be fixed ASAP.
+
+![eStore acceptance](k.png)
+
+![eStore acceptance](l.png)
+
+![eStore acceptance](m.png)
+
+![eStore acceptance](n.png)
+
+![eStore acceptance](o.png)
+
+![eStore acceptance](p.png)
+
+![eStore acceptance](q.png)
 
 ## Unit Testing and Code Coverage
 
