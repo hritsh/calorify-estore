@@ -1,66 +1,74 @@
 <div class="row">
-  <div class="col-lg-4 offset-lg-4">
-      <h2 class="title">BMI Calculator</h2>
-      <div class="row">
-          <div class="col-lg-6">
-              <div class="backgroundItem" [ngClass]="{'inactiveSex': sex === 'Female'}">
-                  <div class="container" style="cursor: pointer;" (click)="male()">
-                      <i class="fas fa-mars sex"></i>
-                      <p><b>Male</b></p>
-                  </div>
-              </div>
-          </div>
-          <div class="col-lg-6">
-              <div class="backgroundItem" [ngClass]="{'inactiveSex': sex === 'Male'}">
-                  <div class="container" style="cursor: pointer;" (click)="female()">
-                      <i class="fas fa-venus sex"></i>
-                      <p><b>Female</b></p>
-                  </div>
-              </div>
-          </div>
-        </div>
-      <div class="row">
-        <div class="col-lg-12">
-            <div class="backgroundItem">
-                <div class="container">
-                    <p>Height</p>
-                    <div class="numberStyle">{{height}}<span class="cm">cm</span></div>
-                    <input type="range" class="form-control-range" (input)="changeHeight($event)" [value]="height"
-                        min="50" max="220">
+    <div class="col-lg-4 offset-lg-4">
+        <h2 class="title">BMI Calculator</h2>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="backgroundItem" [ngClass]="{'inactiveSex': sex === 'Female'}">
+                    <div class="container" style="cursor: pointer;" (click)="male()">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M12.1888 7L12.1909 5L19.1909 5.00746L19.1834 12.0075L17.1834 12.0053L17.1873 8.41678L14.143 11.4611C15.4612 13.4063 15.2587 16.0743 13.5355 17.7975C11.5829 19.7501 8.41709 19.7501 6.46447 17.7975C4.51184 15.8449 4.51184 12.6791 6.46447 10.7264C8.16216 9.02873 10.777 8.80709 12.7141 10.0615L15.7718 7.00382L12.1888 7ZM7.87868 12.1406C9.05025 10.9691 10.9497 10.9691 12.1213 12.1406C13.2929 13.3122 13.2929 15.2117 12.1213 16.3833C10.9497 17.5549 9.05025 17.5549 7.87868 16.3833C6.70711 15.2117 6.70711 13.3122 7.87868 12.1406Z"
+                                fill="currentColor" />
+                        </svg>
+                        <p><b>Male</b></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="backgroundItem" [ngClass]="{'inactiveSex': sex === 'Male'}">
+                    <div class="container" style="cursor: pointer;" (click)="female()">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M12 3C9.23858 3 7 5.23858 7 8C7 10.419 8.71776 12.4367 11 12.9V15H8V17H11V21H13V17H16V15H13V12.9C15.2822 12.4367 17 10.419 17 8C17 5.23858 14.7614 3 12 3ZM9 8C9 9.65685 10.3431 11 12 11C13.6569 11 15 9.65685 15 8C15 6.34315 13.6569 5 12 5C10.3431 5 9 6.34315 9 8Z"
+                                fill="currentColor" />
+                        </svg>
+                        <p><b>Female</b></p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-      <div class="col-lg-6">
-          <div class="backgroundItem">
-              <div class="container">
-                  <p>Weight</p>
-                  <div class="numberStyle">{{weight}}</div>
-                  <div>
-                      <i class="fas fa-minus addSub" (click)="weight = weight - 1"></i>
-                      <i class="fas fa-plus addSub" (click)="weight = weight + 1"></i>
-                  </div>
-              </div>
-          </div>
-      </div>
-      <div class="col-lg-6">
-        <div class="backgroundItem">
-            <div class="container">
-                <p>Age</p>
-                <div class="numberStyle">{{age}}</div>
-                <div>
-                    <i class="fas fa-minus addSub" (click)="age = age - 1"></i>
-                    <i class="fas fa-plus addSub" (click)="age = age + 1"></i>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="backgroundItem">
+                    <div class="container">
+                        <p>Height</p>
+                        <div class="numberStyle">{{height}}<span class="cm">cm</span></div>
+                        <input type="range" class="form-control-range" (input)="changeHeight($event)" [value]="height"
+                            min="50" max="220">
+                    </div>
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="backgroundItem">
+                    <div class="container">
+                        <p>Weight</p>
+                        <div class="numberStyle">{{weight}}</div>
+                        <div>
+                            <span class="fas fa-minus addSub" (click)="weight = weight - 1">-</span>
+                            <span class="fas fa-plus addSub" (click)="weight = weight + 1">+</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="backgroundItem">
+                    <div class="container">
+                        <p>Age</p>
+                        <div class="numberStyle">{{age}}</div>
+                        <div>
+                            <span class="fas fa-minus addSub" (click)="age = age - 1">-</span>
+                            <span class="fas fa-plus addSub" (click)="age = age + 1">+</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 calculate">
+                <button (click)="calculateBMI()" class="btn btn-primary btn-lg btn-block btn-color">CALCULATE</button>
+            </div>
+        </div>
     </div>
-</div>
-<div class="row">
-  <div class="col-lg-12">
-      <button (click)="calculateBMI()" class="btn btn-primary btn-lg btn-block btn-color">CALCULATE</button>
-  </div>
-</div>
-</div>
 </div>

@@ -1,15 +1,36 @@
-<link href='https://fonts.googleapis.com/css?family=Roboto:400,300,100' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="checkout.component.css">
-<form class="credit-card">
+
+
+<div class="message">
+  <div *ngIf="ifSucceed">Checkout Successful!</div>
+  <div *ngIf="ifFailed">Checkout Unsuccessful!</div>
+</div>
+<form class="credit-card address" *ngIf="!ifSucceed">
+
   <div class="form-header">
-    <h4 class="title">Credit card detail</h4>
+    <h4 class="title">Address</h4>
   </div>
- 
+
+  <div class="form-body">
+    <input type="text" class="full-name" placeholder="Address Line 1">
+    <input type="text" class="card-number" placeholder="Address Line 2">
+
+
+  </div>
+</form>
+
+
+<form class="credit-card" *ngIf="!ifSucceed">
+
+  <div class="form-header">
+    <h4 class="title">Credit Card Details</h4>
+  </div>
+
   <div class="form-body">
     <input type="text" class="full-name" placeholder="Full Name">
     <!-- Card Number -->
     <input type="text" class="card-number" placeholder="Card Number">
- 
+
     <!-- Date Field -->
     <div class="date-field">
       <div class="month">
@@ -30,19 +51,20 @@
       </div>
       <div class="year">
         <select name="Year">
-          <option value="2016">2016</option>
-          <option value="2017">2017</option>
-          <option value="2018">2018</option>
-          <option value="2019">2019</option>
-          <option value="2020">2020</option>
-          <option value="2021">2021</option>
-          <option value="2022">2022</option>
           <option value="2023">2023</option>
           <option value="2024">2024</option>
+          <option value="2025">2025</option>
+          <option value="2026">2026</option>
+          <option value="2027">2027</option>
+          <option value="2028">2028</option>
+          <option value="2029">2029</option>
+          <option value="2030">2030</option>
+          <option value="2031">2031</option>
+          <option value="2032">2032</option>
         </select>
       </div>
     </div>
- 
+
     <!-- Card Verification Field -->
     <div class="card-verification">
       <div class="cvv-input">
@@ -52,11 +74,10 @@
         <p>3 or 4 digits usually found <br> on the signature strip</p>
       </div>
     </div>
- 
     <!-- Buttons -->
-   <!-- <button type="submit" class="proceed-btn"><a href="#">Proceed</a></button>  -->
+    <!-- <button type="submit" class="proceed-btn"><a href="#">Proceed</a></button>  -->
     <button type="button" class="proceed-btn" (click)="backButton()">Cancel</button>
     <button type="button" class="proceed-btn" (click)="checkout()">Check out!</button>
   </div>
-
+  <br><br>
 </form>
