@@ -5,13 +5,16 @@
 
 <body>
   <div class="links">
-    <div class="link" routerLink="/login">
+    <div class="link" *ngIf="!isLoggedIn()" routerLink="/login">
       <a class="anchor"><span>Login</span></a>
     </div>
-    <div class="link" *ngIf="isLoggedIn()" routerLink="/bmi">
+    <div class="link" *ngIf="isLoggedIn() && username!='admin'" routerLink="user-store">
+      <a class="anchor"><span>Store</span></a>
+    </div>
+    <div class="link" *ngIf="isLoggedIn() && username!='admin'" routerLink="/bmi">
       <a class="anchor"><span>BMI Calculator</span></a>
     </div>
-    <div class="link" *ngIf="isLoggedIn()" routerLink="/salad-maker">
+    <div class="link" *ngIf="isLoggedIn() && username!='admin'" routerLink="/salad-maker">
       <a class="anchor"><span>Salad Maker</span></a>
     </div>
     <div class="title" routerLink="/user-store">
@@ -20,10 +23,10 @@
     <div class="link" *ngIf="!isLoggedIn()" routerLink="/register">
       <a class="anchor"><span>Register</span></a>
     </div>
-    <div class="link" *ngIf="isLoggedIn()" routerLink="user-store/shopping-cart">
+    <div class="link" *ngIf="isLoggedIn() && username!='admin'" routerLink="user-store/shopping-cart">
       <a class="anchor"><span>Shopping Cart</span></a>
     </div>
-    <div class="link" *ngIf="isLoggedIn()">
+    <div class="link" *ngIf="isLoggedIn() && username!='admin'">
       <app-user-profile></app-user-profile>
     </div>
     <div class="link" *ngIf="isLoggedIn()">

@@ -41,6 +41,7 @@ export class UserLoginComponent implements OnInit {
    * The initialization of this component
    */
   ngOnInit(): void {
+    localStorage.clear();
     this.form = this.formBuilder.group({
       username: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(20)]],
       password: ['', [Validators.required]]
