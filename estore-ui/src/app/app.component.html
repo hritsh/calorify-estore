@@ -4,23 +4,23 @@
 </head>
 <body>
   <div class="links">
-    <div class="link">
-      <a class="anchor" routerLink="/login"><span>Login</span></a>
+    <div class="link" routerLink="/login">
+      <a class="anchor"><span>Login</span></a>
     </div>
-    <div class="link">
-      <a class="anchor" routerLink="/register"><span>Register</span></a>
+    <div class="link" *ngIf="isLoggedIn()" routerLink="/bmi">
+      <a class="anchor"><span>BMI Calculator</span></a>
     </div>
-    <div class="link">
-      <a class="anchor" routerLink="/bmi"><span>BMI Calculator</span></a>
+    <div class="title" routerLink="/user-store">
+      <h1>{{title}}</h1>
     </div>
-    <div class="title">
-      <h1 routerLink="/user-store">{{title}}</h1>
+    <div class="link" routerLink="/register">
+      <a class="anchor"><span>Register</span></a>
     </div>
-    <div class="link">
-      <app-user-profile *ngIf="isLoggedIn()"></app-user-profile>
+    <div class="link" *ngIf="isLoggedIn()">
+      <app-user-profile></app-user-profile>
     </div>
-    <div class="link">
-      <app-logout *ngIf="isLoggedIn()"></app-logout>
+    <div class="link" *ngIf="isLoggedIn()">
+      <app-logout></app-logout>
     </div>
   </div>
   <router-outlet></router-outlet>
