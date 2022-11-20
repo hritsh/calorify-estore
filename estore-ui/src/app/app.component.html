@@ -20,11 +20,17 @@
     <div class="link" *ngIf="isLoggedIn() && username!='admin'" routerLink="/salad-maker">
       <a class="anchor"><span>Salad Maker</span></a>
     </div>
+    <div class="link" *ngIf="!isLoggedIn()" routerLink="/register">
+      <a class="anchor"><span>Register</span></a>
+    </div>
     <div class="title">
       <h1>{{title}}</h1>
     </div>
-    <div class="link" *ngIf="!isLoggedIn()" routerLink="/register">
-      <a class="anchor"><span>Register</span></a>
+    <div class="link" *ngIf="!isLoggedIn()" routerLink="user-store">
+      <a class="anchor"><span>Browse Store</span></a>
+    </div>
+    <div class="link" *ngIf="!isLoggedIn()" routerLink="/bmi">
+      <a class="anchor"><span>BMI Calculator</span></a>
     </div>
     <div class="link" *ngIf="isLoggedIn() && username!='admin'" routerLink="user-store/shopping-cart">
       <a class="anchor"><span>Shopping Cart</span></a>

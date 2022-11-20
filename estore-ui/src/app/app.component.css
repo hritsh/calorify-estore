@@ -20,7 +20,7 @@ h1 {
 }
 
 .link {
-  flex: 1 0 auto;
+  flex: 1 0 0;
   color: white;
   text-align: center;
   border-radius: 4px;
