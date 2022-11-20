@@ -258,17 +258,10 @@ The product details page shows the details of a particular product.
 
 ### Static Code Analysis/Design Improvements
 
-![SonarQube Scanner Results](sonar.jpg)
-> _Discuss design improvements that you would make if the project were
-> to continue. These improvement should be based on your direct
-> analysis of where there are problems in the code base which could be
-> addressed with design changes, and describe those suggested design
-> improvements._
+![SonarQube Scanner Results](https://user-images.githubusercontent.com/89844097/202920754-9e15064d-7d71-4888-9b00-34e3bf27fb8a.png)
+
 
 ## Testing
-
-> _This section will provide information about the testing performed
-> and the results of the testing._
 
 ### Acceptance Testing
 
