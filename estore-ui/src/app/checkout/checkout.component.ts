@@ -5,6 +5,7 @@ import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../user.service';
 import { User } from '../user';
+import { Salad } from '../salad';
 
 @Component({
   selector: 'app-checkout',
@@ -18,6 +19,7 @@ export class CheckoutComponent implements OnInit {
   @Input() user?: User;
   ifSucceed: Boolean = false;
   ifFailed: Boolean = false;
+  s: Salad = new Salad(this.userService);
 
   constructor(
     private shoppingCartService: ShoppingCartService,
@@ -38,7 +40,7 @@ export class CheckoutComponent implements OnInit {
   /**
    * Gets and saves the shopping cart of the currently logged in {@linkplain User user}
    */
-   getCart(): void {
+  getCart(): void {
     /**
      * Gets the id from the route to get the cart
      */
@@ -74,7 +76,7 @@ export class CheckoutComponent implements OnInit {
   /**
    * Returns the {@linkplain User user} to their previous page
    */
-   backButton(): void {
+  backButton(): void {
     this.location.back();
   }
 
@@ -82,13 +84,17 @@ export class CheckoutComponent implements OnInit {
    * Initiates the action of checking out for the {@linkplain User user}
    */
   checkout(): void {
+    this.s.deleteSalad();
     this.shoppingCartService.checkout(this.username).subscribe(output => {
       if (output) {
         this.ifSucceed = true;
         this.cart = [];
       } else { this.ifFailed = true; }
     });
-    console.log(this.ifSucceed, this.ifFailed, this.cart);
+    setTimeout(() => {
+      this.location.back();
+    }, 500);
+
   }
 
 }

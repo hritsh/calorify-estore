@@ -1,15 +1,15 @@
-<link href='https://fonts.googleapis.com/css?family=Roboto:400,300,100' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="checkout.component.css">
 <form class="credit-card">
+
   <div class="form-header">
-    <h4 class="title">Credit card detail</h4>
+    <h4 class="title">Credit Card Details</h4>
   </div>
- 
+
   <div class="form-body">
     <input type="text" class="full-name" placeholder="Full Name">
     <!-- Card Number -->
     <input type="text" class="card-number" placeholder="Card Number">
- 
+
     <!-- Date Field -->
     <div class="date-field">
       <div class="month">
@@ -42,7 +42,7 @@
         </select>
       </div>
     </div>
- 
+
     <!-- Card Verification Field -->
     <div class="card-verification">
       <div class="cvv-input">
@@ -52,11 +52,14 @@
         <p>3 or 4 digits usually found <br> on the signature strip</p>
       </div>
     </div>
- 
     <!-- Buttons -->
-   <!-- <button type="submit" class="proceed-btn"><a href="#">Proceed</a></button>  -->
+    <!-- <button type="submit" class="proceed-btn"><a href="#">Proceed</a></button>  -->
     <button type="button" class="proceed-btn" (click)="backButton()">Cancel</button>
     <button type="button" class="proceed-btn" (click)="checkout()">Check out!</button>
   </div>
 
+  <div class="message">
+    <div *ngIf="ifSucceed">Checkout Successful!</div>
+    <div *ngIf="ifFailed">Checkout Unsuccessful!</div>
+  </div>
 </form>

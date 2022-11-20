@@ -30,7 +30,7 @@ body {
 .form-header {
     height: 60px;
     padding: 20px 30px 0;
-    border-bottom: 1px solid #e1e8ee;
+    border-bottom: 1px solid #86939e;
 }
  
 .form-body {
@@ -71,7 +71,6 @@ body {
 .cvv-input input,
 .month select,
 .year select {
-    opacity: .7;
     color: #86939e;
 }
 
@@ -80,14 +79,14 @@ body {
     width: 100%;
     margin-bottom: 20px;
     padding-left: 20px;
-    border: 2px solid #e1e8ee;
+    border: 2px solid #86939e;
     border-radius: 6px;
 }
 .card-number {
     width: 100%;
     margin-bottom: 20px;
     padding-left: 20px;
-    border: 2px solid #e1e8ee;
+    border: 2px solid #86939e;
     border-radius: 6px;
 }
 
@@ -97,7 +96,7 @@ body {
     width: 145px;
     margin-bottom: 20px;
     padding-left: 20px;
-    border: 2px solid #e1e8ee;
+    border: 2px solid #86939e;
     border-radius: 6px;
     /*background: url('') no-repeat; */
     background-position: 85% 50%;
@@ -118,7 +117,7 @@ body {
     float: left;
     width: 145px;
     padding-left: 20px;
-    border: 2px solid #e1e8ee;
+    border: 2px solid #86939e;
     border-radius: 6px;
     background: #fff;
 }
@@ -149,6 +148,10 @@ body {
     margin-bottom: 10px;
     background: #7dc855;
 }
+
+.proceed-btn:hover {
+    background: #5dd25e;
+}
  
 .paypal-btn a,
 .proceed-btn a {
@@ -158,3 +161,9 @@ body {
 .proceed-btn a {
     color: #fff;
 }
+
+.message {
+    text-align: center;
+    color: #5dd25e;
+}
+

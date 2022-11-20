@@ -47,7 +47,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     UserProductViewComponent,
     PageNotFoundComponent,
     LogoutComponent,
-    CheckoutComponent
+    CheckoutComponent,
     SaladMakerComponent,
     BMIHomeComponent,
     BMIResultComponent,
