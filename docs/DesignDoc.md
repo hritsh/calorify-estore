@@ -256,6 +256,12 @@ The product details page shows the details of a particular product.
 > _At appropriate places as part of this narrative provide one or more
 > static models (UML class diagrams) with some details such as critical attributes and methods._
 
+### Sequence Diagrams
+
+![CreateProductSequenceDiagram](https://user-images.githubusercontent.com/65954042/203735860-a62cb9d1-0b77-4265-8201-3deff65f1643.png)
+![AddToCartSequenceDiagram](https://user-images.githubusercontent.com/65954042/203735913-112c7b3d-d5b9-4836-95b1-a9e70c1f6980.png)
+
+
 ### Static Code Analysis/Design Improvements
 
 ![SonarQube Scanner Results](https://user-images.githubusercontent.com/89844097/202920754-9e15064d-7d71-4888-9b00-34e3bf27fb8a.png)
