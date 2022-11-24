@@ -258,7 +258,10 @@ The product details page shows the details of a particular product.
 
 ### Sequence Diagrams
 
+#### Create Product
 ![CreateProductSequenceDiagram](https://user-images.githubusercontent.com/65954042/203735860-a62cb9d1-0b77-4265-8201-3deff65f1643.png)
+
+#### Add to Cart
 ![AddToCartSequenceDiagram](https://user-images.githubusercontent.com/65954042/203735913-112c7b3d-d5b9-4836-95b1-a9e70c1f6980.png)
 
 
