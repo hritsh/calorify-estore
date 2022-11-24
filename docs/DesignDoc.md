@@ -220,7 +220,9 @@ The e-store web application, is built using the Model–View–ViewModel (MVVM) 
 
 The Model stores the application data objects including any functionality to provide persistance.
 
-The View is the client-side SPA built with Angular utilizing HTML, CSS and TypeScript. The ViewModel provides RESTful APIs to the client (View) as well as any logic required to manipulate the data objects from the Model.
+The View is the client-side SPA built with Angular utilizing HTML, CSS and TypeScript. The ViewModel provides RESTful APIs to the client (View) as well as any logic required to manipulate the data objects from the Model. 
+
+The Controller is written in Java and provides the logic for the application as well as the communication layer between the ViewModel and the Model.
 
 Both the ViewModel and Model are built using Java and Spring Framework. Details of the components within these tiers are supplied below.
 
