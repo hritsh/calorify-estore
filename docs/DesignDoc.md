@@ -299,7 +299,7 @@ Although JUnit5 test classes can have any visibility other than private, using t
 <img width="1187" alt="dd" src="https://user-images.githubusercontent.com/89844097/204104717-1ad5b087-5673-4216-96b2-052eec9cd147.png">
 
 
-To make generics code less verbose, Java included the diamond operator (<>). For example, you may now simplify the constructor declaration with <>, and the compiler will infer the type, rather than having to state a List's type in both its declaration and its constructor. We have specified the Generic Type inside diamond operator in the return statement. However, this is redundant since we already defined it in the function definition. This is an easy fix by just removing the Generic Type from the diamond operator. We have about 24 instances of this.
+To make generics code less verbose, Java included the diamond operator (<>). For example, we can now simplify the constructor declaration with <>, and the compiler will infer the type, rather than having to state a List's type in both its declaration and its constructor. We have specified the Generic Type inside diamond operator in the return statement. However, this is redundant since we already defined it in the function definition. This is an easy fix by just removing the Generic Type from the diamond operator. We have about 24 instances of this.
 
 ### Static Code Analyis Issues - UI
 
