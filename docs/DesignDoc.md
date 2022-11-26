@@ -271,6 +271,19 @@ The model tier is responsible for storing the data for the application. The mode
 
 ![SonarQube Scanner Results](https://user-images.githubusercontent.com/89844097/202920754-9e15064d-7d71-4888-9b00-34e3bf27fb8a.png)
 
+### Static Code Analyis Issues - UI
+
+![image](https://user-images.githubusercontent.com/65954042/204100469-000b7108-e1cd-433e-b7ed-c3a1d3eb0069.png)
+
+For the UI, we had 23 issues shown with about an hour of estimated effort required to fix them. Almost all these issues are minor and do not affect any functionality of our estore.
+
+![image](https://user-images.githubusercontent.com/65954042/204100475-ccad4011-7414-495e-bc27-5f9c6f62f1ac.png)
+
+We had 4 issues of unused imports, which were probably left there during us testing out different methods to implement UI components. The fix is simple, we just need to delete the lines that have these import statements.
+
+![image](https://user-images.githubusercontent.com/65954042/204100481-46a973e5-efa8-4567-817c-286ae3fe2b53.png)
+
+We have 5 issues of empty constructors or methods, namely the ngOnInit and constructor methods in some components. This is another simple fix, where we just need to delete the lines that have these empty methods.
 
 ## Testing
 
