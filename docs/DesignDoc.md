@@ -271,6 +271,25 @@ The model tier is responsible for storing the data for the application. The mode
 
 ![SonarQube Scanner Results](https://user-images.githubusercontent.com/89844097/202920754-9e15064d-7d71-4888-9b00-34e3bf27fb8a.png)
 
+### Static Code Analyis Issues - API
+
+<img width="1277" alt="aa" src="https://user-images.githubusercontent.com/89844097/204104631-bc278851-232a-499e-88b3-686de58ce6a1.png">
+
+For the API, we had 194 issues shown with about an hour or two of estimated effort required to fix them. Almost all these issues are minor and repetitive and do not affect any functionality of our estore.
+
+<img width="1219" alt="bb" src="https://user-images.githubusercontent.com/89844097/204104669-cd926735-20d2-4b41-8efa-347ccaa33605.png">
+
+It can be challenging to update a static field correctly from a non-static method, and if there are numerous threads or instances of the class in use, errors are likely to result. Static fields should ideally only be updated by synchronized static methods. We have not made the methods static. We will have to include the static modifier in the method definition. This is an easy fix by just adding the static modifier to the method. We have about 6 instances of this and were marked as Critical.
+
+<img width="1203" alt="cc" src="https://user-images.githubusercontent.com/89844097/204104697-05fca39b-922a-4275-9136-c4768b040ac1.png">
+
+Although JUnit5 test classes can have any visibility other than private, using the default package visibility is better because it makes the code easier to read. We have specified the public modifier in the JUnit Test Methods. However, this is redundant do not need to specify the public modifier for test methods. This is an easy fix by just removing the public modifier from the method. We have about 108 instances of this.
+
+
+<img width="1187" alt="dd" src="https://user-images.githubusercontent.com/89844097/204104717-1ad5b087-5673-4216-96b2-052eec9cd147.png">
+
+To make generics code less verbose, Java included the diamond operator (<>). For example, you may now simplify the constructor declaration with <>, and the compiler will infer the type, rather than having to state a List's type in both its declaration and its constructor. We have specified the Generic Type inside diamond operator in the return statement. However, this is redundant since we already defined it in the function definition. This is an easy fix by just removing the Generic Type from the diamond operator. We have about 24 instances of this.
+
 ### Static Code Analyis Issues - UI
 
 ![image](https://user-images.githubusercontent.com/65954042/204100469-000b7108-e1cd-433e-b7ed-c3a1d3eb0069.png)
