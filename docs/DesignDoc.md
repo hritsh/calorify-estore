@@ -193,7 +193,7 @@ Calorie Adder
 ## Application Domain
 
 ![Domain Model](z.png)
-![UML Class Structure](class diagramBIGFinal.bmp)
+![UML Class Structure](class%20diagramBIGFinal.bmp)
 There is a parent entity which represents the user, is then extended into two based on privileges of the role: 1) admin/owner 2) customer. Another crucial entity is the product/food that is being sold for purchase by a customer. The products being sold are kept inside inventory. The admin is able to modify the contents of this inventory. A customer has access to the menu which displays all the products present in the inventory. The admin is the only one allowed to add, remove, and update products in the inventory. The customer can also search for products by name, price, and calories. If the customer wants to filter for a specific product or type of product, they use the Search bar. They can also use search filters to specify and narrow down the price or calories they want to intake. They can also sort the menu by price or calories.
 
 The customer can add products from inventory to their shopping cart, which can be described as an attribute of User and the shopping cart is persistent across login sessions. The customer can checkout from shopping cart to place an order. For checking out, the customer has to enter an address and card details. The items are then subtracted from inventory. The customer can use ingredients in the inventory to make their own salad which will be a custom product created by the user that will be placed in the shopping cart and can be purchased in checkout. Finally the customers personal details can be usd to calculate BMI and the recommended calories. This can be used by the user to filter products based their suggested calorie intake.
@@ -255,7 +255,7 @@ The view tier of the e-store has the following components:
 
 ### Model Tier
           
-![Model Tier Diagram](class diagram model tier.jpeg)
+![Model Tier Diagram](class%20diagram%20model%20tier.jpeg)
 
 The model tier is responsible for storing the data for the application. The model tier consists of three types of components: data objects, data access objects, and business objects. The data objects are responsible for storing the data for the application. The data access objects are responsible for getting the data from the storage layer and for saving the data to the storage layer. The business objects are responsible for performing the business logic for the application. For example, a customer adding an item to their cart. The customer clicks on the add to cart button for an item. This sends an HTTP POST request to the server. The server then calls the business tier to add the item to the customer’s cart. The business tier calls the data access tier to get the data for the item from the storage layer. The data access tier returns the data for the item to the business tier. The business tier then adds the item to the customer’s cart. The business tier calls the data access tier to save the customer’s cart to the storage layer. The data access tier saves the customer’s cart to the storage layer.
 
