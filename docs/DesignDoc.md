@@ -227,6 +227,9 @@ The View is the client-side SPA built with Angular utilizing HTML, CSS and TypeS
 The Controller is written in Java and provides the logic for the application as well as the communication layer between the ViewModel and the Model.
 
 Both the ViewModel and Model are built using Java and Spring Framework. Details of the components within these tiers are supplied below.
+### Spring Security Architecture
+
+![Spring Security Architecture](SpringSecurity.drawio.png)
 
 ### Overview of User Interface
 
