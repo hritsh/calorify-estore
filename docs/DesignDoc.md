@@ -180,7 +180,7 @@ Calorie Adder
 
 ### Sprint 1
 
-For the first sprint, we focused on getting the backend functional for the MVP. We worked on the backend for inventory management and product listing. It mainly consisted of working on the Product model, CRUD operations in the Controller and FileDAO and setting up the API endpoints.
+For the first sprint, we focused on getting the backend functional for the MVP. We worked on the backend for inventory management and product listing. It mainly consisted of working on the Product model, CRUD operations in the Controller and FileDAO and setting up the API endpoints. The end goal was to have a functioning backend for the MVP that was able to store and retrieve product data
 The User Stories and Enhancements we worked on are listed below.
 
 - Create a New Product
