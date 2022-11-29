@@ -183,20 +183,53 @@ Calorie Adder
 For the first sprint, we focused on getting the backend functional for the MVP. We worked on the backend for inventory management and product listing. It mainly consisted of working on the Product model, CRUD operations in the Controller and FileDAO and setting up the API endpoints.
 The User Stories and Enhancements we worked on are listed below.
 
-Create a New Product
-Get a Single Product
-Get All Products
-Update a Product
-Delete a Product
-Search for a Product
+- Create a New Product
+- Get a Single Product
+- Get All Products
+- Update a Product
+- Delete a Product
+- Search for a Product
 
 ### Sprint 2
 
 We completed majority of our user stories and completed our MVP including the frontend and backend in this sprint. We worked on the frontend for inventory management for the Admin and product listing for the Customer. We also added the Shopping Cart functionality with persistence. Additionally, we added password hashing and JWT authentication using Spring Security to make our API secure and only accessible by the role assigned to the user logged in. The User Stories and Enhancements we worked on are listed below.
 
-## Sprint 3
+- Login as Admin
+- Add to Inventory
+- List Inventory
+- Edit Inventory Item
+- Delete from Inventory
+
+- Login as Customer
+- View Products
+- Search Product by Name
+- View Product Details
+- Add to Cart
+- View Cart
+- Edit Cart Item Quantity
+- Remove from Cart
+- Checkout
+
+- Register as Customer
+- Password Hashing
+- JWT Authentication
+- Login API
+- Role API
+
+### Sprint 3
 
 For the final sprint, we worked on our 10% features, namely the custom Salad Maker and BMI Calculator, as well as sorting and range filters for calories and price. We also added the ability to edit your User Profile and added a checkout page for the Customer to enter their details. Additionally, we worked on the user experience and overall design of our page and made it a lot more user friendly. The User Stories and Enhancements we worked on are listed below.
+
+- Custom Salad Maker
+- BMI Calculator
+- Sort by Calories
+- Sort by Price
+- Filter by Calories
+- Filter by Price
+- Edit User Profile
+- Checkout Page
+- Design Improvements
+- Error Messages
 
 ## Application Domain
 
