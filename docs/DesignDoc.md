@@ -183,12 +183,17 @@ Calorie Adder
 For the first sprint, we focused on getting the backend functional for the MVP. We worked on the backend for inventory management and product listing. It mainly consisted of working on the Product model, CRUD operations in the Controller and FileDAO and setting up the API endpoints.
 The User Stories and Enhancements we worked on are listed below.
 
-- Create a New Product
-- Get a Single Product
-- Get All Products
-- Update a Product
-- Delete a Product
-- Search for a Product
+Create a New Product
+Get a Single Product
+Get All Products
+Update a Product
+Delete a Product
+Search for a Product
+
+### Sprint 2
+
+We completed majority of our user stories and completed our MVP including the frontend and backend in this sprint. We worked on the frontend for inventory management for the Admin and product listing for the Customer. We also added the Shopping Cart functionality with persistence. Additionally, we added password hashing and JWT authentication using Spring Security to make our API secure and only accessible by the role assigned to the user logged in. The User Stories and Enhancements we worked on are listed below.
+
 
 ## Application Domain
 
