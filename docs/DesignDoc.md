@@ -232,7 +232,7 @@ For the final sprint, we worked on our 10% features, namely the custom Salad Mak
 - Filter by Price
 - Edit User Profile
 - Checkout Page
-- Design Improvements
+- Design and UX
 - Error Messages
 
 ## Application Domain
@@ -366,6 +366,14 @@ We had 4 issues of unused imports, which were probably left there during us test
 ![image](https://user-images.githubusercontent.com/65954042/204100481-46a973e5-efa8-4567-817c-286ae3fe2b53.png)
 
 We have 5 issues of empty constructors or methods, namely the ngOnInit and constructor methods in some components. This is another simple fix, where we just need to delete the lines that have these empty methods.
+
+### Recommendations for Design Improvements
+
+- Order tracking history implemented in the backend
+- Customer as well as Admin can access Placed Orders
+- User Profile Details during Registration
+- Change Shopping Cart API to store items by reference to ID to increase efficiency and reduce storage space
+- Move Total Price and Quantity Calculation for Shopping Cart to Backend
 
 ## Testing
 
