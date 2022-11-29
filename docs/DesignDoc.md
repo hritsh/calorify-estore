@@ -194,12 +194,14 @@ The User Stories and Enhancements we worked on are listed below.
 
 We completed majority of our user stories and completed our MVP including the frontend and backend in this sprint. We worked on the frontend for inventory management for the Admin and product listing for the Customer. We also added the Shopping Cart functionality with persistence. Additionally, we added password hashing and JWT authentication using Spring Security to make our API secure and only accessible by the role assigned to the user logged in. The User Stories and Enhancements we worked on are listed below.
 
+#### Admin Page
 - Login as Admin
 - Add to Inventory
 - List Inventory
 - Edit Inventory Item
 - Delete from Inventory
 
+#### E-Store Page
 - Login as Customer
 - View Products
 - Search Product by Name
@@ -210,6 +212,8 @@ We completed majority of our user stories and completed our MVP including the fr
 - Remove from Cart
 - Checkout
 
+#### Backend
+- Shopping Cart Model & Controller
 - Register as Customer
 - Password Hashing
 - JWT Authentication
