@@ -194,6 +194,9 @@ Search for a Product
 
 We completed majority of our user stories and completed our MVP including the frontend and backend in this sprint. We worked on the frontend for inventory management for the Admin and product listing for the Customer. We also added the Shopping Cart functionality with persistence. Additionally, we added password hashing and JWT authentication using Spring Security to make our API secure and only accessible by the role assigned to the user logged in. The User Stories and Enhancements we worked on are listed below.
 
+## Sprint 3
+
+For the final sprint, we worked on our 10% features, namely the custom Salad Maker and BMI Calculator, as well as sorting and range filters for calories and price. We also added the ability to edit your User Profile and added a checkout page for the Customer to enter their details. Additionally, we worked on the user experience and overall design of our page and made it a lot more user friendly. The User Stories and Enhancements we worked on are listed below.
 
 ## Application Domain
 
