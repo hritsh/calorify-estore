@@ -176,19 +176,19 @@ Add Ingredients
 Remove Ingredients
 Calorie Adder
 
-### Roadmap of Enhancements
+## Roadmap of Enhancements
 
-#### Caloric Intake Progress & Statistics
+### Sprint 1
 
-#### Diet Plan
+For the first sprint, we focused on getting the backend functional for the MVP. We worked on the backend for inventory management and product listing. It mainly consisted of working on the Product model, CRUD operations in the Controller and FileDAO and setting up the API endpoints.
+The User Stories and Enhancements we worked on are listed below.
 
-#### Customer Processes
-
-#### Order Management
-
-#### Health Tips
-
-#### Rewards
+- Create a New Product
+- Get a Single Product
+- Get All Products
+- Update a Product
+- Delete a Product
+- Search for a Product
 
 ## Application Domain
 
