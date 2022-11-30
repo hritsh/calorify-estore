@@ -87,93 +87,93 @@ Customer functionality, including searching for products, adding products to the
 
 ##### Product Lists
 
-List Products on Customer Product Page
+List Products on Customer Product Page,
 Product Details
 
 ##### Inventory Management
 
-Add to Inventory
-List Inventory
-Delete from Inventory
+Add to Inventory,
+List Inventory,
+Delete from Inventory,
 Edit inventory item
 
 ##### Shopping Cart
 
-Display Cart
-Add to Cart
-Remove from Cart
-Change Quantity
-Confirm Cart
-Cart Persistence
+Display Cart,
+Add to Cart,
+Remove from Cart,
+Change Quantity,
+Confirm Cart,
+Cart Persistence,
 
 ##### Login
 
-Logout
-Login as User
+Logout,
+Login as User,
 Login as E-Store Admin
 
 ##### Product API
 
-Create New Product
-Get a single product
-Get Entire Inventory
-Search Product
-Update Product
+Create New Product,
+Get a single product,
+Get Entire Inventory,
+Search Product,
+Update Product,
 Delete a Single Product
 
 ##### User API
 
-Create a New User
-Get a Single User
-Update User
-Delete User
-Get All Users
+Create a New User,
+Get a Single User,
+Update User,
+Delete User,
+Get All Users,
 
 ##### Registration Page
 
-Entering and Creating User
+Entering and Creating User,
 Enter Personal Details
 
 ##### User Profile
 
-View User Profile
+View User Profile,
 Edit User Profile
 
 ##### Role API
 
-Create a New Role
-Get All Roles
+Create a New Role,
+Get All Roles,
 Delete Role
 
 ##### Spring Security- Login API and User Roles
 
-Login API
-Admin Registration Roles
-User Registration Roles
+Login API,
+Admin Registration Roles,
+User Registration Roles,
 Unregistered User Roles
 
 ##### Product Search Component
 
-Search Food Items by Name
-Search Food Items by Price
+Search Food Items by Name,
+Search Food Items by Price,
 Search Food Items by Caloric Range
 
 ##### Sorting and Filters
 
-Sort by Calories
+Sort by Calories,
 Sort by Price
 
 ##### Customer Checkout
 
-Checkout from Shopping Cart
-List Shopping Cart Contents on Checkout Page
-Purchase Options
+Checkout from Shopping Cart,
+List Shopping Cart Contents on Checkout Page,
+Purchase Options,
 Direct Checkout from Product Details
 
 ##### Make Your Own Salad
 
-Add Ingredients
-Remove Ingredients
+Add Ingredients,
+Remove Ingredients,
 Calorie Adder
 
 ## Roadmap of Enhancements
@@ -237,7 +237,7 @@ For the final sprint, we worked on our 10% features, namely the custom Salad Mak
 
 ## Application Domain
 
-![Domain Model](z.png)
+![Domain Model](Calorify Domain.png)
 ![UML Class Structure](class%20diagramBIGFinal.bmp)
 There is a parent entity which represents the user, is then extended into two based on privileges of the role: 1) admin/owner 2) customer. Another crucial entity is the product/food that is being sold for purchase by a customer. The products being sold are kept inside inventory. The admin is able to modify the contents of this inventory. A customer has access to the menu which displays all the products present in the inventory. The admin is the only one allowed to add, remove, and update products in the inventory. The customer can also search for products by name, price, and calories. If the customer wants to filter for a specific product or type of product, they use the Search bar. They can also use search filters to specify and narrow down the price or calories they want to intake. They can also sort the menu by price or calories.
 
