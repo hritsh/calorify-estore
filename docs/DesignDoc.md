@@ -237,7 +237,7 @@ For the final sprint, we worked on our 10% features, namely the custom Salad Mak
 
 ## Application Domain
 
-![Domain Model](calorifydomain1.png)
+![Domain Model](calorifydomain2.png)
 ![UML Class Structure](classdiagram.png)
 There is a parent entity which represents the user, is then extended into two based on privileges of the role: 1) admin/owner 2) customer. Another crucial entity is the product/food that is being sold for purchase by a customer. The products being sold are kept inside inventory. The admin is able to modify the contents of this inventory. A customer has access to the menu which displays all the products present in the inventory. The admin is the only one allowed to add, remove, and update products in the inventory. The customer can also search for products by name, price, and calories. If the customer wants to filter for a specific product or type of product, they use the Search bar. They can also use search filters to specify and narrow down the price or calories they want to intake. They can also sort the menu by price or calories.
 
