@@ -443,7 +443,6 @@ Analysis
  ![estoreModel](g.png)
 
 Analysis
- We are only 2% short of the ideal requirement of 90%. We would have to test our getProduct array, createproduct elements in our InventoryFileDAO more thoroughly in order to achieve a decent coverage. As we can see, all the other elements have been covered 100%.
 
 ![estorePersistence](h.png)
 
