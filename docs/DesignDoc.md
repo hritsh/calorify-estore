@@ -304,11 +304,6 @@ The view tier of the e-store has the following components:
 
 The model tier is responsible for storing the data for the application. The model tier consists of three types of components: data objects, data access objects, and business objects. The data objects are responsible for storing the data for the application. The data access objects are responsible for getting the data from the storage layer and for saving the data to the storage layer. The business objects are responsible for performing the business logic for the application. For example, a customer adding an item to their cart. The customer clicks on the add to cart button for an item. This sends an HTTP POST request to the server. The server then calls the business tier to add the item to the customer’s cart. The business tier calls the data access tier to get the data for the item from the storage layer. The data access tier returns the data for the item to the business tier. The business tier then adds the item to the customer’s cart. The business tier calls the data access tier to save the customer’s cart to the storage layer. The data access tier saves the customer’s cart to the storage layer.
 
-> _Provide a summary of this tier of your architecture. This
-> section will follow the same instructions that are given for the View
-> Tier above._
-> _At appropriate places as part of this narrative provide one or more
-> static models (UML class diagrams) with some details such as critical attributes and methods._
 
 ### Sequence Diagrams
 
