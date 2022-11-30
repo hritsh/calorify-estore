@@ -401,9 +401,16 @@ We have a minor exception handling bug that will be fixed ASAP.
 
 Our unit testing strategy is to make sure that our tests are thorough, independent and readable. Thorough meaning that we are performing at a high code coverage - at least 90% overall. Independent meaning that we are testing one thing at a time. For example, we’ve decided that a unit is a class. We are testing each and every component of a class - its state and functions as well as those functions method arguments.
 
+<img width="1082" alt="image" src="https://user-images.githubusercontent.com/65954042/204744422-ad2a686c-829f-4c9d-8094-dc30d937aa69.png">
+
+We have achieved an overall code coverage of 95%, including 98% for the Model tier, 94% for the Controller Tier and 93% for the Persistence Tier.
+
 ### Coverage: Controller Tier
 
  ![eStore API](a.png)
+ 
+ We have achieved 94% code coverage for the Controller Tier, which satisfies and exeeds the minimum 90% ideal requirement.
+ 
  ![estorecontroller](b.png)
 
 Analysis
@@ -418,6 +425,9 @@ As such, for proper coverage, we could write tests that cover a test that tests 
 ### Coverage: Model Tier
 
  ![eStoreModel](d.png)
+ 
+ We have achieved 98% code coverage for the Model Tier, which satisfies and exeeds the minimum 95% ideal requirement.
+
  ![estoreModel](e.png)
 
 Analysis
@@ -427,6 +437,9 @@ Analysis
 ### Coverage: Persistence Tier
 
  ![eStoreModel](f.png)
+ 
+ We have achieved 93% code coverage for the Persistence Tier, which satisfies and exeeds the minimum 90% ideal requirement.
+ 
  ![estoreModel](g.png)
 
 Analysis
