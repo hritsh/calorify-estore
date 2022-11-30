@@ -464,7 +464,15 @@ For example, in this case the framework creates an InventoryFileDAO object. It t
 ### Information Expert
 
 Information Expert is a design pattern that states “Assign responsibility to the class that has the information needed to fulfill the responsibility.”
-According to this principle, responsibilities are assigned in the form of methods which are fields to classes. All behaviors that directly work with a class's attributes should be implemented in the class itself. Any operations that the client would perform using the attribute data or class methods should also be considered for implementation. The client shouldn’t be doing any “heavy-lifting”, all methods should be simplified for their use. For example, let’s say we have a class called “Animal”, and this class has a field called “name”. The “name” field is used to store the name of the animal. We would want to implement a method in the Animal class to set the name of the animal, and another method to get the name of the animal. This way, the client doesn’t have to worry about how the name is stored, or how to set it. They can simply call the methods that are provided.
+According to this principle, responsibilities are assigned in the form of methods which are fields to classes. All behaviors that directly work with a class's attributes should be implemented in the class itself. Any operations that the client would perform using the attribute data or class methods should also be considered for implementation. The client shouldn’t be doing any “heavy-lifting”, all methods should be simplified for their use.
+
+For example, this is the UML for our Product class:
+
+<img width="376" alt="image" src="https://user-images.githubusercontent.com/65954042/204739347-8a13c1b9-269e-4cb9-84be-05dc72970a8b.png">
+
+
+All the getter and setter methods are provided which let the user retrieve and modify individual attributes of a product without fully deleting and defining a product again.
+The toString() method makes it easy to print all the details of a product without calling all the getter functions at once.
 
 ### Low Coupling
 
