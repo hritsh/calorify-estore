@@ -459,6 +459,7 @@ Its main goal is the separation of responsibilities, which causes separate conce
 ### Dependency Inversion
 
 The Dependency Inversion Principle provides and allows room for looser coupling between dependent entities. Martin defines this principle as “High Level Modules should not depend on low-level modules. Both should depend on abstractions.". This project utilizes this principle. Dependency Inversion Principle reduces coupling between different pieces of code. It basically seeks to help with code reusability. Also, this principle is critical for doing unit tests since we can inject objects into the constructor. In this the low-level module has no responsibility to instantiate a dependent class. The high-level module injects the dependent elements and the low-level is dependent on the high-level’s abstraction and not its implementation. Dependency Injection can be defined as a principle that provides looser coupling between dependent entities. In other words, higher level classes should not depend on low-level classes. Both should depend on some layer of abstraction to communicate. Calorify's backend API is built on Spring Boot which provides what is necessary for successfully implementing dependency injection through the use of a configuration file. Dependency injection is implemented between InventoryController, and InventoryFileDAO through the interface InventoryDAO. Spring, via configuration, creates an InventoryFileDAO object.
+
 For example, in this case the framework creates an InventoryFileDAO object. It then, injects this InventoryFileDAO object into the Inventory Controller when it’s called or instantiated. Our controller class, Inventory Controller only is told to deal with the abstraction which is the higher level InventoryDAO. This enhances the reusability of the code in addition to provide the ease of independently testing the Inventory Controller and the InventoryFileDAO class. As discussed in the above example, the InventoryController Class only deals with the higher level InventoryDAO abstraction. The benefit of this is that the lower-level implementation of storing and accessing/manipulating data can be updated at any point in time without having an effect on the InventoryController class’s responsibility. To illustrate this, the current underlying storing mechanism is a file using json objects representing an array of products. So, we know, that as long as the data access object is adhering to all the principles, our InventoryController does not need to change at all. In fact, even in angular the services aspect is a huge supporter of dependency injection. Since the project follows MVC (Model-View-Controller) Architecture, it already exclusively is designed to support the Object-Oriented Programming Design Principles.
 
 ### Information Expert
@@ -470,7 +471,6 @@ For example, this is the UML for our Product class:
 
 <img width="376" alt="image" src="https://user-images.githubusercontent.com/65954042/204739347-8a13c1b9-269e-4cb9-84be-05dc72970a8b.png">
 
-
 All the getter and setter methods are provided which let the user retrieve and modify individual attributes of a product without fully deleting and defining a product again.
 The toString() method makes it easy to print all the details of a product without calling all the getter functions at once.
 
@@ -479,6 +479,6 @@ The toString() method makes it easy to print all the details of a product withou
 Low coupling is the principle which aims to reduce the impact of any change in the system. If a change needs to be made somewhere, there shouldn’t be any unnecessary coupling such that you may have to make many changes in different classes.
 For example, To make the Product class to work, an InventoryController class, an InventoryDAO interface, and the InventoryFileDAO class which implements it, are required, which are all connected together. There should be minimal number of connections for any class.
 
-### High Cohesion
+<img width="652" alt="image" src="https://user-images.githubusercontent.com/65954042/204739689-23dc19f3-4d28-46d2-932f-a4c554c45698.png">
 
-High cohesion is the principle which aims to move closely related items together. The classes which are closely related to each other should be placed together. For example, the Product class and the Inventory class can be placed together in the same package, because they are closely related to each other.
+The User offloads its work to the ShoppingCartController which does all the work of creating a shopping cart for each user and interacting with its own DAO. Before this, we had designed the User to have a shopping cart as their own attribute, but that led to a lot of coupling as we needed to use a DAO for persistent storage of shopping carts for each user, and the user was already connected to an InventoryController, which handled the DAO for the Inventory.
