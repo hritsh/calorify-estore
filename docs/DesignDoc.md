@@ -104,7 +104,7 @@ Add to Cart,
 Remove from Cart,
 Change Quantity,
 Confirm Cart,
-Cart Persistence,
+Cart Persistence
 
 ##### Login
 
