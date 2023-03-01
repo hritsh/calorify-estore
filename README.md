@@ -20,116 +20,102 @@ The customer can add products from inventory to their shopping cart, which can b
 
 ## Architecture and Design
 
-The Estore-UI is the graphical user interface front end for our application. It is made up of HTML, CSS, and TypeScript code and uses the Angular framework. The Estore-UI communicates with the Estore-API to fetch data and to send data back to the backend for processing.
+- The Estore-UI is the graphical user interface front end for our application. It is made up of HTML, CSS, and TypeScript code and uses the Angular framework. The Estore-UI communicates with the Estore-API to fetch data and to send data back to the backend for processing.
 
-The Estore-API is the back end for our application. It is made up of Java code and uses the Spring framework. The Estore-API receives HTTP requests from the Estore-UI and responds with HTTP answers. The Estore-API uses I/O to communicate with the storage for read and write. JSON files constitute the storage and format of requests and response bodies
+- The Estore-API is the back end for our application. It is made up of Java code and uses the Spring framework. The Estore-API receives HTTP requests from the Estore-UI and responds with HTTP answers. The Estore-API uses I/O to communicate with the storage for read and write. JSON files constitute the storage and format of requests and response bodies
 
-Our application consists of three main components: the model, the controller and the persistence.
+- Our application consists of three main components: the model, the controller and the persistence.
 
 ### Definition of MVP
 
-The minimum viable product includes
+The minimum viable product includes:
 
-Login and logout functionality, where an inventory manager can log in as "admin" and no passwords are required
+- Login and logout functionality, where an inventory manager can log in as "admin" and no passwords are required
 
-Customer functionality, including searching for products, adding products to their shopping cart, and checking out Inventory management, which allows inventory managers to add, remove, and update products in the inventory Data persistence, so that the inventory, users, and user shopping carts are saved.
+- Customer functionality, including searching for products, adding products to their shopping cart, and checking out Inventory management, which allows inventory managers to add, remove, and update products in the inventory Data persistence, so that the inventory, users, and user shopping carts are saved.
 
-10% feature - An additional feature implemented on top of the MVP.
+- 10% feature - An additional feature implemented on top of the MVP.
 
 ### MVP Features
 
 #### Epics
 
-##### Product Lists
+- Product Lists
+  - List Products on Customer Product Page
+  - Product Details
 
-List Products on Customer Product Page,
-Product Details
+- Inventory Management
+  -Add to Inventory
+  -List Inventory
+  -Delete from Inventory
+  -Edit inventory item
 
-##### Inventory Management
+- Shopping Cart
+  -Display Cart
+  -Add to Cart
+  -Remove from Cart
+  -Change Quantity
+  -Confirm Cart
+  -Cart Persistence
 
-Add to Inventory,
-List Inventory,
-Delete from Inventory,
-Edit inventory item
+- Login
+  -Logout
+  -Login as User
+  -Login as E-Store Admin
 
-##### Shopping Cart
+- Product API
+  -Create New Product
+  -Get a single product
+  -Get Entire Inventory
+  -Search Product
+  -Update Product
+  -Delete a Single Product
 
-Display Cart,
-Add to Cart,
-Remove from Cart,
-Change Quantity,
-Confirm Cart,
-Cart Persistence
+- User API
+  -Create a New User
+  -Get a single User
+  -Update User
+  -Delete User
+  -Get All Users
 
-##### Login
+- Registration Page
+  -Entering and Creating User
+  -Enter Personal Details
 
-Logout,
-Login as User,
-Login as E-Store Admin
+- User Profile
+  -View User Profile
+  -Edit User Profile
 
-##### Product API
+- Role API
+  -Create a New Role
+  -Get All Roles
+  -Delete Role
 
-Create New Product,
-Get a single product,
-Get Entire Inventory,
-Search Product,
-Update Product,
-Delete a Single Product
+- Spring Security
+  -Login API
+  -Admin Registration Roles
+  -User Registration Roles
+  -Unregistered User Roles
 
-##### User API
+- Product Search Component
+  -Search Food Items by Name
+  -Search Food Items by Price
+  -Search Food Items by Caloric Range
 
-Create a New User,
-Get a Single User,
-Update User,
-Delete User,
-Get All Users
+- Sorting and Filters
+  -Sort by Calories
+  -Sort by Price
 
-##### Registration Page
+- Customer Checkout
+  -Checkout from Shopping Cart
+  -List Shopping Cart Contents on Checkout Page
+  -Purchase Options
+  -Direct Checkout from Product Details
 
-Entering and Creating User,
-Enter Personal Details
-
-##### User Profile
-
-View User Profile,
-Edit User Profile
-
-##### Role API
-
-Create a New Role,
-Get All Roles,
-Delete Role
-
-##### Spring Security- Login API and User Roles
-
-Login API,
-Admin Registration Roles,
-User Registration Roles,
-Unregistered User Roles
-
-##### Product Search Component
-
-Search Food Items by Name,
-Search Food Items by Price,
-Search Food Items by Caloric Range
-
-##### Sorting and Filters
-
-Sort by Calories,
-Sort by Price
-
-##### Customer Checkout
-
-Checkout from Shopping Cart,
-List Shopping Cart Contents on Checkout Page,
-Purchase Options,
-Direct Checkout from Product Details
-
-##### Make Your Own Salad
-
-Add Ingredients,
-Remove Ingredients,
-Calorie Adder
+- Make Your Own Salad
+  -Add Ingredients
+  -Remove Ingredients
+  -Calorie Adder
 
 ## Roadmap of Enhancements
 
@@ -244,14 +230,6 @@ To run tests on all the tiers in isolation do this:
 1. Access the `PROJECT_DOCS_HOME/` directory
 2. Execute `mvn exec:exec@docs`
 3. The generated PDF will be in `PROJECT_DOCS_HOME/` directory
-
-
-## How to setup/run/test program 
-1. Tester, first obtain the Acceptance Test plan
-2. IP address of target machine running the app
-3. Execute ________
-4. ...
-5. ...
 
 ## License
 
