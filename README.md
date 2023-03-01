@@ -2,13 +2,7 @@
 
 An online E-store system built in Java 8=>11 and Spring Tools 4.16
   
-## Team
-
-- Christin
-- Hritish Mahajan
-- Sohan Saimbhi 
-- Syed Basit Hussain
-- Eslam Tarrum
+[Click here to see the design documentation for this Project](https://github.com/hritsh/calorify-estore/blob/main/docs/DesignDoc.md)
 
 ## Prerequisites
 
