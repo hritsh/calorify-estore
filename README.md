@@ -1,8 +1,16 @@
 # E-Store: Calorify - Online Food Store
 
 An online E-store system built in Java 8=>11 and Spring Tools 4.16
-  
-[Click here to see the design documentation for this Project](https://github.com/hritsh/calorify-estore/blob/main/docs/DesignDoc.md)
+
+## Executive Summary
+
+Calorify is an e-commerce store which is dedicated to allowing the customers to choose and purchase healthy food products in order to cater to their calorie intake requirements. We want to provide a platform on which customers can, easily and safely, browse and purchase various healthy food products including salads, wraps, dips and our signature dishes. It is completely user-input based so that we can meet the needs of our customer and help them acheive their diet goals.
+
+## Purpose
+
+Our purpose is to allow our customers to purchase high quality healthy food products to satisfy their daily calorie requirements with a considerable amount of freedom towards customization. The inventory manager or the owner of the store, their functionality includes that they can view, add, update, and delete products from the menu listing.
+
+[Click here to see the complete design documentation for this Project](https://github.com/hritsh/calorify-estore/blob/main/docs/DesignDoc.md)
 
 ## Prerequisites
 
