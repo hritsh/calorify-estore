@@ -45,77 +45,77 @@ The minimum viable product includes:
   - Product Details
 
 - Inventory Management
-  -Add to Inventory
-  -List Inventory
-  -Delete from Inventory
-  -Edit inventory item
+  - Add to Inventory
+  - List Inventory
+  - Delete from Inventory
+  - Edit inventory item
 
 - Shopping Cart
-  -Display Cart
-  -Add to Cart
-  -Remove from Cart
-  -Change Quantity
-  -Confirm Cart
-  -Cart Persistence
+  - Display Cart
+  - Add to Cart
+  - Remove from Cart
+  - Change Quantity
+  - Confirm Cart
+  - Cart Persistence
 
 - Login
-  -Logout
-  -Login as User
-  -Login as E-Store Admin
+  - Logout
+  - Login as User
+  - Login as E-Store Admin
 
 - Product API
-  -Create New Product
-  -Get a single product
-  -Get Entire Inventory
-  -Search Product
-  -Update Product
-  -Delete a Single Product
+  - Create New Product
+  - Get a single product
+  - Get Entire Inventory
+  - Search Product
+  - Update Product
+  - Delete a Single Product
 
 - User API
-  -Create a New User
-  -Get a single User
-  -Update User
-  -Delete User
-  -Get All Users
+  - Create a New User
+  - Get a single User
+  - Update User
+  - Delete User
+  - Get All Users
 
 - Registration Page
-  -Entering and Creating User
-  -Enter Personal Details
+  - Entering and Creating User
+  - Enter Personal Details
 
 - User Profile
-  -View User Profile
-  -Edit User Profile
+  - View User Profile
+  - Edit User Profile
 
 - Role API
-  -Create a New Role
-  -Get All Roles
-  -Delete Role
+  - Create a New Role
+  - Get All Roles
+  - Delete Role
 
 - Spring Security
-  -Login API
-  -Admin Registration Roles
-  -User Registration Roles
-  -Unregistered User Roles
+  - Login API
+  - Admin Registration Roles
+  - User Registration Roles
+  - Unregistered User Roles
 
 - Product Search Component
-  -Search Food Items by Name
-  -Search Food Items by Price
-  -Search Food Items by Caloric Range
+  - Search Food Items by Name
+  - Search Food Items by Price
+  - Search Food Items by Caloric Range
 
 - Sorting and Filters
-  -Sort by Calories
-  -Sort by Price
+  - Sort by Calories
+  - Sort by Price
 
 - Customer Checkout
-  -Checkout from Shopping Cart
-  -List Shopping Cart Contents on Checkout Page
-  -Purchase Options
-  -Direct Checkout from Product Details
+  - Checkout from Shopping Cart
+  - List Shopping Cart Contents on Checkout Page
+  - Purchase Options
+  - Direct Checkout from Product Details
 
 - Make Your Own Salad
-  -Add Ingredients
-  -Remove Ingredients
-  -Calorie Adder
+  - Add Ingredients
+  - Remove Ingredients
+  - Calorie Adder
 
 ## Roadmap of Enhancements
 
